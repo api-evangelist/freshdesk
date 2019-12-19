@@ -1,0 +1,93 @@
+{
+    "name": "Freshdesk",
+    "description": "An online cloud-based customer service software providing helpdesk support with all smart automations to get things done faster. Sign up for a free trial today!",
+    "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/797-freshdesk.jpg",
+    "tags": [
+        "api provider",
+        "crm",
+        "customers",
+        "has api",
+        "have api",
+        "helpdesk",
+        "profile"
+    ],
+    "created": "2019-12-19",
+    "modified": "2019-12-19",
+    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/freshdesk\/master\/apis.json",
+    "specificationVersion": "0.14",
+    "apis": [
+        {
+            "name": "Freshdesk",
+            "description": null,
+            "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/797-freshdesk.jpg",
+            "humanURL": "https:\/\/zootrock.freshdesk.com\/solution\/articles\/4000065689-slack",
+            "baseURL": "",
+            "tags": [],
+            "properties": [
+                {
+                    "type": "x-openapi",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/freshdesk-openapi.json"
+                },
+                {
+                    "type": "x-postman-collecction",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/freshdesk-postman-collection.json"
+                }
+            ]
+        }
+    ],
+    "include": [],
+    "x-common": [
+        {
+            "type": "Base",
+            "url": "https:\/\/domain.freshdesk.com\/path\/to\/api"
+        },
+        {
+            "type": "Blog",
+            "url": "http:\/\/blog.freshdesk.com"
+        },
+        {
+            "type": "Blog RSS",
+            "url": "http:\/\/feeds.feedburner.com\/freshdesk\/eaHJ"
+        },
+        {
+            "type": "Crunchbase",
+            "url": "https:\/\/crunchbase.com\/organization\/freshdesk"
+        },
+        {
+            "type": "Crunchbase",
+            "url": "http:\/\/www.crunchbase.com\/company\/freshdesk"
+        },
+        {
+            "type": "Developers",
+            "url": "http:\/\/www.freshdesk.com\/api"
+        },
+        {
+            "type": "Email",
+            "url": "support@freshdesk.com"
+        },
+        {
+            "type": "Github",
+            "url": "https:\/\/github.com\/freshdesk"
+        },
+        {
+            "type": "Pricing",
+            "url": "https:\/\/freshdesk.com\/pricing"
+        },
+        {
+            "type": "Support",
+            "url": "https:\/\/gogeo.freshdesk.com\/support\/home"
+        },
+        {
+            "type": "Twitter",
+            "url": "https:\/\/twitter.com\/freshdesk"
+        },
+        {
+            "type": "Website",
+            "url": "https:\/\/zootrock.freshdesk.com\/solution\/articles\/4000065689-slack"
+        },
+        {
+            "type": "Website",
+            "url": "http:\/\/www.freshdesk.com"
+        }
+    ]
+}
