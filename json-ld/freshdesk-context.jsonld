@@ -1,0 +1,245 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "freshdesk": "https://developers.freshdesk.com/api/ns#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+
+    "Ticket": {
+      "@id": "freshdesk:Ticket",
+      "@context": {
+        "subject": "freshdesk:subject",
+        "description": "schema:description",
+        "status": "freshdesk:status",
+        "priority": "freshdesk:priority",
+        "source": "freshdesk:source",
+        "type": "freshdesk:ticketType",
+        "requester": {
+          "@id": "freshdesk:requester",
+          "@type": "@id"
+        },
+        "responder": {
+          "@id": "freshdesk:responder",
+          "@type": "@id"
+        },
+        "group": {
+          "@id": "freshdesk:group",
+          "@type": "@id"
+        },
+        "product": {
+          "@id": "freshdesk:product",
+          "@type": "@id"
+        },
+        "company": {
+          "@id": "freshdesk:company",
+          "@type": "@id"
+        },
+        "tags": "schema:keywords",
+        "dueBy": {
+          "@id": "freshdesk:dueBy",
+          "@type": "xsd:dateTime"
+        },
+        "firstResponseDueBy": {
+          "@id": "freshdesk:firstResponseDueBy",
+          "@type": "xsd:dateTime"
+        },
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        },
+        "ticketUrl": {
+          "@id": "schema:url",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "Contact": {
+      "@id": "freshdesk:Contact",
+      "@context": {
+        "name": "schema:name",
+        "email": "schema:email",
+        "phone": "schema:telephone",
+        "mobile": "freshdesk:mobile",
+        "address": "schema:address",
+        "jobTitle": "schema:jobTitle",
+        "language": "schema:knowsLanguage",
+        "timeZone": "freshdesk:timeZone",
+        "company": {
+          "@id": "schema:worksFor",
+          "@type": "@id"
+        },
+        "twitterId": "freshdesk:twitterId",
+        "active": "freshdesk:active",
+        "tags": "schema:keywords",
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Company": {
+      "@id": "freshdesk:Company",
+      "@context": {
+        "name": "schema:name",
+        "description": "schema:description",
+        "domains": "freshdesk:domains",
+        "industry": "schema:industry",
+        "healthScore": "freshdesk:healthScore",
+        "accountTier": "freshdesk:accountTier",
+        "renewalDate": {
+          "@id": "freshdesk:renewalDate",
+          "@type": "xsd:dateTime"
+        },
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Agent": {
+      "@id": "freshdesk:Agent",
+      "@context": {
+        "contact": {
+          "@id": "freshdesk:agentContact",
+          "@type": "@id"
+        },
+        "available": "freshdesk:available",
+        "occasional": "freshdesk:occasional",
+        "ticketScope": "freshdesk:ticketScope",
+        "groups": {
+          "@id": "freshdesk:groups",
+          "@type": "@id",
+          "@container": "@set"
+        },
+        "roles": {
+          "@id": "freshdesk:roles",
+          "@type": "@id",
+          "@container": "@set"
+        },
+        "signature": "freshdesk:signature",
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Group": {
+      "@id": "freshdesk:Group",
+      "@context": {
+        "name": "schema:name",
+        "description": "schema:description",
+        "agents": {
+          "@id": "freshdesk:agents",
+          "@type": "@id",
+          "@container": "@set"
+        },
+        "businessHours": {
+          "@id": "freshdesk:businessHours",
+          "@type": "@id"
+        },
+        "autoTicketAssign": "freshdesk:autoTicketAssign",
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Conversation": {
+      "@id": "freshdesk:Conversation",
+      "@context": {
+        "body": "freshdesk:body",
+        "incoming": "freshdesk:incoming",
+        "private": "freshdesk:private",
+        "user": {
+          "@id": "freshdesk:user",
+          "@type": "@id"
+        },
+        "ticket": {
+          "@id": "freshdesk:ticket",
+          "@type": "@id"
+        },
+        "attachments": {
+          "@id": "freshdesk:attachments",
+          "@container": "@set"
+        },
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "SolutionArticle": {
+      "@id": "freshdesk:SolutionArticle",
+      "@context": {
+        "title": "schema:headline",
+        "description": "schema:articleBody",
+        "folder": {
+          "@id": "freshdesk:folder",
+          "@type": "@id"
+        },
+        "category": {
+          "@id": "freshdesk:category",
+          "@type": "@id"
+        },
+        "status": "freshdesk:publicationStatus",
+        "tags": "schema:keywords",
+        "hits": "schema:interactionCount",
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Product": {
+      "@id": "freshdesk:Product",
+      "@context": {
+        "name": "schema:name",
+        "description": "schema:description",
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    }
+  }
+}

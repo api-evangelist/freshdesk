@@ -1,0 +1,3970 @@
+openapi: 3.1.0
+info:
+  title: Freshdesk REST API
+  description: >-
+    The Freshdesk REST API (v2) provides programmatic access to helpdesk data
+    and operations within Freshdesk, a customer support platform by Freshworks.
+    It exposes endpoints for managing tickets, contacts, companies, agents,
+    groups, conversations, products, email configurations, SLA policies,
+    business hours, time entries, satisfaction ratings, solution categories,
+    solution folders, solution articles, and more. The API uses JSON for request
+    and response payloads, supports API key-based authentication, and follows
+    RESTful conventions for CRUD operations.
+  version: '2.0'
+  contact:
+    name: Freshdesk Support
+    url: https://support.freshdesk.com/
+  termsOfService: https://www.freshworks.com/terms/
+externalDocs:
+  description: Freshdesk API Documentation
+  url: https://developers.freshdesk.com/api/
+servers:
+  - url: https://{domain}.freshdesk.com/api/v2
+    description: Freshdesk Production Server
+    variables:
+      domain:
+        default: yourdomain
+        description: >-
+          Your Freshdesk subdomain, e.g. if your helpdesk URL is
+          acme.freshdesk.com, use acme.
+tags:
+  - name: Tickets
+    description: >-
+      Manage support tickets including creation, updates, bulk operations,
+      merging, and lifecycle management.
+  - name: Conversations
+    description: >-
+      Manage replies, notes, and conversation threads on tickets.
+  - name: Contacts
+    description: >-
+      Manage contacts (end users) who submit support tickets.
+  - name: Companies
+    description: >-
+      Manage companies (organizations) associated with contacts.
+  - name: Agents
+    description: >-
+      Manage support agents and their properties.
+  - name: Groups
+    description: >-
+      Manage agent groups for ticket assignment and routing.
+  - name: Roles
+    description: >-
+      Manage roles that define agent permissions.
+  - name: Products
+    description: >-
+      Manage products to categorize tickets by product line.
+  - name: Email Configs
+    description: >-
+      Manage email mailbox configurations for the helpdesk.
+  - name: SLA Policies
+    description: >-
+      Manage service level agreement policies for ticket response and
+      resolution times.
+  - name: Business Hours
+    description: >-
+      Manage business hour schedules used in SLA calculations.
+  - name: Time Entries
+    description: >-
+      Track time spent on tickets by agents.
+  - name: Satisfaction Ratings
+    description: >-
+      View customer satisfaction survey ratings on tickets.
+  - name: Solutions
+    description: >-
+      Manage knowledge base solution categories, folders, and articles.
+  - name: Search
+    description: >-
+      Search across tickets, contacts, and companies using query syntax.
+security:
+  - basicAuth: []
+paths:
+  /tickets:
+    get:
+      operationId: listTickets
+      summary: List all tickets
+      description: >-
+        Retrieves a paginated list of tickets from the helpdesk. By default,
+        only tickets that have not been deleted or marked as spam are returned.
+        Use filter query parameters to narrow results by status, requester,
+        agent, group, or updated date.
+      tags:
+        - Tickets
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/perPage'
+        - name: filter
+          in: query
+          description: >-
+            Pre-defined filter to apply. Options include new_and_my_open,
+            watching, spam, deleted.
+          schema:
+            type: string
+            enum:
+              - new_and_my_open
+              - watching
+              - spam
+              - deleted
+        - name: requester_id
+          in: query
+          description: >-
+            Filter tickets by requester ID.
+          schema:
+            type: integer
+            format: int64
+        - name: email
+          in: query
+          description: >-
+            Filter tickets by requester email address.
+          schema:
+            type: string
+            format: email
+        - name: updated_since
+          in: query
+          description: >-
+            Return tickets updated since the given date-time in UTC format.
+          schema:
+            type: string
+            format: date-time
+        - name: order_by
+          in: query
+          description: >-
+            Field to order results by.
+          schema:
+            type: string
+            enum:
+              - created_at
+              - due_by
+              - updated_at
+              - status
+            default: created_at
+        - name: order_type
+          in: query
+          description: >-
+            Sort direction for results.
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+            default: desc
+        - name: include
+          in: query
+          description: >-
+            Include additional information such as requester, stats, or
+            description.
+          schema:
+            type: string
+            enum:
+              - requester
+              - stats
+              - description
+      responses:
+        '200':
+          description: Successfully retrieved list of tickets.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ticket'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createTicket
+      summary: Create a ticket
+      description: >-
+        Creates a new support ticket. At minimum, a requester identifier
+        (email, phone, requester_id, or twitter_id) and a subject or
+        description must be provided.
+      tags:
+        - Tickets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketCreate'
+      responses:
+        '201':
+          description: Ticket created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tickets/{ticket_id}:
+    get:
+      operationId: getTicket
+      summary: View a ticket
+      description: >-
+        Retrieves the details of a specific ticket by its ID, including all
+        standard and custom fields.
+      tags:
+        - Tickets
+      parameters:
+        - $ref: '#/components/parameters/ticketId'
+        - name: include
+          in: query
+          description: >-
+            Include additional information in the response.
+          schema:
+            type: string
+            enum:
+              - conversations
+              - requester
+              - company
+              - stats
+      responses:
+        '200':
+          description: Successfully retrieved ticket details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateTicket
+      summary: Update a ticket
+      description: >-
+        Updates the properties of an existing ticket. Only the fields provided
+        in the request body will be updated.
+      tags:
+        - Tickets
+      parameters:
+        - $ref: '#/components/parameters/ticketId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketUpdate'
+      responses:
+        '200':
+          description: Ticket updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteTicket
+      summary: Delete a ticket
+      description: >-
+        Soft-deletes a ticket, moving it to the trash. The ticket can be
+        restored later using the restore endpoint.
+      tags:
+        - Tickets
+      parameters:
+        - $ref: '#/components/parameters/ticketId'
+      responses:
+        '204':
+          description: Ticket deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tickets/{ticket_id}/restore:
+    put:
+      operationId: restoreTicket
+      summary: Restore a deleted ticket
+      description: >-
+        Restores a previously soft-deleted ticket from the trash.
+      tags:
+        - Tickets
+      parameters:
+        - $ref: '#/components/parameters/ticketId'
+      responses:
+        '204':
+          description: Ticket restored successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tickets/outbound_email:
+    post:
+      operationId: createOutboundEmail
+      summary: Create an outbound email ticket
+      description: >-
+        Creates a new outbound email ticket, allowing agents to initiate
+        email conversations with customers.
+      tags:
+        - Tickets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketCreate'
+      responses:
+        '201':
+          description: Outbound email ticket created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tickets/{ticket_id}/conversations:
+    get:
+      operationId: listTicketConversations
+      summary: List conversations on a ticket
+      description: >-
+        Retrieves all conversations (replies and notes) associated with
+        the specified ticket.
+      tags:
+        - Conversations
+      parameters:
+        - $ref: '#/components/parameters/ticketId'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/perPage'
+      responses:
+        '200':
+          description: Successfully retrieved conversations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Conversation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tickets/{ticket_id}/reply:
+    post:
+      operationId: replyToTicket
+      summary: Reply to a ticket
+      description: >-
+        Adds a reply to the specified ticket. The reply is sent as an email
+        to the requester and any CC'd addresses.
+      tags:
+        - Conversations
+      parameters:
+        - $ref: '#/components/parameters/ticketId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplyCreate'
+      responses:
+        '201':
+          description: Reply created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tickets/{ticket_id}/notes:
+    post:
+      operationId: createNote
+      summary: Create a note on a ticket
+      description: >-
+        Adds an internal or public note to the specified ticket. Private
+        notes are visible only to agents.
+      tags:
+        - Conversations
+      parameters:
+        - $ref: '#/components/parameters/ticketId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteCreate'
+      responses:
+        '201':
+          description: Note created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tickets/{ticket_id}/forward:
+    post:
+      operationId: forwardTicket
+      summary: Forward a ticket
+      description: >-
+        Forwards the specified ticket to one or more email addresses.
+      tags:
+        - Conversations
+      parameters:
+        - $ref: '#/components/parameters/ticketId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - body
+                - to_emails
+              properties:
+                body:
+                  type: string
+                  description: >-
+                    Content of the forward message in HTML format.
+                to_emails:
+                  type: array
+                  items:
+                    type: string
+                    format: email
+                  description: >-
+                    Email addresses to forward the ticket to.
+      responses:
+        '201':
+          description: Ticket forwarded successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /conversations/{conversation_id}:
+    put:
+      operationId: updateConversation
+      summary: Update a conversation
+      description: >-
+        Updates the body of an existing conversation (reply or note).
+      tags:
+        - Conversations
+      parameters:
+        - $ref: '#/components/parameters/conversationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+                  description: >-
+                    Updated content of the conversation in HTML format.
+      responses:
+        '200':
+          description: Conversation updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteConversation
+      summary: Delete a conversation
+      description: >-
+        Deletes a conversation (note) from a ticket. Only notes can be
+        deleted; replies cannot be removed.
+      tags:
+        - Conversations
+      parameters:
+        - $ref: '#/components/parameters/conversationId'
+      responses:
+        '204':
+          description: Conversation deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tickets/{ticket_id}/time_entries:
+    get:
+      operationId: listTicketTimeEntries
+      summary: List time entries for a ticket
+      description: >-
+        Retrieves all time entries associated with the specified ticket.
+      tags:
+        - Time Entries
+      parameters:
+        - $ref: '#/components/parameters/ticketId'
+      responses:
+        '200':
+          description: Successfully retrieved time entries.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimeEntry'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: createTimeEntry
+      summary: Create a time entry
+      description: >-
+        Adds a new time entry to the specified ticket to track agent effort.
+      tags:
+        - Time Entries
+      parameters:
+        - $ref: '#/components/parameters/ticketId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeEntryCreate'
+      responses:
+        '201':
+          description: Time entry created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeEntry'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /time_entries:
+    get:
+      operationId: listAllTimeEntries
+      summary: List all time entries
+      description: >-
+        Retrieves all time entries across all tickets, with optional filters.
+      tags:
+        - Time Entries
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/perPage'
+      responses:
+        '200':
+          description: Successfully retrieved time entries.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimeEntry'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /time_entries/{time_entry_id}:
+    put:
+      operationId: updateTimeEntry
+      summary: Update a time entry
+      description: >-
+        Updates the properties of an existing time entry.
+      tags:
+        - Time Entries
+      parameters:
+        - $ref: '#/components/parameters/timeEntryId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeEntryCreate'
+      responses:
+        '200':
+          description: Time entry updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeEntry'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteTimeEntry
+      summary: Delete a time entry
+      description: >-
+        Deletes a time entry from a ticket.
+      tags:
+        - Time Entries
+      parameters:
+        - $ref: '#/components/parameters/timeEntryId'
+      responses:
+        '204':
+          description: Time entry deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /time_entries/{time_entry_id}/toggle_timer:
+    put:
+      operationId: toggleTimer
+      summary: Toggle a timer
+      description: >-
+        Starts or stops the timer on a time entry.
+      tags:
+        - Time Entries
+      parameters:
+        - $ref: '#/components/parameters/timeEntryId'
+      responses:
+        '200':
+          description: Timer toggled successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeEntry'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tickets/{ticket_id}/satisfaction_ratings:
+    post:
+      operationId: createSatisfactionRating
+      summary: Create a satisfaction rating
+      description: >-
+        Creates a satisfaction rating for the specified ticket.
+      tags:
+        - Satisfaction Ratings
+      parameters:
+        - $ref: '#/components/parameters/ticketId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SatisfactionRatingCreate'
+      responses:
+        '201':
+          description: Satisfaction rating created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SatisfactionRating'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /surveys/satisfaction_ratings:
+    get:
+      operationId: listSatisfactionRatings
+      summary: List all satisfaction ratings
+      description: >-
+        Retrieves all satisfaction ratings across tickets, with optional
+        filters for date range and satisfaction score.
+      tags:
+        - Satisfaction Ratings
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/perPage'
+        - name: created_since
+          in: query
+          description: >-
+            Return ratings created since the given date-time.
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Successfully retrieved satisfaction ratings.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SatisfactionRating'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tickets/{ticket_id}/watchers:
+    get:
+      operationId: listTicketWatchers
+      summary: List watchers on a ticket
+      description: >-
+        Retrieves the list of agents watching the specified ticket.
+      tags:
+        - Tickets
+      parameters:
+        - $ref: '#/components/parameters/ticketId'
+      responses:
+        '200':
+          description: Successfully retrieved watchers.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  watcher_ids:
+                    type: array
+                    items:
+                      type: integer
+                      format: int64
+                    description: >-
+                      List of agent IDs watching the ticket.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tickets/{ticket_id}/watch:
+    post:
+      operationId: watchTicket
+      summary: Watch a ticket
+      description: >-
+        Adds the authenticated agent as a watcher on the specified ticket.
+      tags:
+        - Tickets
+      parameters:
+        - $ref: '#/components/parameters/ticketId'
+      responses:
+        '204':
+          description: Successfully added as a watcher.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tickets/{ticket_id}/associated_tickets:
+    get:
+      operationId: listAssociatedTickets
+      summary: List associated tickets
+      description: >-
+        Retrieves tickets associated with the specified tracker ticket.
+      tags:
+        - Tickets
+      parameters:
+        - $ref: '#/components/parameters/ticketId'
+      responses:
+        '200':
+          description: Successfully retrieved associated tickets.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ticket'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tickets/merge:
+    put:
+      operationId: mergeTickets
+      summary: Merge tickets
+      description: >-
+        Merges one or more secondary tickets into a primary ticket. The
+        secondary tickets are closed and their conversations are added
+        to the primary ticket.
+      tags:
+        - Tickets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - primary_id
+                - ticket_ids
+              properties:
+                primary_id:
+                  type: integer
+                  format: int64
+                  description: >-
+                    ID of the primary ticket to merge into.
+                ticket_ids:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: >-
+                    IDs of secondary tickets to merge.
+      responses:
+        '200':
+          description: Tickets merged successfully.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tickets/bulk_update:
+    post:
+      operationId: bulkUpdateTickets
+      summary: Bulk update tickets
+      description: >-
+        Updates properties on multiple tickets at once.
+      tags:
+        - Tickets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - ids
+                - properties
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: >-
+                    IDs of tickets to update.
+                properties:
+                  type: object
+                  description: >-
+                    Key-value pairs of ticket properties to update.
+      responses:
+        '202':
+          description: Bulk update accepted for processing.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tickets/bulk_delete:
+    post:
+      operationId: bulkDeleteTickets
+      summary: Bulk delete tickets
+      description: >-
+        Soft-deletes multiple tickets at once, moving them to the trash.
+      tags:
+        - Tickets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - ids
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: >-
+                    IDs of tickets to delete.
+      responses:
+        '202':
+          description: Bulk delete accepted for processing.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /contacts:
+    get:
+      operationId: listContacts
+      summary: List all contacts
+      description: >-
+        Retrieves a paginated list of contacts. Contacts can be filtered
+        by email, phone, mobile, company, or state.
+      tags:
+        - Contacts
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/perPage'
+        - name: email
+          in: query
+          description: >-
+            Filter contacts by email address.
+          schema:
+            type: string
+            format: email
+        - name: phone
+          in: query
+          description: >-
+            Filter contacts by phone number.
+          schema:
+            type: string
+        - name: mobile
+          in: query
+          description: >-
+            Filter contacts by mobile number.
+          schema:
+            type: string
+        - name: company_id
+          in: query
+          description: >-
+            Filter contacts by company ID.
+          schema:
+            type: integer
+            format: int64
+        - name: state
+          in: query
+          description: >-
+            Filter contacts by state.
+          schema:
+            type: string
+            enum:
+              - blocked
+              - deleted
+              - unverified
+              - verified
+      responses:
+        '200':
+          description: Successfully retrieved list of contacts.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contact'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createContact
+      summary: Create a contact
+      description: >-
+        Creates a new contact in the helpdesk. At minimum, an email, phone,
+        mobile, or twitter_id must be provided.
+      tags:
+        - Contacts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactCreate'
+      responses:
+        '201':
+          description: Contact created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /contacts/{contact_id}:
+    get:
+      operationId: getContact
+      summary: View a contact
+      description: >-
+        Retrieves the details of a specific contact by ID.
+      tags:
+        - Contacts
+      parameters:
+        - $ref: '#/components/parameters/contactId'
+      responses:
+        '200':
+          description: Successfully retrieved contact details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateContact
+      summary: Update a contact
+      description: >-
+        Updates the properties of an existing contact.
+      tags:
+        - Contacts
+      parameters:
+        - $ref: '#/components/parameters/contactId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactCreate'
+      responses:
+        '200':
+          description: Contact updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteContact
+      summary: Delete a contact
+      description: >-
+        Soft-deletes a contact. The contact can be restored later.
+      tags:
+        - Contacts
+      parameters:
+        - $ref: '#/components/parameters/contactId'
+      responses:
+        '204':
+          description: Contact deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /contacts/{contact_id}/restore:
+    put:
+      operationId: restoreContact
+      summary: Restore a deleted contact
+      description: >-
+        Restores a previously soft-deleted contact.
+      tags:
+        - Contacts
+      parameters:
+        - $ref: '#/components/parameters/contactId'
+      responses:
+        '204':
+          description: Contact restored successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /contacts/merge:
+    post:
+      operationId: mergeContacts
+      summary: Merge contacts
+      description: >-
+        Merges secondary contacts into a primary contact. The secondary
+        contacts are deleted and their tickets are reassigned to the primary.
+      tags:
+        - Contacts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - primary_contact_id
+                - secondary_contact_ids
+              properties:
+                primary_contact_id:
+                  type: integer
+                  format: int64
+                  description: >-
+                    ID of the primary contact to merge into.
+                secondary_contact_ids:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: >-
+                    IDs of secondary contacts to merge.
+      responses:
+        '200':
+          description: Contacts merged successfully.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /contacts/export:
+    post:
+      operationId: exportContacts
+      summary: Export contacts
+      description: >-
+        Initiates an export of contacts and returns a job ID to check status.
+      tags:
+        - Contacts
+      responses:
+        '202':
+          description: Export job initiated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: >-
+                      Export job ID.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /contact_fields:
+    get:
+      operationId: listContactFields
+      summary: List all contact fields
+      description: >-
+        Retrieves all default and custom contact fields.
+      tags:
+        - Contacts
+      responses:
+        '200':
+          description: Successfully retrieved contact fields.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Field'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /companies:
+    get:
+      operationId: listCompanies
+      summary: List all companies
+      description: >-
+        Retrieves a paginated list of companies.
+      tags:
+        - Companies
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/perPage'
+      responses:
+        '200':
+          description: Successfully retrieved list of companies.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Company'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createCompany
+      summary: Create a company
+      description: >-
+        Creates a new company in the helpdesk.
+      tags:
+        - Companies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyCreate'
+      responses:
+        '201':
+          description: Company created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /companies/{company_id}:
+    get:
+      operationId: getCompany
+      summary: View a company
+      description: >-
+        Retrieves the details of a specific company by ID.
+      tags:
+        - Companies
+      parameters:
+        - $ref: '#/components/parameters/companyId'
+      responses:
+        '200':
+          description: Successfully retrieved company details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateCompany
+      summary: Update a company
+      description: >-
+        Updates the properties of an existing company.
+      tags:
+        - Companies
+      parameters:
+        - $ref: '#/components/parameters/companyId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyCreate'
+      responses:
+        '200':
+          description: Company updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteCompany
+      summary: Delete a company
+      description: >-
+        Deletes a company from the helpdesk.
+      tags:
+        - Companies
+      parameters:
+        - $ref: '#/components/parameters/companyId'
+      responses:
+        '204':
+          description: Company deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /company_fields:
+    get:
+      operationId: listCompanyFields
+      summary: List all company fields
+      description: >-
+        Retrieves all default and custom company fields.
+      tags:
+        - Companies
+      responses:
+        '200':
+          description: Successfully retrieved company fields.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Field'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /agents:
+    get:
+      operationId: listAgents
+      summary: List all agents
+      description: >-
+        Retrieves a paginated list of agents. Agents can be filtered
+        by email, phone, mobile, or state.
+      tags:
+        - Agents
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/perPage'
+        - name: email
+          in: query
+          description: >-
+            Filter agents by email address.
+          schema:
+            type: string
+            format: email
+        - name: phone
+          in: query
+          description: >-
+            Filter agents by phone number.
+          schema:
+            type: string
+        - name: mobile
+          in: query
+          description: >-
+            Filter agents by mobile number.
+          schema:
+            type: string
+        - name: state
+          in: query
+          description: >-
+            Filter agents by state.
+          schema:
+            type: string
+            enum:
+              - fulltime
+              - occasional
+      responses:
+        '200':
+          description: Successfully retrieved list of agents.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Agent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /agents/{agent_id}:
+    get:
+      operationId: getAgent
+      summary: View an agent
+      description: >-
+        Retrieves the details of a specific agent by ID.
+      tags:
+        - Agents
+      parameters:
+        - $ref: '#/components/parameters/agentId'
+      responses:
+        '200':
+          description: Successfully retrieved agent details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateAgent
+      summary: Update an agent
+      description: >-
+        Updates the properties of an existing agent.
+      tags:
+        - Agents
+      parameters:
+        - $ref: '#/components/parameters/agentId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentUpdate'
+      responses:
+        '200':
+          description: Agent updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteAgent
+      summary: Delete an agent
+      description: >-
+        Deletes an agent from the helpdesk. The agent's tickets will need
+        to be reassigned.
+      tags:
+        - Agents
+      parameters:
+        - $ref: '#/components/parameters/agentId'
+      responses:
+        '204':
+          description: Agent deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /groups:
+    get:
+      operationId: listGroups
+      summary: List all groups
+      description: >-
+        Retrieves a paginated list of agent groups.
+      tags:
+        - Groups
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/perPage'
+      responses:
+        '200':
+          description: Successfully retrieved list of groups.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createGroup
+      summary: Create a group
+      description: >-
+        Creates a new agent group in the helpdesk.
+      tags:
+        - Groups
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupCreate'
+      responses:
+        '201':
+          description: Group created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /groups/{group_id}:
+    get:
+      operationId: getGroup
+      summary: View a group
+      description: >-
+        Retrieves the details of a specific group by ID.
+      tags:
+        - Groups
+      parameters:
+        - $ref: '#/components/parameters/groupId'
+      responses:
+        '200':
+          description: Successfully retrieved group details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateGroup
+      summary: Update a group
+      description: >-
+        Updates the properties of an existing group.
+      tags:
+        - Groups
+      parameters:
+        - $ref: '#/components/parameters/groupId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupCreate'
+      responses:
+        '200':
+          description: Group updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteGroup
+      summary: Delete a group
+      description: >-
+        Deletes a group from the helpdesk.
+      tags:
+        - Groups
+      parameters:
+        - $ref: '#/components/parameters/groupId'
+      responses:
+        '204':
+          description: Group deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /roles:
+    get:
+      operationId: listRoles
+      summary: List all roles
+      description: >-
+        Retrieves a list of all roles defined in the helpdesk.
+      tags:
+        - Roles
+      responses:
+        '200':
+          description: Successfully retrieved list of roles.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Role'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /roles/{role_id}:
+    get:
+      operationId: getRole
+      summary: View a role
+      description: >-
+        Retrieves the details of a specific role by ID.
+      tags:
+        - Roles
+      parameters:
+        - $ref: '#/components/parameters/roleId'
+      responses:
+        '200':
+          description: Successfully retrieved role details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /products:
+    get:
+      operationId: listProducts
+      summary: List all products
+      description: >-
+        Retrieves a paginated list of products.
+      tags:
+        - Products
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/perPage'
+      responses:
+        '200':
+          description: Successfully retrieved list of products.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /products/{product_id}:
+    get:
+      operationId: getProduct
+      summary: View a product
+      description: >-
+        Retrieves the details of a specific product by ID.
+      tags:
+        - Products
+      parameters:
+        - $ref: '#/components/parameters/productId'
+      responses:
+        '200':
+          description: Successfully retrieved product details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateProduct
+      summary: Update a product
+      description: >-
+        Updates the properties of an existing product.
+      tags:
+        - Products
+      parameters:
+        - $ref: '#/components/parameters/productId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: >-
+                    Name of the product.
+                description:
+                  type: string
+                  description: >-
+                    Description of the product.
+      responses:
+        '200':
+          description: Product updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: createProduct
+      summary: Create a product
+      description: >-
+        Creates a new product in the helpdesk.
+      tags:
+        - Products
+      parameters:
+        - $ref: '#/components/parameters/productId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  description: >-
+                    Name of the product.
+                description:
+                  type: string
+                  description: >-
+                    Description of the product.
+      responses:
+        '201':
+          description: Product created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /email_configs:
+    get:
+      operationId: listEmailConfigs
+      summary: List all email configurations
+      description: >-
+        Retrieves a list of all email mailbox configurations.
+      tags:
+        - Email Configs
+      responses:
+        '200':
+          description: Successfully retrieved email configurations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmailConfig'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /email_configs/{email_config_id}:
+    get:
+      operationId: getEmailConfig
+      summary: View an email configuration
+      description: >-
+        Retrieves the details of a specific email configuration by ID.
+      tags:
+        - Email Configs
+      parameters:
+        - $ref: '#/components/parameters/emailConfigId'
+      responses:
+        '200':
+          description: Successfully retrieved email configuration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailConfig'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /sla_policies:
+    get:
+      operationId: listSLAPolicies
+      summary: List all SLA policies
+      description: >-
+        Retrieves a list of all SLA policies defined in the helpdesk.
+      tags:
+        - SLA Policies
+      responses:
+        '200':
+          description: Successfully retrieved SLA policies.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SLAPolicy'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /sla_policies/{sla_policy_id}:
+    get:
+      operationId: getSLAPolicy
+      summary: View an SLA policy
+      description: >-
+        Retrieves the details of a specific SLA policy by ID.
+      tags:
+        - SLA Policies
+      parameters:
+        - $ref: '#/components/parameters/slaPolicyId'
+      responses:
+        '200':
+          description: Successfully retrieved SLA policy.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SLAPolicy'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /business_hours:
+    get:
+      operationId: listBusinessHours
+      summary: List all business hours
+      description: >-
+        Retrieves a list of all business hour schedules.
+      tags:
+        - Business Hours
+      responses:
+        '200':
+          description: Successfully retrieved business hours.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BusinessHour'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /business_hours/{business_hour_id}:
+    get:
+      operationId: getBusinessHour
+      summary: View a business hour schedule
+      description: >-
+        Retrieves the details of a specific business hour schedule by ID.
+      tags:
+        - Business Hours
+      parameters:
+        - $ref: '#/components/parameters/businessHourId'
+      responses:
+        '200':
+          description: Successfully retrieved business hour schedule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessHour'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /ticket_fields:
+    get:
+      operationId: listTicketFields
+      summary: List all ticket fields
+      description: >-
+        Retrieves all default and custom ticket fields.
+      tags:
+        - Tickets
+      responses:
+        '200':
+          description: Successfully retrieved ticket fields.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Field'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /solutions/categories:
+    get:
+      operationId: listSolutionCategories
+      summary: List all solution categories
+      description: >-
+        Retrieves a list of all solution categories in the knowledge base.
+      tags:
+        - Solutions
+      responses:
+        '200':
+          description: Successfully retrieved solution categories.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SolutionCategory'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createSolutionCategory
+      summary: Create a solution category
+      description: >-
+        Creates a new solution category in the knowledge base.
+      tags:
+        - Solutions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  description: >-
+                    Name of the solution category.
+                description:
+                  type: string
+                  description: >-
+                    Description of the solution category.
+      responses:
+        '201':
+          description: Solution category created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionCategory'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /solutions/categories/{category_id}:
+    get:
+      operationId: getSolutionCategory
+      summary: View a solution category
+      description: >-
+        Retrieves the details of a specific solution category by ID.
+      tags:
+        - Solutions
+      parameters:
+        - $ref: '#/components/parameters/categoryId'
+      responses:
+        '200':
+          description: Successfully retrieved solution category.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionCategory'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateSolutionCategory
+      summary: Update a solution category
+      description: >-
+        Updates the properties of an existing solution category.
+      tags:
+        - Solutions
+      parameters:
+        - $ref: '#/components/parameters/categoryId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: >-
+                    Name of the solution category.
+                description:
+                  type: string
+                  description: >-
+                    Description of the solution category.
+      responses:
+        '200':
+          description: Solution category updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionCategory'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteSolutionCategory
+      summary: Delete a solution category
+      description: >-
+        Deletes a solution category and all its folders and articles.
+      tags:
+        - Solutions
+      parameters:
+        - $ref: '#/components/parameters/categoryId'
+      responses:
+        '204':
+          description: Solution category deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /solutions/categories/{category_id}/folders:
+    get:
+      operationId: listSolutionFolders
+      summary: List solution folders in a category
+      description: >-
+        Retrieves all solution folders within the specified category.
+      tags:
+        - Solutions
+      parameters:
+        - $ref: '#/components/parameters/categoryId'
+      responses:
+        '200':
+          description: Successfully retrieved solution folders.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SolutionFolder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: createSolutionFolder
+      summary: Create a solution folder
+      description: >-
+        Creates a new solution folder within the specified category.
+      tags:
+        - Solutions
+      parameters:
+        - $ref: '#/components/parameters/categoryId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - visibility
+              properties:
+                name:
+                  type: string
+                  description: >-
+                    Name of the solution folder.
+                description:
+                  type: string
+                  description: >-
+                    Description of the solution folder.
+                visibility:
+                  type: integer
+                  description: >-
+                    Visibility of the folder. 1 for all users, 2 for logged-in
+                    users, 3 for agents only, 4 for selected companies.
+                  enum:
+                    - 1
+                    - 2
+                    - 3
+                    - 4
+      responses:
+        '201':
+          description: Solution folder created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionFolder'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /solutions/folders/{folder_id}:
+    get:
+      operationId: getSolutionFolder
+      summary: View a solution folder
+      description: >-
+        Retrieves the details of a specific solution folder by ID.
+      tags:
+        - Solutions
+      parameters:
+        - $ref: '#/components/parameters/folderId'
+      responses:
+        '200':
+          description: Successfully retrieved solution folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionFolder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateSolutionFolder
+      summary: Update a solution folder
+      description: >-
+        Updates the properties of an existing solution folder.
+      tags:
+        - Solutions
+      parameters:
+        - $ref: '#/components/parameters/folderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: >-
+                    Name of the solution folder.
+                description:
+                  type: string
+                  description: >-
+                    Description of the solution folder.
+                visibility:
+                  type: integer
+                  description: >-
+                    Visibility of the folder.
+      responses:
+        '200':
+          description: Solution folder updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionFolder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteSolutionFolder
+      summary: Delete a solution folder
+      description: >-
+        Deletes a solution folder and all its articles.
+      tags:
+        - Solutions
+      parameters:
+        - $ref: '#/components/parameters/folderId'
+      responses:
+        '204':
+          description: Solution folder deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /solutions/folders/{folder_id}/articles:
+    get:
+      operationId: listSolutionArticles
+      summary: List solution articles in a folder
+      description: >-
+        Retrieves all solution articles within the specified folder.
+      tags:
+        - Solutions
+      parameters:
+        - $ref: '#/components/parameters/folderId'
+      responses:
+        '200':
+          description: Successfully retrieved solution articles.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SolutionArticle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: createSolutionArticle
+      summary: Create a solution article
+      description: >-
+        Creates a new solution article within the specified folder.
+      tags:
+        - Solutions
+      parameters:
+        - $ref: '#/components/parameters/folderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - description
+                - status
+              properties:
+                title:
+                  type: string
+                  description: >-
+                    Title of the solution article.
+                description:
+                  type: string
+                  description: >-
+                    Content of the solution article in HTML format.
+                status:
+                  type: integer
+                  description: >-
+                    Publication status. 1 for draft, 2 for published.
+                  enum:
+                    - 1
+                    - 2
+      responses:
+        '201':
+          description: Solution article created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionArticle'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /solutions/articles/{article_id}:
+    get:
+      operationId: getSolutionArticle
+      summary: View a solution article
+      description: >-
+        Retrieves the details of a specific solution article by ID.
+      tags:
+        - Solutions
+      parameters:
+        - $ref: '#/components/parameters/articleId'
+      responses:
+        '200':
+          description: Successfully retrieved solution article.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionArticle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateSolutionArticle
+      summary: Update a solution article
+      description: >-
+        Updates the properties of an existing solution article.
+      tags:
+        - Solutions
+      parameters:
+        - $ref: '#/components/parameters/articleId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: >-
+                    Title of the solution article.
+                description:
+                  type: string
+                  description: >-
+                    Content of the solution article in HTML format.
+                status:
+                  type: integer
+                  description: >-
+                    Publication status. 1 for draft, 2 for published.
+      responses:
+        '200':
+          description: Solution article updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionArticle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteSolutionArticle
+      summary: Delete a solution article
+      description: >-
+        Deletes a solution article from the knowledge base.
+      tags:
+        - Solutions
+      parameters:
+        - $ref: '#/components/parameters/articleId'
+      responses:
+        '204':
+          description: Solution article deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /search/tickets:
+    get:
+      operationId: searchTickets
+      summary: Search tickets
+      description: >-
+        Searches for tickets using Freshdesk query language. Supports filtering
+        by any ticket field using a SQL-like query syntax.
+      tags:
+        - Search
+      parameters:
+        - name: query
+          in: query
+          required: true
+          description: >-
+            Search query using Freshdesk query language, e.g.
+            "priority:1 AND status:2".
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved search results.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    description: >-
+                      Total number of matching tickets.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Ticket'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /search/contacts:
+    get:
+      operationId: searchContacts
+      summary: Search contacts
+      description: >-
+        Searches for contacts using Freshdesk query language.
+      tags:
+        - Search
+      parameters:
+        - name: query
+          in: query
+          required: true
+          description: >-
+            Search query using Freshdesk query language.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved search results.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    description: >-
+                      Total number of matching contacts.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Contact'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /search/companies:
+    get:
+      operationId: searchCompanies
+      summary: Search companies
+      description: >-
+        Searches for companies using Freshdesk query language.
+      tags:
+        - Search
+      parameters:
+        - name: query
+          in: query
+          required: true
+          description: >-
+            Search query using Freshdesk query language.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved search results.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    description: >-
+                      Total number of matching companies.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Company'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: >-
+        Freshdesk uses API key-based authentication. Pass your API key as the
+        username with any string (e.g. X) as the password using HTTP Basic
+        Authentication.
+  parameters:
+    page:
+      name: page
+      in: query
+      description: >-
+        Page number for paginated results.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    perPage:
+      name: per_page
+      in: query
+      description: >-
+        Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+    ticketId:
+      name: ticket_id
+      in: path
+      required: true
+      description: >-
+        Unique identifier of the ticket.
+      schema:
+        type: integer
+        format: int64
+    conversationId:
+      name: conversation_id
+      in: path
+      required: true
+      description: >-
+        Unique identifier of the conversation.
+      schema:
+        type: integer
+        format: int64
+    contactId:
+      name: contact_id
+      in: path
+      required: true
+      description: >-
+        Unique identifier of the contact.
+      schema:
+        type: integer
+        format: int64
+    companyId:
+      name: company_id
+      in: path
+      required: true
+      description: >-
+        Unique identifier of the company.
+      schema:
+        type: integer
+        format: int64
+    agentId:
+      name: agent_id
+      in: path
+      required: true
+      description: >-
+        Unique identifier of the agent.
+      schema:
+        type: integer
+        format: int64
+    groupId:
+      name: group_id
+      in: path
+      required: true
+      description: >-
+        Unique identifier of the group.
+      schema:
+        type: integer
+        format: int64
+    roleId:
+      name: role_id
+      in: path
+      required: true
+      description: >-
+        Unique identifier of the role.
+      schema:
+        type: integer
+        format: int64
+    productId:
+      name: product_id
+      in: path
+      required: true
+      description: >-
+        Unique identifier of the product.
+      schema:
+        type: integer
+        format: int64
+    emailConfigId:
+      name: email_config_id
+      in: path
+      required: true
+      description: >-
+        Unique identifier of the email configuration.
+      schema:
+        type: integer
+        format: int64
+    slaPolicyId:
+      name: sla_policy_id
+      in: path
+      required: true
+      description: >-
+        Unique identifier of the SLA policy.
+      schema:
+        type: integer
+        format: int64
+    businessHourId:
+      name: business_hour_id
+      in: path
+      required: true
+      description: >-
+        Unique identifier of the business hour schedule.
+      schema:
+        type: integer
+        format: int64
+    timeEntryId:
+      name: time_entry_id
+      in: path
+      required: true
+      description: >-
+        Unique identifier of the time entry.
+      schema:
+        type: integer
+        format: int64
+    categoryId:
+      name: category_id
+      in: path
+      required: true
+      description: >-
+        Unique identifier of the solution category.
+      schema:
+        type: integer
+        format: int64
+    folderId:
+      name: folder_id
+      in: path
+      required: true
+      description: >-
+        Unique identifier of the solution folder.
+      schema:
+        type: integer
+        format: int64
+    articleId:
+      name: article_id
+      in: path
+      required: true
+      description: >-
+        Unique identifier of the solution article.
+      schema:
+        type: integer
+        format: int64
+  schemas:
+    Ticket:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the ticket.
+        subject:
+          type: string
+          description: >-
+            Subject of the ticket.
+        description:
+          type: string
+          description: >-
+            HTML content of the ticket description.
+        description_text:
+          type: string
+          description: >-
+            Plain-text content of the ticket description.
+        status:
+          type: integer
+          description: >-
+            Status of the ticket. 2=Open, 3=Pending, 4=Resolved, 5=Closed.
+          enum:
+            - 2
+            - 3
+            - 4
+            - 5
+        priority:
+          type: integer
+          description: >-
+            Priority of the ticket. 1=Low, 2=Medium, 3=High, 4=Urgent.
+          enum:
+            - 1
+            - 2
+            - 3
+            - 4
+        source:
+          type: integer
+          description: >-
+            Channel through which the ticket was created. 1=Email, 2=Portal,
+            3=Phone, 7=Chat, 9=Feedback Widget, 10=Outbound Email.
+          enum:
+            - 1
+            - 2
+            - 3
+            - 7
+            - 9
+            - 10
+        type:
+          type: string
+          nullable: true
+          description: >-
+            Type of the ticket, e.g. Question, Incident, Problem, Feature
+            Request.
+        requester_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the contact who raised the ticket.
+        responder_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: >-
+            ID of the agent assigned to the ticket.
+        group_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: >-
+            ID of the group the ticket is assigned to.
+        product_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: >-
+            ID of the product associated with the ticket.
+        company_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: >-
+            ID of the company associated with the ticket.
+        email_config_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: >-
+            ID of the email configuration used for the ticket.
+        cc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: >-
+            Email addresses CC'd on the ticket.
+        fwd_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: >-
+            Email addresses the ticket was forwarded to.
+        reply_cc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: >-
+            Email addresses CC'd on replies.
+        to_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          nullable: true
+          description: >-
+            Email addresses in the To field.
+        tags:
+          type: array
+          items:
+            type: string
+          description: >-
+            Tags associated with the ticket.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: >-
+            Custom fields set on the ticket, keyed by field name with
+            cf_ prefix.
+        fr_escalated:
+          type: boolean
+          description: >-
+            Whether the ticket has been escalated for first response SLA
+            breach.
+        spam:
+          type: boolean
+          description: >-
+            Whether the ticket has been marked as spam.
+        is_escalated:
+          type: boolean
+          description: >-
+            Whether the ticket has been escalated.
+        due_by:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the ticket resolution is due.
+        fr_due_by:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the first response is due.
+        created_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the ticket was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the ticket was last updated.
+    TicketCreate:
+      type: object
+      properties:
+        subject:
+          type: string
+          description: >-
+            Subject of the ticket.
+        description:
+          type: string
+          description: >-
+            HTML content of the ticket description.
+        email:
+          type: string
+          format: email
+          description: >-
+            Email address of the requester. Required if requester_id,
+            phone, or twitter_id is not provided.
+        phone:
+          type: string
+          description: >-
+            Phone number of the requester.
+        requester_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the requester contact.
+        status:
+          type: integer
+          description: >-
+            Status of the ticket. 2=Open, 3=Pending, 4=Resolved, 5=Closed.
+          enum:
+            - 2
+            - 3
+            - 4
+            - 5
+        priority:
+          type: integer
+          description: >-
+            Priority of the ticket. 1=Low, 2=Medium, 3=High, 4=Urgent.
+          enum:
+            - 1
+            - 2
+            - 3
+            - 4
+        source:
+          type: integer
+          description: >-
+            Channel source of the ticket.
+        type:
+          type: string
+          description: >-
+            Type of the ticket.
+        responder_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the agent to assign.
+        group_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the group to assign.
+        product_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the associated product.
+        cc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: >-
+            Email addresses to CC.
+        tags:
+          type: array
+          items:
+            type: string
+          description: >-
+            Tags to add to the ticket.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: >-
+            Custom field values keyed by field name with cf_ prefix.
+    TicketUpdate:
+      type: object
+      properties:
+        subject:
+          type: string
+          description: >-
+            Subject of the ticket.
+        description:
+          type: string
+          description: >-
+            HTML content of the ticket description.
+        status:
+          type: integer
+          description: >-
+            Status of the ticket.
+          enum:
+            - 2
+            - 3
+            - 4
+            - 5
+        priority:
+          type: integer
+          description: >-
+            Priority of the ticket.
+          enum:
+            - 1
+            - 2
+            - 3
+            - 4
+        source:
+          type: integer
+          description: >-
+            Channel source of the ticket.
+        type:
+          type: string
+          description: >-
+            Type of the ticket.
+        responder_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the agent to assign.
+        group_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the group to assign.
+        product_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the associated product.
+        tags:
+          type: array
+          items:
+            type: string
+          description: >-
+            Tags to set on the ticket.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: >-
+            Custom field values to update.
+    Conversation:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the conversation.
+        body:
+          type: string
+          description: >-
+            Content of the conversation in HTML format.
+        body_text:
+          type: string
+          description: >-
+            Content of the conversation in plain text.
+        incoming:
+          type: boolean
+          description: >-
+            Whether the conversation was incoming (from a customer).
+        private:
+          type: boolean
+          description: >-
+            Whether the conversation is a private note.
+        user_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the user who created the conversation.
+        ticket_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the ticket the conversation belongs to.
+        support_email:
+          type: string
+          format: email
+          nullable: true
+          description: >-
+            Support email address used for the conversation.
+        to_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: >-
+            Email addresses in the To field.
+        cc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: >-
+            Email addresses CC'd on the conversation.
+        bcc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: >-
+            Email addresses BCC'd on the conversation.
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+          description: >-
+            Files attached to the conversation.
+        source:
+          type: integer
+          description: >-
+            Source of the conversation.
+        created_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the conversation was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the conversation was last updated.
+    ReplyCreate:
+      type: object
+      required:
+        - body
+      properties:
+        body:
+          type: string
+          description: >-
+            Content of the reply in HTML format.
+        cc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: >-
+            Email addresses to CC on the reply.
+        bcc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: >-
+            Email addresses to BCC on the reply.
+    NoteCreate:
+      type: object
+      required:
+        - body
+      properties:
+        body:
+          type: string
+          description: >-
+            Content of the note in HTML format.
+        private:
+          type: boolean
+          description: >-
+            Whether the note is private (visible only to agents). Default true.
+          default: true
+        incoming:
+          type: boolean
+          description: >-
+            Whether the note is incoming (from a customer).
+          default: false
+        notify_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: >-
+            Email addresses to notify about the note.
+    Contact:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the contact.
+        name:
+          type: string
+          description: >-
+            Full name of the contact.
+        email:
+          type: string
+          format: email
+          description: >-
+            Primary email address of the contact.
+        phone:
+          type: string
+          nullable: true
+          description: >-
+            Phone number of the contact.
+        mobile:
+          type: string
+          nullable: true
+          description: >-
+            Mobile phone number of the contact.
+        twitter_id:
+          type: string
+          nullable: true
+          description: >-
+            Twitter handle of the contact.
+        address:
+          type: string
+          nullable: true
+          description: >-
+            Physical address of the contact.
+        description:
+          type: string
+          nullable: true
+          description: >-
+            Description or notes about the contact.
+        job_title:
+          type: string
+          nullable: true
+          description: >-
+            Job title of the contact.
+        language:
+          type: string
+          nullable: true
+          description: >-
+            Language preference of the contact.
+        time_zone:
+          type: string
+          nullable: true
+          description: >-
+            Time zone of the contact.
+        company_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: >-
+            ID of the company the contact belongs to.
+        active:
+          type: boolean
+          description: >-
+            Whether the contact is active.
+        tags:
+          type: array
+          items:
+            type: string
+          description: >-
+            Tags associated with the contact.
+        other_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: >-
+            Additional email addresses for the contact.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: >-
+            Custom fields set on the contact.
+        created_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the contact was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the contact was last updated.
+    ContactCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: >-
+            Full name of the contact.
+        email:
+          type: string
+          format: email
+          description: >-
+            Email address of the contact.
+        phone:
+          type: string
+          description: >-
+            Phone number of the contact.
+        mobile:
+          type: string
+          description: >-
+            Mobile phone number of the contact.
+        twitter_id:
+          type: string
+          description: >-
+            Twitter handle of the contact.
+        address:
+          type: string
+          description: >-
+            Physical address of the contact.
+        description:
+          type: string
+          description: >-
+            Description or notes about the contact.
+        job_title:
+          type: string
+          description: >-
+            Job title of the contact.
+        language:
+          type: string
+          description: >-
+            Language preference of the contact.
+        time_zone:
+          type: string
+          description: >-
+            Time zone of the contact.
+        company_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the company to associate.
+        tags:
+          type: array
+          items:
+            type: string
+          description: >-
+            Tags to associate with the contact.
+        other_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: >-
+            Additional email addresses.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: >-
+            Custom field values.
+    Company:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the company.
+        name:
+          type: string
+          description: >-
+            Name of the company.
+        description:
+          type: string
+          nullable: true
+          description: >-
+            Description of the company.
+        note:
+          type: string
+          nullable: true
+          description: >-
+            Notes about the company.
+        domains:
+          type: array
+          items:
+            type: string
+          description: >-
+            Email domains associated with the company.
+        health_score:
+          type: string
+          nullable: true
+          description: >-
+            Health score of the company relationship.
+        account_tier:
+          type: string
+          nullable: true
+          description: >-
+            Account tier or plan level.
+        renewal_date:
+          type: string
+          format: date-time
+          nullable: true
+          description: >-
+            Date when the company's account renews.
+        industry:
+          type: string
+          nullable: true
+          description: >-
+            Industry the company belongs to.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: >-
+            Custom fields set on the company.
+        created_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the company was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the company was last updated.
+    CompanyCreate:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: >-
+            Name of the company.
+        description:
+          type: string
+          description: >-
+            Description of the company.
+        note:
+          type: string
+          description: >-
+            Notes about the company.
+        domains:
+          type: array
+          items:
+            type: string
+          description: >-
+            Email domains to associate.
+        health_score:
+          type: string
+          description: >-
+            Health score.
+        account_tier:
+          type: string
+          description: >-
+            Account tier.
+        renewal_date:
+          type: string
+          format: date-time
+          description: >-
+            Renewal date.
+        industry:
+          type: string
+          description: >-
+            Industry.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: >-
+            Custom field values.
+    Agent:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the agent.
+        available:
+          type: boolean
+          description: >-
+            Whether the agent is currently available.
+        occasional:
+          type: boolean
+          description: >-
+            Whether the agent is an occasional agent.
+        signature:
+          type: string
+          nullable: true
+          description: >-
+            Signature of the agent in HTML format.
+        ticket_scope:
+          type: integer
+          description: >-
+            Ticket scope of the agent. 1=Global, 2=Group, 3=Restricted.
+          enum:
+            - 1
+            - 2
+            - 3
+        group_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: >-
+            IDs of the groups the agent belongs to.
+        role_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: >-
+            IDs of the roles assigned to the agent.
+        contact:
+          $ref: '#/components/schemas/Contact'
+        type:
+          type: string
+          description: >-
+            Type of the agent (e.g., support_agent).
+        created_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the agent was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the agent was last updated.
+    AgentUpdate:
+      type: object
+      properties:
+        occasional:
+          type: boolean
+          description: >-
+            Whether the agent is occasional.
+        signature:
+          type: string
+          description: >-
+            Agent signature in HTML.
+        ticket_scope:
+          type: integer
+          description: >-
+            Ticket scope.
+        group_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: >-
+            Groups to assign.
+        role_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: >-
+            Roles to assign.
+    Group:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the group.
+        name:
+          type: string
+          description: >-
+            Name of the group.
+        description:
+          type: string
+          nullable: true
+          description: >-
+            Description of the group.
+        escalate_to:
+          type: integer
+          format: int64
+          nullable: true
+          description: >-
+            ID of the agent to escalate to.
+        unassigned_for:
+          type: string
+          nullable: true
+          description: >-
+            Duration after which unassigned tickets are escalated.
+        business_hour_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: >-
+            ID of the associated business hour schedule.
+        agent_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: >-
+            IDs of agents in the group.
+        auto_ticket_assign:
+          type: boolean
+          description: >-
+            Whether tickets are auto-assigned within the group.
+        created_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the group was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the group was last updated.
+    GroupCreate:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: >-
+            Name of the group.
+        description:
+          type: string
+          description: >-
+            Description of the group.
+        escalate_to:
+          type: integer
+          format: int64
+          description: >-
+            Agent ID to escalate to.
+        unassigned_for:
+          type: string
+          description: >-
+            Duration for escalation.
+        agent_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: >-
+            Agent IDs to include.
+        auto_ticket_assign:
+          type: boolean
+          description: >-
+            Enable auto-assignment.
+    Role:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the role.
+        name:
+          type: string
+          description: >-
+            Name of the role.
+        description:
+          type: string
+          nullable: true
+          description: >-
+            Description of the role.
+        default:
+          type: boolean
+          description: >-
+            Whether this is a default system role.
+        created_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the role was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the role was last updated.
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the product.
+        name:
+          type: string
+          description: >-
+            Name of the product.
+        description:
+          type: string
+          nullable: true
+          description: >-
+            Description of the product.
+        created_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the product was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the product was last updated.
+    EmailConfig:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the email configuration.
+        name:
+          type: string
+          description: >-
+            Display name of the email configuration.
+        reply_email:
+          type: string
+          format: email
+          description: >-
+            Reply-to email address.
+        support_email:
+          type: string
+          format: email
+          description: >-
+            Support email address.
+        product_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: >-
+            ID of the associated product.
+        primary_role:
+          type: boolean
+          description: >-
+            Whether this is the primary email configuration.
+        to_email:
+          type: string
+          format: email
+          description: >-
+            Incoming email address.
+        active:
+          type: boolean
+          description: >-
+            Whether the email configuration is active.
+        created_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the email configuration was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the email configuration was last updated.
+    SLAPolicy:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the SLA policy.
+        name:
+          type: string
+          description: >-
+            Name of the SLA policy.
+        description:
+          type: string
+          nullable: true
+          description: >-
+            Description of the SLA policy.
+        is_default:
+          type: boolean
+          description: >-
+            Whether this is the default SLA policy.
+        active:
+          type: boolean
+          description: >-
+            Whether the SLA policy is active.
+        sla_target:
+          type: object
+          additionalProperties: true
+          description: >-
+            SLA target configuration with response and resolution times
+            for each priority level.
+        applicable_to:
+          type: object
+          additionalProperties: true
+          description: >-
+            Conditions that determine which tickets this SLA applies to.
+        escalation:
+          type: object
+          additionalProperties: true
+          description: >-
+            Escalation configuration for SLA breaches.
+        created_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the SLA policy was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the SLA policy was last updated.
+    BusinessHour:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the business hour schedule.
+        name:
+          type: string
+          description: >-
+            Name of the business hour schedule.
+        description:
+          type: string
+          nullable: true
+          description: >-
+            Description of the business hour schedule.
+        is_default:
+          type: boolean
+          description: >-
+            Whether this is the default business hour schedule.
+        time_zone:
+          type: string
+          description: >-
+            Time zone of the business hours, e.g. America/New_York.
+        business_hours:
+          type: object
+          additionalProperties: true
+          description: >-
+            Day-by-day business hour configuration with start and end times.
+        created_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the schedule was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the schedule was last updated.
+    TimeEntry:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the time entry.
+        agent_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the agent who logged the time.
+        ticket_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the ticket the time entry is for.
+        billable:
+          type: boolean
+          description: >-
+            Whether the time entry is billable.
+        note:
+          type: string
+          nullable: true
+          description: >-
+            Notes about the time entry.
+        time_spent:
+          type: string
+          description: >-
+            Time spent in hh:mm format.
+        timer_running:
+          type: boolean
+          description: >-
+            Whether a timer is currently running on this entry.
+        executed_at:
+          type: string
+          format: date-time
+          description: >-
+            Date when the work was performed.
+        start_time:
+          type: string
+          format: date-time
+          nullable: true
+          description: >-
+            Start time of the timer if running.
+        created_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the time entry was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the time entry was last updated.
+    TimeEntryCreate:
+      type: object
+      properties:
+        agent_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the agent who performed the work.
+        billable:
+          type: boolean
+          description: >-
+            Whether the time entry is billable.
+        note:
+          type: string
+          description: >-
+            Notes about the work performed.
+        time_spent:
+          type: string
+          description: >-
+            Time spent in hh:mm format.
+        executed_at:
+          type: string
+          format: date-time
+          description: >-
+            Date when the work was performed.
+    SatisfactionRating:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the satisfaction rating.
+        survey_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the associated survey.
+        ticket_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the rated ticket.
+        user_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the user who provided the rating.
+        agent_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the agent on the ticket.
+        group_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: >-
+            ID of the group on the ticket.
+        rating:
+          type: integer
+          description: >-
+            Satisfaction rating value.
+        feedback:
+          type: string
+          nullable: true
+          description: >-
+            Written feedback from the customer.
+        created_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the rating was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the rating was last updated.
+    SatisfactionRatingCreate:
+      type: object
+      required:
+        - rating
+      properties:
+        rating:
+          type: integer
+          description: >-
+            Satisfaction rating value.
+        feedback:
+          type: string
+          description: >-
+            Written feedback from the customer.
+    SolutionCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the solution category.
+        name:
+          type: string
+          description: >-
+            Name of the solution category.
+        description:
+          type: string
+          nullable: true
+          description: >-
+            Description of the solution category.
+        created_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the category was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the category was last updated.
+    SolutionFolder:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the solution folder.
+        name:
+          type: string
+          description: >-
+            Name of the solution folder.
+        description:
+          type: string
+          nullable: true
+          description: >-
+            Description of the solution folder.
+        category_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the parent category.
+        visibility:
+          type: integer
+          description: >-
+            Visibility setting. 1=All users, 2=Logged-in users, 3=Agents
+            only, 4=Selected companies.
+          enum:
+            - 1
+            - 2
+            - 3
+            - 4
+        articles_count:
+          type: integer
+          description: >-
+            Number of articles in the folder.
+        created_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the folder was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the folder was last updated.
+    SolutionArticle:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the solution article.
+        title:
+          type: string
+          description: >-
+            Title of the article.
+        description:
+          type: string
+          description: >-
+            Content of the article in HTML format.
+        description_text:
+          type: string
+          description: >-
+            Content of the article in plain text.
+        folder_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the parent folder.
+        category_id:
+          type: integer
+          format: int64
+          description: >-
+            ID of the parent category.
+        status:
+          type: integer
+          description: >-
+            Publication status. 1=Draft, 2=Published.
+          enum:
+            - 1
+            - 2
+        thumbs_up:
+          type: integer
+          description: >-
+            Number of positive votes.
+        thumbs_down:
+          type: integer
+          description: >-
+            Number of negative votes.
+        hits:
+          type: integer
+          description: >-
+            Number of views.
+        tags:
+          type: array
+          items:
+            type: string
+          description: >-
+            Tags associated with the article.
+        created_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the article was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the article was last updated.
+    Field:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the field.
+        name:
+          type: string
+          description: >-
+            Internal name of the field.
+        label:
+          type: string
+          description: >-
+            Display label of the field.
+        description:
+          type: string
+          nullable: true
+          description: >-
+            Description of the field.
+        type:
+          type: string
+          description: >-
+            Data type of the field.
+        default:
+          type: boolean
+          description: >-
+            Whether this is a default system field.
+        required_for_closure:
+          type: boolean
+          description: >-
+            Whether this field must be filled before closing a ticket.
+        required_for_agents:
+          type: boolean
+          description: >-
+            Whether this field is required when agents create tickets.
+        required_for_customers:
+          type: boolean
+          description: >-
+            Whether this field is required when customers create tickets.
+        choices:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: >-
+            Available choices for dropdown fields.
+        created_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the field was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the field was last updated.
+    Attachment:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: >-
+            Unique identifier of the attachment.
+        name:
+          type: string
+          description: >-
+            File name of the attachment.
+        content_type:
+          type: string
+          description: >-
+            MIME type of the attachment.
+        size:
+          type: integer
+          description: >-
+            File size in bytes.
+        attachment_url:
+          type: string
+          format: uri
+          description: >-
+            URL to download the attachment.
+        created_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the attachment was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp when the attachment was last updated.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: >-
+            Human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: >-
+                  Field that caused the error.
+              message:
+                type: string
+                description: >-
+                  Error message for the field.
+              code:
+                type: string
+                description: >-
+                  Error code.
+  responses:
+    BadRequest:
+      description: >-
+        The request is invalid or malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: >-
+        Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: >-
+        The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

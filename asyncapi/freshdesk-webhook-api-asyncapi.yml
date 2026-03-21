@@ -1,0 +1,276 @@
+asyncapi: 2.6.0
+info:
+  title: Freshdesk Webhook Events
+  description: >-
+    The Freshdesk Webhook API enables real-time communication between Freshdesk
+    and external systems by sending HTTP POST requests when specific events occur
+    within the helpdesk. Webhooks can be triggered by ticket creation, updates,
+    status changes, agent assignments, and other support events through
+    automation rules. This allows developers to build event-driven integrations
+    without polling the REST API, useful for synchronizing Freshdesk data with
+    CRM systems, triggering notifications in messaging platforms, or updating
+    external dashboards in real time.
+  version: '2.0'
+  contact:
+    name: Freshdesk Support
+    url: https://support.freshdesk.com/
+  license:
+    name: Proprietary
+  externalDocs:
+    description: Freshdesk Webhook Documentation
+    url: https://support.freshdesk.com/support/solutions/articles/132589-using-webhooks-in-automation-rules
+servers:
+  external:
+    url: '{webhookUrl}'
+    protocol: https
+    description: >-
+      Your external webhook endpoint that receives HTTP POST requests from
+      Freshdesk automation rules.
+    variables:
+      webhookUrl:
+        description: >-
+          The URL of your webhook endpoint configured in the Freshdesk
+          automation rule.
+    security:
+      - httpBasic: []
+channels:
+  /webhook:
+    description: >-
+      Webhook endpoint that receives event payloads from Freshdesk automation
+      rules. Freshdesk sends JSON-encoded HTTP POST requests to this endpoint
+      when the configured automation rule conditions are met.
+    publish:
+      operationId: receiveWebhookEvent
+      summary: Receive a webhook event from Freshdesk
+      description: >-
+        Freshdesk publishes event payloads to your configured webhook URL when
+        automation rule conditions are met. Events include ticket creation,
+        ticket updates, status changes, priority changes, agent assignments,
+        and other helpdesk activities.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/TicketCreated'
+          - $ref: '#/components/messages/TicketUpdated'
+          - $ref: '#/components/messages/TicketDeleted'
+          - $ref: '#/components/messages/NoteAdded'
+          - $ref: '#/components/messages/ReplyReceived'
+components:
+  securitySchemes:
+    httpBasic:
+      type: http
+      scheme: basic
+      description: >-
+        Freshdesk can send webhooks with HTTP Basic authentication credentials.
+        Configure the username and password in your automation rule webhook
+        action.
+  messages:
+    TicketCreated:
+      name: ticketCreated
+      title: Ticket Created
+      summary: >-
+        Fired when a new ticket is created in Freshdesk.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/WebhookPayload'
+    TicketUpdated:
+      name: ticketUpdated
+      title: Ticket Updated
+      summary: >-
+        Fired when a ticket is updated, including status changes, priority
+        changes, agent reassignments, and field modifications.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/WebhookPayload'
+    TicketDeleted:
+      name: ticketDeleted
+      title: Ticket Deleted
+      summary: >-
+        Fired when a ticket is deleted from the helpdesk.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/WebhookPayload'
+    NoteAdded:
+      name: noteAdded
+      title: Note Added
+      summary: >-
+        Fired when a note is added to a ticket.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/WebhookPayload'
+    ReplyReceived:
+      name: replyReceived
+      title: Reply Received
+      summary: >-
+        Fired when a reply is received on a ticket.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/WebhookPayload'
+  schemas:
+    WebhookPayload:
+      type: object
+      description: >-
+        The webhook payload sent by Freshdesk automation rules. The structure
+        depends on whether Simple or Advanced content mode is selected in the
+        automation rule. In Simple mode, Freshdesk sends a predefined set of
+        ticket fields. In Advanced mode, you can customize the JSON payload
+        using placeholders.
+      properties:
+        freshdesk_webhook:
+          type: object
+          description: >-
+            Container object for the webhook data. Present when using the
+            Simple content format.
+          properties:
+            ticket_id:
+              type: integer
+              format: int64
+              description: >-
+                Unique identifier of the ticket that triggered the event.
+            ticket_url:
+              type: string
+              format: uri
+              description: >-
+                URL to view the ticket in the Freshdesk portal.
+            ticket_subject:
+              type: string
+              description: >-
+                Subject line of the ticket.
+            ticket_description:
+              type: string
+              description: >-
+                Description or body of the ticket in text format.
+            ticket_status:
+              type: string
+              description: >-
+                Current status of the ticket, e.g. Open, Pending, Resolved,
+                Closed.
+            ticket_priority:
+              type: string
+              description: >-
+                Current priority of the ticket, e.g. Low, Medium, High, Urgent.
+            ticket_source:
+              type: string
+              description: >-
+                Channel through which the ticket was created, e.g. Email,
+                Portal, Phone, Chat.
+            ticket_type:
+              type: string
+              nullable: true
+              description: >-
+                Type of the ticket, e.g. Question, Incident, Problem.
+            ticket_due_by_time:
+              type: string
+              format: date-time
+              description: >-
+                Timestamp when the ticket resolution is due.
+            ticket_tags:
+              type: string
+              description: >-
+                Comma-separated list of tags on the ticket.
+            ticket_requester_name:
+              type: string
+              description: >-
+                Name of the contact who raised the ticket.
+            ticket_requester_email:
+              type: string
+              format: email
+              description: >-
+                Email of the contact who raised the ticket.
+            ticket_requester_phone:
+              type: string
+              nullable: true
+              description: >-
+                Phone number of the requester.
+            ticket_agent_name:
+              type: string
+              nullable: true
+              description: >-
+                Name of the agent assigned to the ticket.
+            ticket_agent_email:
+              type: string
+              format: email
+              nullable: true
+              description: >-
+                Email of the agent assigned to the ticket.
+            ticket_group_name:
+              type: string
+              nullable: true
+              description: >-
+                Name of the group the ticket is assigned to.
+            ticket_company_name:
+              type: string
+              nullable: true
+              description: >-
+                Name of the company associated with the ticket.
+            ticket_product_name:
+              type: string
+              nullable: true
+              description: >-
+                Name of the product associated with the ticket.
+            ticket_latest_public_comment:
+              type: string
+              nullable: true
+              description: >-
+                The most recent public reply or comment on the ticket.
+            ticket_created_at:
+              type: string
+              format: date-time
+              description: >-
+                Timestamp when the ticket was created.
+            ticket_updated_at:
+              type: string
+              format: date-time
+              description: >-
+                Timestamp when the ticket was last updated.
+    ExternalEventPayload:
+      type: object
+      description: >-
+        Payload structure used by the Freshdesk App SDK external events feature.
+        When an external product sends webhook data to the app framework target
+        URL, this structure wraps the event data and passes it to the serverless
+        app callback.
+      properties:
+        account_id:
+          type: string
+          description: >-
+            Identifier of the Freshdesk account, auto-generated when the
+            account is configured.
+        domain:
+          type: string
+          description: >-
+            Domain name for the Freshdesk account, e.g. acme.freshdesk.com.
+        event:
+          type: string
+          description: >-
+            Name of the event that triggered the webhook.
+        timestamp:
+          type: integer
+          format: int64
+          description: >-
+            When the external event occurred, in Unix epoch format.
+        region:
+          type: string
+          description: >-
+            Data center region of the Freshdesk account.
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+          description: >-
+            HTTP headers associated with the incoming webhook request.
+        data:
+          type: object
+          additionalProperties: true
+          description: >-
+            Event-specific data passed by the external product as key-value
+            pairs.
+        iparams:
+          type: object
+          additionalProperties: true
+          description: >-
+            Installation parameters configured for the app.
+        app_settings:
+          type: object
+          additionalProperties: true
+          description: >-
+            Application settings configured for the Freshdesk account.
