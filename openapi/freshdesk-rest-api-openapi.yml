@@ -28,53 +28,53 @@ servers:
           Your Freshdesk subdomain, e.g. if your helpdesk URL is
           acme.freshdesk.com, use acme.
 tags:
-  - name: Tickets
-    description: >-
-      Manage support tickets including creation, updates, bulk operations,
-      merging, and lifecycle management.
-  - name: Conversations
-    description: >-
-      Manage replies, notes, and conversation threads on tickets.
-  - name: Contacts
-    description: >-
-      Manage contacts (end users) who submit support tickets.
-  - name: Companies
-    description: >-
-      Manage companies (organizations) associated with contacts.
   - name: Agents
     description: >-
       Manage support agents and their properties.
-  - name: Groups
+  - name: Business Hours
     description: >-
-      Manage agent groups for ticket assignment and routing.
-  - name: Roles
+      Manage business hour schedules used in SLA calculations.
+  - name: Companies
     description: >-
-      Manage roles that define agent permissions.
-  - name: Products
+      Manage companies (organizations) associated with contacts.
+  - name: Contacts
     description: >-
-      Manage products to categorize tickets by product line.
+      Manage contacts (end users) who submit support tickets.
+  - name: Conversations
+    description: >-
+      Manage replies, notes, and conversation threads on tickets.
   - name: Email Configs
     description: >-
       Manage email mailbox configurations for the helpdesk.
+  - name: Groups
+    description: >-
+      Manage agent groups for ticket assignment and routing.
+  - name: Products
+    description: >-
+      Manage products to categorize tickets by product line.
+  - name: Roles
+    description: >-
+      Manage roles that define agent permissions.
+  - name: Satisfaction Ratings
+    description: >-
+      View customer satisfaction survey ratings on tickets.
+  - name: Search
+    description: >-
+      Search across tickets, contacts, and companies using query syntax.
   - name: SLA Policies
     description: >-
       Manage service level agreement policies for ticket response and
       resolution times.
-  - name: Business Hours
-    description: >-
-      Manage business hour schedules used in SLA calculations.
-  - name: Time Entries
-    description: >-
-      Track time spent on tickets by agents.
-  - name: Satisfaction Ratings
-    description: >-
-      View customer satisfaction survey ratings on tickets.
   - name: Solutions
     description: >-
       Manage knowledge base solution categories, folders, and articles.
-  - name: Search
+  - name: Tickets
     description: >-
-      Search across tickets, contacts, and companies using query syntax.
+      Manage support tickets including creation, updates, bulk operations,
+      merging, and lifecycle management.
+  - name: Time Entries
+    description: >-
+      Track time spent on tickets by agents.
 security:
   - basicAuth: []
 paths:

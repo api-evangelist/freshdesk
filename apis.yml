@@ -1,18 +1,16 @@
 aid: freshdesk
-url: 
-  https://raw.githubusercontent.com/api-evangelist/freshdesk/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/freshdesk/refs/heads/main/apis.yml
 apis:
   - aid: freshdesk:rest-api
     name: Freshdesk REST API
     tags:
+      - Agents
+      - Companies
+      - Contacts
       - Customer Support
       - Helpdesk
       - Tickets
-      - Contacts
-      - Agents
-      - Companies
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://yourdomain.freshdesk.com/api/v2
     humanURL: https://developers.freshdesk.com/api/
     properties:
@@ -30,13 +28,12 @@ apis:
   - aid: freshdesk:webhook-api
     name: Freshdesk Webhook API
     tags:
-      - Webhooks
+      - Automation
+      - Customer Support
       - Events
       - Notifications
-      - Customer Support
-      - Automation
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Webhooks
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://support.freshdesk.com/support/solutions/folders/272646
     properties:
@@ -53,20 +50,18 @@ apis:
   - aid: freshdesk:app-sdk
     name: Freshdesk App SDK
     tags:
-      - SDK
       - Apps
-      - Marketplace
       - Extensions
+      - Marketplace
       - Plugins
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - SDK
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://developers.freshdesk.com/
     properties:
       - url: https://developers.freshdesk.com/
         type: Documentation
-      - url: 
-          https://developers.freshworks.com/docs/app-sdk/v3.0/support_ticket/rest-apis/
+      - url: https://developers.freshworks.com/docs/app-sdk/v3.0/support_ticket/rest-apis/
         type: Documentation
     description: >-
       The Freshdesk App SDK allows developers to build custom applications that extend
