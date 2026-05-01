@@ -16,7 +16,7 @@ Freshdesk is a cloud-based customer support platform by Freshworks that helps bu
 ## Timestamps
 
 - **Created:** 2026-03-20
-- **Modified:** 2026-03-20
+- **Modified:** 2026-04-28
 
 ## APIs
 
