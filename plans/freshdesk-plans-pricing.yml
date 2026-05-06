@@ -4,151 +4,149 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: freshdesk
 providerId: freshdesk
 created: '2026-05-04'
-modified: '2026-05-04'
-tags: []
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+modified: '2026-05-05'
+reconciled: true
+tags:
+  - Customer Support
+  - Helpdesk
+  - SaaS
+  - Ticketing
+description: Freshdesk uses tiered per-agent SaaS subscriptions billed annually (per-agent/month
+  list price). A free plan covers 1-2 agents for 6 months. Freddy AI Agent sessions are sold as
+  add-on usage (50 sessions / $49 per 100 additional). API rate limits scale with the paid plan.
+sources:
+  - https://www.freshworks.com/freshdesk/pricing/
+  - https://developers.freshdesk.com/api/
 plans:
   - id: freshdesk-free
     name: Free
     type: freemium
-    description: Free entry tier for the freshdesk API surface. Intended for evaluation, prototyping,
-      and low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
+    description: Free plan for 1-2 agents for 6 months; essential ticketing, knowledge base,
+      reports.
     entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
+      - label: Per-agent monthly fee
+        name: agent_seat
+        type: subscription
+        metric: seat
+        limit: 2
         timeFrame: month
         geo: global
-        domains:
-          - https://yourdomain.freshdesk.com/api/v2
-          - https://api.example.com
         unit: 1
         price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://yourdomain.freshdesk.com/api/v2
-          - https://api.example.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
+        userMultiplied: true
     elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: Freshdesk REST API
-      - name: Freshdesk Webhook API
-      - name: Freshdesk App SDK
-  - id: freshdesk-pro
-    name: Professional
-    type: paid
-    description: Production tier for freshdesk. Provides higher quotas, priority support, and access to
-      the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
+      - name: Essential ticketing
+      - name: Knowledge base
+      - name: Reports
+      - name: 1-2 agents for 6 months
+  - id: freshdesk-growth
+    name: Growth
+    type: subscription
+    description: Ticketing, customer portal, reports; ideal for small businesses. $19/agent/month
+      billed annually.
     entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://yourdomain.freshdesk.com/api/v2
-          - https://api.example.com
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://yourdomain.freshdesk.com/api/v2
-          - https://api.example.com
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
+      - label: Per-agent monthly fee (annual billing)
+        name: agent_seat
+        type: subscription
+        metric: seat
         limit: -1
         timeFrame: month
         geo: global
-        domains:
-          - https://yourdomain.freshdesk.com/api/v2
-          - https://api.example.com
-        unit: 1000
-        price: TBD
+        unit: 1
+        price: '19.00'
+        userMultiplied: true
+    elements:
+      - name: Ticketing
+      - name: Shared inbox
+      - name: Threads and tasks
+      - name: Customer portal
+      - name: Multilingual support
+      - name: 5,000 collaborators included
+  - id: freshdesk-pro
+    name: Pro
+    type: subscription
+    description: Growth features plus customized support portals, custom objects, advanced
+      ticketing, custom reporting, routing. $55/agent/month billed annually. Includes Freddy AI
+      Copilot and Freddy AI Insights.
+    entries:
+      - label: Per-agent monthly fee (annual billing)
+        name: agent_seat
+        type: subscription
+        metric: seat
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '55.00'
+        userMultiplied: true
+      - label: Freddy AI Agent included sessions
+        name: freddy_sessions_included
+        type: quota
+        metric: session
+        limit: 500
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: included
         userMultiplied: false
     elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Freshdesk REST API
-      - name: Freshdesk Webhook API
-      - name: Freshdesk App SDK
+      - name: All Growth features
+      - name: Customized support portals
+      - name: Custom objects
+      - name: Advanced ticketing
+      - name: Custom reporting
+      - name: Routing mechanisms
+      - name: Freddy AI Copilot
+      - name: Freddy AI Insights
   - id: freshdesk-enterprise
     name: Enterprise
-    type: enterprise
-    description: Custom-negotiated tier for freshdesk. Includes dedicated capacity, contractual SLAs,
-      security review, data residency options, and named technical account management.
+    type: subscription
+    description: Pro features plus audit logs, approval workflows, skills-based assignments,
+      additional security. $89/agent/month billed annually.
     entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
+      - label: Per-agent monthly fee (annual billing)
+        name: agent_seat
+        type: subscription
+        metric: seat
         limit: -1
         timeFrame: month
-        geo: configurable
-        domains:
-          - https://yourdomain.freshdesk.com/api/v2
-          - https://api.example.com
+        geo: global
         unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains:
-          - https://yourdomain.freshdesk.com/api/v2
-          - https://api.example.com
+        price: '89.00'
+        userMultiplied: true
+      - label: Freddy AI Agent included sessions
+        name: freddy_sessions_included
+        type: quota
+        metric: session
+        limit: 500
+        timeFrame: month
+        geo: global
         unit: 1
-        price: custom
+        price: included
         userMultiplied: false
     elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Freshdesk REST API
-      - name: Freshdesk Webhook API
-      - name: Freshdesk App SDK
-maintainers: []
+      - name: All Pro features
+      - name: Audit logs
+      - name: Approval workflows
+      - name: Skills-based assignments
+      - name: Additional security features
+  - id: freshdesk-freddy-addon
+    name: Freddy AI Agent — Add-on Sessions
+    type: usage-based
+    description: Additional Freddy AI Agent sessions beyond the 500 included on Pro/Enterprise.
+    entries:
+      - label: Additional sessions
+        name: freddy_sessions_overage
+        type: metered
+        metric: session
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 100
+        price: '49.00'
+        userMultiplied: false
+    elements:
+      - name: $49 per 100 additional sessions
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

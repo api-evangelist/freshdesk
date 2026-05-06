@@ -4,89 +4,79 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: freshdesk
 providerId: freshdesk
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
+  - Customer Support
+  - Helpdesk
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the freshdesk API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
+description: Freshdesk enforces per-account API rate limits that scale with the subscription plan.
+  Current plans use per-hour limits; legacy plans use per-minute limits with additional
+  endpoint-specific caps (Ticket Create / Update / List, Contacts). Additional capacity (1,000-2,000
+  calls) can be purchased.
+sources:
+  - https://developers.freshdesk.com/api/
 headers:
-  limit: X-RateLimit-Limit
+  limit: X-RateLimit-Total
   remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
+  used: X-RateLimit-Used-CurrentRequest
   retryAfter: Retry-After
-  policy: RateLimit-Policy
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
+  - name: Blossom (current plan)
+    scope: account
+    metric: requests_per_hour
+    limit: 3000
+    timeFrame: hour
+  - name: Garden (current plan)
+    scope: account
+    metric: requests_per_hour
+    limit: 3000
+    timeFrame: hour
+  - name: Estate (current plan)
+    scope: account
+    metric: requests_per_hour
+    limit: 5000
+    timeFrame: hour
+  - name: Forest (current plan)
+    scope: account
+    metric: requests_per_hour
+    limit: 5000
+    timeFrame: hour
+  - name: Growth (legacy)
+    scope: account
     metric: requests_per_minute
-    limit: 10
-    burst: 20
+    limit: 200
     timeFrame: minute
-    applies:
-      - Freshdesk REST API
-      - Freshdesk Webhook API
-      - Freshdesk App SDK
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Freshdesk REST API
-      - Freshdesk Webhook API
-      - Freshdesk App SDK
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
+    notes: Endpoint-specific caps — Ticket Create 80/min, Update 80/min, List 20/min, Contacts
+      20/min.
+  - name: Pro (legacy)
+    scope: account
     metric: requests_per_minute
-    limit: 100
-    burst: 200
+    limit: 400
     timeFrame: minute
-    applies:
-      - Freshdesk REST API
-      - Freshdesk Webhook API
-      - Freshdesk App SDK
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Freshdesk REST API
-      - Freshdesk Webhook API
-      - Freshdesk App SDK
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
+    notes: Endpoint-specific caps — Ticket Create 160/min, Update 160/min, List 100/min, Contacts
+      100/min.
+  - name: Enterprise (legacy)
+    scope: account
     metric: requests_per_minute
-    limit: 1000
-    burst: 5000
+    limit: 700
     timeFrame: minute
-    applies:
-      - Freshdesk REST API
-      - Freshdesk Webhook API
-      - Freshdesk App SDK
+    notes: Endpoint-specific caps — Ticket Create 280/min, Update 280/min, List 200/min, Contacts
+      200/min.
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
-maintainers: []
+  - name: Per-account scoping
+    description: Limits are enforced per Freshdesk account, not per API key. Custom apps that
+      consume the API count toward the account total.
+  - name: Invalid requests count
+    description: Invalid requests still count toward the rate limit.
+  - name: Retry-After
+    description: When the limit is breached, responses return HTTP 429 with a Retry-After header
+      indicating wait seconds before retrying.
+  - name: Capacity purchase
+    description: Additional rate-limit capacity (1,000-2,000 calls) can be purchased and includes
+      higher endpoint-specific limits.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
