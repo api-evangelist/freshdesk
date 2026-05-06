@@ -1,0 +1,2003 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshdesk REST API
+  description: The Freshdesk REST API (v2) provides programmatic access to helpdesk data and operations within Freshdesk,
+    a customer support platform by Freshworks. It exposes endpoints for managing tickets, contacts, companies, agents, groups,
+    conversations, products, email configurations, SLA policies, business hours, time entries, satisfaction ratings, solution
+    categories, solution folders, solution articles, and more. The API uses JSON for request and response payloads, supports
+    API key-based authentication, and follows RESTful conventions for CRUD operations.
+  tags:
+  - Freshdesk
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: freshdesk
+    baseUri: https://yourdomain.freshdesk.com/api/v2
+    description: Freshdesk REST API HTTP API.
+    authentication:
+      type: basic
+      username: '{{FRESHDESK_USERNAME}}'
+      password: '{{FRESHDESK_PASSWORD}}'
+    resources:
+    - name: tickets
+      path: /tickets
+      operations:
+      - name: listtickets
+        method: GET
+        description: List all tickets
+        inputParameters:
+        - name: filter
+          in: query
+          type: string
+          description: Pre-defined filter to apply. Options include new_and_my_open, watching, spam, deleted.
+        - name: requester_id
+          in: query
+          type: integer
+          description: Filter tickets by requester ID.
+        - name: email
+          in: query
+          type: string
+          description: Filter tickets by requester email address.
+        - name: updated_since
+          in: query
+          type: string
+          description: Return tickets updated since the given date-time in UTC format.
+        - name: order_by
+          in: query
+          type: string
+          description: Field to order results by.
+        - name: order_type
+          in: query
+          type: string
+          description: Sort direction for results.
+        - name: include
+          in: query
+          type: string
+          description: Include additional information such as requester, stats, or description.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createticket
+        method: POST
+        description: Create a ticket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tickets-ticket-id
+      path: /tickets/{ticket_id}
+      operations:
+      - name: getticket
+        method: GET
+        description: View a ticket
+        inputParameters:
+        - name: include
+          in: query
+          type: string
+          description: Include additional information in the response.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateticket
+        method: PUT
+        description: Update a ticket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deleteticket
+        method: DELETE
+        description: Delete a ticket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tickets-ticket-id-restore
+      path: /tickets/{ticket_id}/restore
+      operations:
+      - name: restoreticket
+        method: PUT
+        description: Restore a deleted ticket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tickets-outbound-email
+      path: /tickets/outbound_email
+      operations:
+      - name: createoutboundemail
+        method: POST
+        description: Create an outbound email ticket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tickets-ticket-id-conversations
+      path: /tickets/{ticket_id}/conversations
+      operations:
+      - name: listticketconversations
+        method: GET
+        description: List conversations on a ticket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tickets-ticket-id-reply
+      path: /tickets/{ticket_id}/reply
+      operations:
+      - name: replytoticket
+        method: POST
+        description: Reply to a ticket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tickets-ticket-id-notes
+      path: /tickets/{ticket_id}/notes
+      operations:
+      - name: createnote
+        method: POST
+        description: Create a note on a ticket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tickets-ticket-id-forward
+      path: /tickets/{ticket_id}/forward
+      operations:
+      - name: forwardticket
+        method: POST
+        description: Forward a ticket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: conversations-conversation-id
+      path: /conversations/{conversation_id}
+      operations:
+      - name: updateconversation
+        method: PUT
+        description: Update a conversation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deleteconversation
+        method: DELETE
+        description: Delete a conversation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tickets-ticket-id-time-entries
+      path: /tickets/{ticket_id}/time_entries
+      operations:
+      - name: listtickettimeentries
+        method: GET
+        description: List time entries for a ticket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createtimeentry
+        method: POST
+        description: Create a time entry
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: time-entries
+      path: /time_entries
+      operations:
+      - name: listalltimeentries
+        method: GET
+        description: List all time entries
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: time-entries-time-entry-id
+      path: /time_entries/{time_entry_id}
+      operations:
+      - name: updatetimeentry
+        method: PUT
+        description: Update a time entry
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletetimeentry
+        method: DELETE
+        description: Delete a time entry
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: time-entries-time-entry-id-toggle-timer
+      path: /time_entries/{time_entry_id}/toggle_timer
+      operations:
+      - name: toggletimer
+        method: PUT
+        description: Toggle a timer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tickets-ticket-id-satisfaction-ratings
+      path: /tickets/{ticket_id}/satisfaction_ratings
+      operations:
+      - name: createsatisfactionrating
+        method: POST
+        description: Create a satisfaction rating
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: surveys-satisfaction-ratings
+      path: /surveys/satisfaction_ratings
+      operations:
+      - name: listsatisfactionratings
+        method: GET
+        description: List all satisfaction ratings
+        inputParameters:
+        - name: created_since
+          in: query
+          type: string
+          description: Return ratings created since the given date-time.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tickets-ticket-id-watchers
+      path: /tickets/{ticket_id}/watchers
+      operations:
+      - name: listticketwatchers
+        method: GET
+        description: List watchers on a ticket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tickets-ticket-id-watch
+      path: /tickets/{ticket_id}/watch
+      operations:
+      - name: watchticket
+        method: POST
+        description: Watch a ticket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tickets-ticket-id-associated-tickets
+      path: /tickets/{ticket_id}/associated_tickets
+      operations:
+      - name: listassociatedtickets
+        method: GET
+        description: List associated tickets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tickets-merge
+      path: /tickets/merge
+      operations:
+      - name: mergetickets
+        method: PUT
+        description: Merge tickets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tickets-bulk-update
+      path: /tickets/bulk_update
+      operations:
+      - name: bulkupdatetickets
+        method: POST
+        description: Bulk update tickets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tickets-bulk-delete
+      path: /tickets/bulk_delete
+      operations:
+      - name: bulkdeletetickets
+        method: POST
+        description: Bulk delete tickets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: contacts
+      path: /contacts
+      operations:
+      - name: listcontacts
+        method: GET
+        description: List all contacts
+        inputParameters:
+        - name: email
+          in: query
+          type: string
+          description: Filter contacts by email address.
+        - name: phone
+          in: query
+          type: string
+          description: Filter contacts by phone number.
+        - name: mobile
+          in: query
+          type: string
+          description: Filter contacts by mobile number.
+        - name: company_id
+          in: query
+          type: integer
+          description: Filter contacts by company ID.
+        - name: state
+          in: query
+          type: string
+          description: Filter contacts by state.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createcontact
+        method: POST
+        description: Create a contact
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: contacts-contact-id
+      path: /contacts/{contact_id}
+      operations:
+      - name: getcontact
+        method: GET
+        description: View a contact
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatecontact
+        method: PUT
+        description: Update a contact
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletecontact
+        method: DELETE
+        description: Delete a contact
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: contacts-contact-id-restore
+      path: /contacts/{contact_id}/restore
+      operations:
+      - name: restorecontact
+        method: PUT
+        description: Restore a deleted contact
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: contacts-merge
+      path: /contacts/merge
+      operations:
+      - name: mergecontacts
+        method: POST
+        description: Merge contacts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: contacts-export
+      path: /contacts/export
+      operations:
+      - name: exportcontacts
+        method: POST
+        description: Export contacts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: contact-fields
+      path: /contact_fields
+      operations:
+      - name: listcontactfields
+        method: GET
+        description: List all contact fields
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: companies
+      path: /companies
+      operations:
+      - name: listcompanies
+        method: GET
+        description: List all companies
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createcompany
+        method: POST
+        description: Create a company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: companies-company-id
+      path: /companies/{company_id}
+      operations:
+      - name: getcompany
+        method: GET
+        description: View a company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatecompany
+        method: PUT
+        description: Update a company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletecompany
+        method: DELETE
+        description: Delete a company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: company-fields
+      path: /company_fields
+      operations:
+      - name: listcompanyfields
+        method: GET
+        description: List all company fields
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: agents
+      path: /agents
+      operations:
+      - name: listagents
+        method: GET
+        description: List all agents
+        inputParameters:
+        - name: email
+          in: query
+          type: string
+          description: Filter agents by email address.
+        - name: phone
+          in: query
+          type: string
+          description: Filter agents by phone number.
+        - name: mobile
+          in: query
+          type: string
+          description: Filter agents by mobile number.
+        - name: state
+          in: query
+          type: string
+          description: Filter agents by state.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: agents-agent-id
+      path: /agents/{agent_id}
+      operations:
+      - name: getagent
+        method: GET
+        description: View an agent
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateagent
+        method: PUT
+        description: Update an agent
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deleteagent
+        method: DELETE
+        description: Delete an agent
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: groups
+      path: /groups
+      operations:
+      - name: listgroups
+        method: GET
+        description: List all groups
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: creategroup
+        method: POST
+        description: Create a group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: groups-group-id
+      path: /groups/{group_id}
+      operations:
+      - name: getgroup
+        method: GET
+        description: View a group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updategroup
+        method: PUT
+        description: Update a group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletegroup
+        method: DELETE
+        description: Delete a group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: roles
+      path: /roles
+      operations:
+      - name: listroles
+        method: GET
+        description: List all roles
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: roles-role-id
+      path: /roles/{role_id}
+      operations:
+      - name: getrole
+        method: GET
+        description: View a role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: products
+      path: /products
+      operations:
+      - name: listproducts
+        method: GET
+        description: List all products
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: products-product-id
+      path: /products/{product_id}
+      operations:
+      - name: getproduct
+        method: GET
+        description: View a product
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateproduct
+        method: PUT
+        description: Update a product
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createproduct
+        method: POST
+        description: Create a product
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: email-configs
+      path: /email_configs
+      operations:
+      - name: listemailconfigs
+        method: GET
+        description: List all email configurations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: email-configs-email-config-id
+      path: /email_configs/{email_config_id}
+      operations:
+      - name: getemailconfig
+        method: GET
+        description: View an email configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: sla-policies
+      path: /sla_policies
+      operations:
+      - name: listslapolicies
+        method: GET
+        description: List all SLA policies
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: freshdesk-rest
+    description: REST adapter for Freshdesk REST API.
+    resources:
+    - path: /tickets
+      name: listtickets
+      operations:
+      - method: GET
+        name: listtickets
+        description: List all tickets
+        call: freshdesk.listtickets
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets
+      name: createticket
+      operations:
+      - method: POST
+        name: createticket
+        description: Create a ticket
+        call: freshdesk.createticket
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets/{ticket_id}
+      name: getticket
+      operations:
+      - method: GET
+        name: getticket
+        description: View a ticket
+        call: freshdesk.getticket
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets/{ticket_id}
+      name: updateticket
+      operations:
+      - method: PUT
+        name: updateticket
+        description: Update a ticket
+        call: freshdesk.updateticket
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets/{ticket_id}
+      name: deleteticket
+      operations:
+      - method: DELETE
+        name: deleteticket
+        description: Delete a ticket
+        call: freshdesk.deleteticket
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets/{ticket_id}/restore
+      name: restoreticket
+      operations:
+      - method: PUT
+        name: restoreticket
+        description: Restore a deleted ticket
+        call: freshdesk.restoreticket
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets/outbound_email
+      name: createoutboundemail
+      operations:
+      - method: POST
+        name: createoutboundemail
+        description: Create an outbound email ticket
+        call: freshdesk.createoutboundemail
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets/{ticket_id}/conversations
+      name: listticketconversations
+      operations:
+      - method: GET
+        name: listticketconversations
+        description: List conversations on a ticket
+        call: freshdesk.listticketconversations
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets/{ticket_id}/reply
+      name: replytoticket
+      operations:
+      - method: POST
+        name: replytoticket
+        description: Reply to a ticket
+        call: freshdesk.replytoticket
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets/{ticket_id}/notes
+      name: createnote
+      operations:
+      - method: POST
+        name: createnote
+        description: Create a note on a ticket
+        call: freshdesk.createnote
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets/{ticket_id}/forward
+      name: forwardticket
+      operations:
+      - method: POST
+        name: forwardticket
+        description: Forward a ticket
+        call: freshdesk.forwardticket
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /conversations/{conversation_id}
+      name: updateconversation
+      operations:
+      - method: PUT
+        name: updateconversation
+        description: Update a conversation
+        call: freshdesk.updateconversation
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /conversations/{conversation_id}
+      name: deleteconversation
+      operations:
+      - method: DELETE
+        name: deleteconversation
+        description: Delete a conversation
+        call: freshdesk.deleteconversation
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets/{ticket_id}/time_entries
+      name: listtickettimeentries
+      operations:
+      - method: GET
+        name: listtickettimeentries
+        description: List time entries for a ticket
+        call: freshdesk.listtickettimeentries
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets/{ticket_id}/time_entries
+      name: createtimeentry
+      operations:
+      - method: POST
+        name: createtimeentry
+        description: Create a time entry
+        call: freshdesk.createtimeentry
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /time_entries
+      name: listalltimeentries
+      operations:
+      - method: GET
+        name: listalltimeentries
+        description: List all time entries
+        call: freshdesk.listalltimeentries
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /time_entries/{time_entry_id}
+      name: updatetimeentry
+      operations:
+      - method: PUT
+        name: updatetimeentry
+        description: Update a time entry
+        call: freshdesk.updatetimeentry
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /time_entries/{time_entry_id}
+      name: deletetimeentry
+      operations:
+      - method: DELETE
+        name: deletetimeentry
+        description: Delete a time entry
+        call: freshdesk.deletetimeentry
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /time_entries/{time_entry_id}/toggle_timer
+      name: toggletimer
+      operations:
+      - method: PUT
+        name: toggletimer
+        description: Toggle a timer
+        call: freshdesk.toggletimer
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets/{ticket_id}/satisfaction_ratings
+      name: createsatisfactionrating
+      operations:
+      - method: POST
+        name: createsatisfactionrating
+        description: Create a satisfaction rating
+        call: freshdesk.createsatisfactionrating
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /surveys/satisfaction_ratings
+      name: listsatisfactionratings
+      operations:
+      - method: GET
+        name: listsatisfactionratings
+        description: List all satisfaction ratings
+        call: freshdesk.listsatisfactionratings
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets/{ticket_id}/watchers
+      name: listticketwatchers
+      operations:
+      - method: GET
+        name: listticketwatchers
+        description: List watchers on a ticket
+        call: freshdesk.listticketwatchers
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets/{ticket_id}/watch
+      name: watchticket
+      operations:
+      - method: POST
+        name: watchticket
+        description: Watch a ticket
+        call: freshdesk.watchticket
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets/{ticket_id}/associated_tickets
+      name: listassociatedtickets
+      operations:
+      - method: GET
+        name: listassociatedtickets
+        description: List associated tickets
+        call: freshdesk.listassociatedtickets
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets/merge
+      name: mergetickets
+      operations:
+      - method: PUT
+        name: mergetickets
+        description: Merge tickets
+        call: freshdesk.mergetickets
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets/bulk_update
+      name: bulkupdatetickets
+      operations:
+      - method: POST
+        name: bulkupdatetickets
+        description: Bulk update tickets
+        call: freshdesk.bulkupdatetickets
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tickets/bulk_delete
+      name: bulkdeletetickets
+      operations:
+      - method: POST
+        name: bulkdeletetickets
+        description: Bulk delete tickets
+        call: freshdesk.bulkdeletetickets
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts
+      name: listcontacts
+      operations:
+      - method: GET
+        name: listcontacts
+        description: List all contacts
+        call: freshdesk.listcontacts
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts
+      name: createcontact
+      operations:
+      - method: POST
+        name: createcontact
+        description: Create a contact
+        call: freshdesk.createcontact
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/{contact_id}
+      name: getcontact
+      operations:
+      - method: GET
+        name: getcontact
+        description: View a contact
+        call: freshdesk.getcontact
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/{contact_id}
+      name: updatecontact
+      operations:
+      - method: PUT
+        name: updatecontact
+        description: Update a contact
+        call: freshdesk.updatecontact
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/{contact_id}
+      name: deletecontact
+      operations:
+      - method: DELETE
+        name: deletecontact
+        description: Delete a contact
+        call: freshdesk.deletecontact
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/{contact_id}/restore
+      name: restorecontact
+      operations:
+      - method: PUT
+        name: restorecontact
+        description: Restore a deleted contact
+        call: freshdesk.restorecontact
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/merge
+      name: mergecontacts
+      operations:
+      - method: POST
+        name: mergecontacts
+        description: Merge contacts
+        call: freshdesk.mergecontacts
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contacts/export
+      name: exportcontacts
+      operations:
+      - method: POST
+        name: exportcontacts
+        description: Export contacts
+        call: freshdesk.exportcontacts
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /contact_fields
+      name: listcontactfields
+      operations:
+      - method: GET
+        name: listcontactfields
+        description: List all contact fields
+        call: freshdesk.listcontactfields
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /companies
+      name: listcompanies
+      operations:
+      - method: GET
+        name: listcompanies
+        description: List all companies
+        call: freshdesk.listcompanies
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /companies
+      name: createcompany
+      operations:
+      - method: POST
+        name: createcompany
+        description: Create a company
+        call: freshdesk.createcompany
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /companies/{company_id}
+      name: getcompany
+      operations:
+      - method: GET
+        name: getcompany
+        description: View a company
+        call: freshdesk.getcompany
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /companies/{company_id}
+      name: updatecompany
+      operations:
+      - method: PUT
+        name: updatecompany
+        description: Update a company
+        call: freshdesk.updatecompany
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /companies/{company_id}
+      name: deletecompany
+      operations:
+      - method: DELETE
+        name: deletecompany
+        description: Delete a company
+        call: freshdesk.deletecompany
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /company_fields
+      name: listcompanyfields
+      operations:
+      - method: GET
+        name: listcompanyfields
+        description: List all company fields
+        call: freshdesk.listcompanyfields
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /agents
+      name: listagents
+      operations:
+      - method: GET
+        name: listagents
+        description: List all agents
+        call: freshdesk.listagents
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /agents/{agent_id}
+      name: getagent
+      operations:
+      - method: GET
+        name: getagent
+        description: View an agent
+        call: freshdesk.getagent
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /agents/{agent_id}
+      name: updateagent
+      operations:
+      - method: PUT
+        name: updateagent
+        description: Update an agent
+        call: freshdesk.updateagent
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /agents/{agent_id}
+      name: deleteagent
+      operations:
+      - method: DELETE
+        name: deleteagent
+        description: Delete an agent
+        call: freshdesk.deleteagent
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /groups
+      name: listgroups
+      operations:
+      - method: GET
+        name: listgroups
+        description: List all groups
+        call: freshdesk.listgroups
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /groups
+      name: creategroup
+      operations:
+      - method: POST
+        name: creategroup
+        description: Create a group
+        call: freshdesk.creategroup
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /groups/{group_id}
+      name: getgroup
+      operations:
+      - method: GET
+        name: getgroup
+        description: View a group
+        call: freshdesk.getgroup
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /groups/{group_id}
+      name: updategroup
+      operations:
+      - method: PUT
+        name: updategroup
+        description: Update a group
+        call: freshdesk.updategroup
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /groups/{group_id}
+      name: deletegroup
+      operations:
+      - method: DELETE
+        name: deletegroup
+        description: Delete a group
+        call: freshdesk.deletegroup
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /roles
+      name: listroles
+      operations:
+      - method: GET
+        name: listroles
+        description: List all roles
+        call: freshdesk.listroles
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /roles/{role_id}
+      name: getrole
+      operations:
+      - method: GET
+        name: getrole
+        description: View a role
+        call: freshdesk.getrole
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /products
+      name: listproducts
+      operations:
+      - method: GET
+        name: listproducts
+        description: List all products
+        call: freshdesk.listproducts
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /products/{product_id}
+      name: getproduct
+      operations:
+      - method: GET
+        name: getproduct
+        description: View a product
+        call: freshdesk.getproduct
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /products/{product_id}
+      name: updateproduct
+      operations:
+      - method: PUT
+        name: updateproduct
+        description: Update a product
+        call: freshdesk.updateproduct
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /products/{product_id}
+      name: createproduct
+      operations:
+      - method: POST
+        name: createproduct
+        description: Create a product
+        call: freshdesk.createproduct
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /email_configs
+      name: listemailconfigs
+      operations:
+      - method: GET
+        name: listemailconfigs
+        description: List all email configurations
+        call: freshdesk.listemailconfigs
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /email_configs/{email_config_id}
+      name: getemailconfig
+      operations:
+      - method: GET
+        name: getemailconfig
+        description: View an email configuration
+        call: freshdesk.getemailconfig
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /sla_policies
+      name: listslapolicies
+      operations:
+      - method: GET
+        name: listslapolicies
+        description: List all SLA policies
+        call: freshdesk.listslapolicies
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: freshdesk-mcp
+    transport: http
+    description: MCP adapter for Freshdesk REST API for AI agent use.
+    tools:
+    - name: listtickets
+      description: List all tickets
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.listtickets
+      with:
+        filter: tools.filter
+        requester_id: tools.requester_id
+        email: tools.email
+        updated_since: tools.updated_since
+        order_by: tools.order_by
+        order_type: tools.order_type
+        include: tools.include
+      inputParameters:
+      - name: filter
+        type: string
+        description: Pre-defined filter to apply. Options include new_and_my_open, watching, spam, deleted.
+      - name: requester_id
+        type: integer
+        description: Filter tickets by requester ID.
+      - name: email
+        type: string
+        description: Filter tickets by requester email address.
+      - name: updated_since
+        type: string
+        description: Return tickets updated since the given date-time in UTC format.
+      - name: order_by
+        type: string
+        description: Field to order results by.
+      - name: order_type
+        type: string
+        description: Sort direction for results.
+      - name: include
+        type: string
+        description: Include additional information such as requester, stats, or description.
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createticket
+      description: Create a ticket
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshdesk.createticket
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getticket
+      description: View a ticket
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.getticket
+      with:
+        include: tools.include
+      inputParameters:
+      - name: include
+        type: string
+        description: Include additional information in the response.
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updateticket
+      description: Update a ticket
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshdesk.updateticket
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deleteticket
+      description: Delete a ticket
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: freshdesk.deleteticket
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: restoreticket
+      description: Restore a deleted ticket
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshdesk.restoreticket
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createoutboundemail
+      description: Create an outbound email ticket
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshdesk.createoutboundemail
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listticketconversations
+      description: List conversations on a ticket
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.listticketconversations
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: replytoticket
+      description: Reply to a ticket
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshdesk.replytoticket
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createnote
+      description: Create a note on a ticket
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshdesk.createnote
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: forwardticket
+      description: Forward a ticket
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshdesk.forwardticket
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updateconversation
+      description: Update a conversation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshdesk.updateconversation
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deleteconversation
+      description: Delete a conversation
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: freshdesk.deleteconversation
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listtickettimeentries
+      description: List time entries for a ticket
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.listtickettimeentries
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createtimeentry
+      description: Create a time entry
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshdesk.createtimeentry
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listalltimeentries
+      description: List all time entries
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.listalltimeentries
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updatetimeentry
+      description: Update a time entry
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshdesk.updatetimeentry
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletetimeentry
+      description: Delete a time entry
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: freshdesk.deletetimeentry
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: toggletimer
+      description: Toggle a timer
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshdesk.toggletimer
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createsatisfactionrating
+      description: Create a satisfaction rating
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshdesk.createsatisfactionrating
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listsatisfactionratings
+      description: List all satisfaction ratings
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.listsatisfactionratings
+      with:
+        created_since: tools.created_since
+      inputParameters:
+      - name: created_since
+        type: string
+        description: Return ratings created since the given date-time.
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listticketwatchers
+      description: List watchers on a ticket
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.listticketwatchers
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: watchticket
+      description: Watch a ticket
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshdesk.watchticket
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listassociatedtickets
+      description: List associated tickets
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.listassociatedtickets
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: mergetickets
+      description: Merge tickets
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshdesk.mergetickets
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulkupdatetickets
+      description: Bulk update tickets
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshdesk.bulkupdatetickets
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulkdeletetickets
+      description: Bulk delete tickets
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshdesk.bulkdeletetickets
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listcontacts
+      description: List all contacts
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.listcontacts
+      with:
+        email: tools.email
+        phone: tools.phone
+        mobile: tools.mobile
+        company_id: tools.company_id
+        state: tools.state
+      inputParameters:
+      - name: email
+        type: string
+        description: Filter contacts by email address.
+      - name: phone
+        type: string
+        description: Filter contacts by phone number.
+      - name: mobile
+        type: string
+        description: Filter contacts by mobile number.
+      - name: company_id
+        type: integer
+        description: Filter contacts by company ID.
+      - name: state
+        type: string
+        description: Filter contacts by state.
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createcontact
+      description: Create a contact
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshdesk.createcontact
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getcontact
+      description: View a contact
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.getcontact
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updatecontact
+      description: Update a contact
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshdesk.updatecontact
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletecontact
+      description: Delete a contact
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: freshdesk.deletecontact
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: restorecontact
+      description: Restore a deleted contact
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshdesk.restorecontact
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: mergecontacts
+      description: Merge contacts
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshdesk.mergecontacts
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: exportcontacts
+      description: Export contacts
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshdesk.exportcontacts
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listcontactfields
+      description: List all contact fields
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.listcontactfields
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listcompanies
+      description: List all companies
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.listcompanies
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createcompany
+      description: Create a company
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshdesk.createcompany
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getcompany
+      description: View a company
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.getcompany
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updatecompany
+      description: Update a company
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshdesk.updatecompany
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletecompany
+      description: Delete a company
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: freshdesk.deletecompany
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listcompanyfields
+      description: List all company fields
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.listcompanyfields
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listagents
+      description: List all agents
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.listagents
+      with:
+        email: tools.email
+        phone: tools.phone
+        mobile: tools.mobile
+        state: tools.state
+      inputParameters:
+      - name: email
+        type: string
+        description: Filter agents by email address.
+      - name: phone
+        type: string
+        description: Filter agents by phone number.
+      - name: mobile
+        type: string
+        description: Filter agents by mobile number.
+      - name: state
+        type: string
+        description: Filter agents by state.
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getagent
+      description: View an agent
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.getagent
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updateagent
+      description: Update an agent
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshdesk.updateagent
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deleteagent
+      description: Delete an agent
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: freshdesk.deleteagent
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listgroups
+      description: List all groups
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.listgroups
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: creategroup
+      description: Create a group
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshdesk.creategroup
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getgroup
+      description: View a group
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.getgroup
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updategroup
+      description: Update a group
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshdesk.updategroup
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deletegroup
+      description: Delete a group
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: freshdesk.deletegroup
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listroles
+      description: List all roles
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.listroles
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getrole
+      description: View a role
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.getrole
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listproducts
+      description: List all products
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.listproducts
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getproduct
+      description: View a product
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.getproduct
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updateproduct
+      description: Update a product
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshdesk.updateproduct
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createproduct
+      description: Create a product
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshdesk.createproduct
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listemailconfigs
+      description: List all email configurations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.listemailconfigs
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getemailconfig
+      description: View an email configuration
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.getemailconfig
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listslapolicies
+      description: List all SLA policies
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk.listslapolicies
+      outputParameters:
+      - type: object
+        mapping: $.
+binds:
+- namespace: env
+  keys:
+    FRESHDESK_USERNAME: FRESHDESK_USERNAME
+    FRESHDESK_PASSWORD: FRESHDESK_PASSWORD
