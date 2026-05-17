@@ -70,7 +70,7 @@ apis:
       tools for creating front-end interfaces using the Crayons component library
       and server-side logic through serverless apps.
 common:
-  - type: JSON-LD
+  - type: JSONLD
     url: json-ld/freshdesk-context.jsonld
   - type: JSONSchema
     url: json-schema/freshdesk-ticket-schema.json
