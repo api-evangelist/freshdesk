@@ -1,0 +1,103 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshdesk REST API — Roles
+  description: 'Freshdesk REST API — Roles. 2 operations. Lead operation: List all roles. Self-contained Naftiko capability
+    covering one Freshdesk business surface.'
+  tags:
+  - Freshdesk
+  - Roles
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHDESK_API_KEY: FRESHDESK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-roles
+    baseUri: https://{domain}.freshdesk.com/api/v2
+    description: Freshdesk REST API — Roles business capability. Self-contained, no shared references.
+    resources:
+    - name: roles
+      path: /roles
+      operations:
+      - name: listroles
+        method: GET
+        description: List all roles
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: roles-role_id
+      path: /roles/{role_id}
+      operations:
+      - name: getrole
+        method: GET
+        description: View a role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.FRESHDESK_USER}}'
+      password: '{{env.FRESHDESK_PASS}}'
+  exposes:
+  - type: rest
+    namespace: rest-roles-rest
+    port: 8080
+    description: REST adapter for Freshdesk REST API — Roles. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/roles
+      name: roles
+      description: REST surface for roles.
+      operations:
+      - method: GET
+        name: listroles
+        description: List all roles
+        call: rest-roles.listroles
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/roles/{role-id}
+      name: roles-role-id
+      description: REST surface for roles-role_id.
+      operations:
+      - method: GET
+        name: getrole
+        description: View a role
+        call: rest-roles.getrole
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-roles-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshdesk REST API — Roles. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-all-roles
+      description: List all roles
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-roles.listroles
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: view-role
+      description: View a role
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-roles.getrole
+      outputParameters:
+      - type: object
+        mapping: $.

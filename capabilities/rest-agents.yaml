@@ -1,0 +1,190 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshdesk REST API — Agents
+  description: 'Freshdesk REST API — Agents. 4 operations. Lead operation: List all agents. Self-contained Naftiko capability
+    covering one Freshdesk business surface.'
+  tags:
+  - Freshdesk
+  - Agents
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHDESK_API_KEY: FRESHDESK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-agents
+    baseUri: https://{domain}.freshdesk.com/api/v2
+    description: Freshdesk REST API — Agents business capability. Self-contained, no shared references.
+    resources:
+    - name: agents
+      path: /agents
+      operations:
+      - name: listagents
+        method: GET
+        description: List all agents
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: email
+          in: query
+          type: string
+          description: Filter agents by email address.
+        - name: phone
+          in: query
+          type: string
+          description: Filter agents by phone number.
+        - name: mobile
+          in: query
+          type: string
+          description: Filter agents by mobile number.
+        - name: state
+          in: query
+          type: string
+          description: Filter agents by state.
+    - name: agents-agent_id
+      path: /agents/{agent_id}
+      operations:
+      - name: getagent
+        method: GET
+        description: View an agent
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateagent
+        method: PUT
+        description: Update an agent
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteagent
+        method: DELETE
+        description: Delete an agent
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.FRESHDESK_USER}}'
+      password: '{{env.FRESHDESK_PASS}}'
+  exposes:
+  - type: rest
+    namespace: rest-agents-rest
+    port: 8080
+    description: REST adapter for Freshdesk REST API — Agents. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/agents
+      name: agents
+      description: REST surface for agents.
+      operations:
+      - method: GET
+        name: listagents
+        description: List all agents
+        call: rest-agents.listagents
+        with:
+          email: rest.email
+          phone: rest.phone
+          mobile: rest.mobile
+          state: rest.state
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/agents/{agent-id}
+      name: agents-agent-id
+      description: REST surface for agents-agent_id.
+      operations:
+      - method: GET
+        name: getagent
+        description: View an agent
+        call: rest-agents.getagent
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateagent
+        description: Update an agent
+        call: rest-agents.updateagent
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteagent
+        description: Delete an agent
+        call: rest-agents.deleteagent
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-agents-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshdesk REST API — Agents. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-all-agents
+      description: List all agents
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-agents.listagents
+      with:
+        email: tools.email
+        phone: tools.phone
+        mobile: tools.mobile
+        state: tools.state
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: view-agent
+      description: View an agent
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-agents.getagent
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-agent
+      description: Update an agent
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-agents.updateagent
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-agent
+      description: Delete an agent
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-agents.deleteagent
+      outputParameters:
+      - type: object
+        mapping: $.

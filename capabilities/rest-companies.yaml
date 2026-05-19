@@ -1,0 +1,230 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshdesk REST API — Companies
+  description: 'Freshdesk REST API — Companies. 6 operations. Lead operation: List all companies. Self-contained Naftiko capability
+    covering one Freshdesk business surface.'
+  tags:
+  - Freshdesk
+  - Companies
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHDESK_API_KEY: FRESHDESK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-companies
+    baseUri: https://{domain}.freshdesk.com/api/v2
+    description: Freshdesk REST API — Companies business capability. Self-contained, no shared references.
+    resources:
+    - name: companies
+      path: /companies
+      operations:
+      - name: listcompanies
+        method: GET
+        description: List all companies
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createcompany
+        method: POST
+        description: Create a company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: companies-company_id
+      path: /companies/{company_id}
+      operations:
+      - name: getcompany
+        method: GET
+        description: View a company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatecompany
+        method: PUT
+        description: Update a company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletecompany
+        method: DELETE
+        description: Delete a company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: company_fields
+      path: /company_fields
+      operations:
+      - name: listcompanyfields
+        method: GET
+        description: List all company fields
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.FRESHDESK_USER}}'
+      password: '{{env.FRESHDESK_PASS}}'
+  exposes:
+  - type: rest
+    namespace: rest-companies-rest
+    port: 8080
+    description: REST adapter for Freshdesk REST API — Companies. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/companies
+      name: companies
+      description: REST surface for companies.
+      operations:
+      - method: GET
+        name: listcompanies
+        description: List all companies
+        call: rest-companies.listcompanies
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createcompany
+        description: Create a company
+        call: rest-companies.createcompany
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{company-id}
+      name: companies-company-id
+      description: REST surface for companies-company_id.
+      operations:
+      - method: GET
+        name: getcompany
+        description: View a company
+        call: rest-companies.getcompany
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatecompany
+        description: Update a company
+        call: rest-companies.updatecompany
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletecompany
+        description: Delete a company
+        call: rest-companies.deletecompany
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/company-fields
+      name: company-fields
+      description: REST surface for company_fields.
+      operations:
+      - method: GET
+        name: listcompanyfields
+        description: List all company fields
+        call: rest-companies.listcompanyfields
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-companies-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshdesk REST API — Companies. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-all-companies
+      description: List all companies
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-companies.listcompanies
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-company
+      description: Create a company
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-companies.createcompany
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: view-company
+      description: View a company
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-companies.getcompany
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-company
+      description: Update a company
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-companies.updatecompany
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-company
+      description: Delete a company
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-companies.deletecompany
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-company-fields
+      description: List all company fields
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-companies.listcompanyfields
+      outputParameters:
+      - type: object
+        mapping: $.

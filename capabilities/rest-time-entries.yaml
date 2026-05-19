@@ -1,0 +1,237 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshdesk REST API — Time Entries
+  description: 'Freshdesk REST API — Time Entries. 6 operations. Lead operation: List time entries for a ticket. Self-contained
+    Naftiko capability covering one Freshdesk business surface.'
+  tags:
+  - Freshdesk
+  - Time Entries
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHDESK_API_KEY: FRESHDESK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-time-entries
+    baseUri: https://{domain}.freshdesk.com/api/v2
+    description: Freshdesk REST API — Time Entries business capability. Self-contained, no shared references.
+    resources:
+    - name: tickets-ticket_id-time_entries
+      path: /tickets/{ticket_id}/time_entries
+      operations:
+      - name: listtickettimeentries
+        method: GET
+        description: List time entries for a ticket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createtimeentry
+        method: POST
+        description: Create a time entry
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: time_entries
+      path: /time_entries
+      operations:
+      - name: listalltimeentries
+        method: GET
+        description: List all time entries
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: time_entries-time_entry_id
+      path: /time_entries/{time_entry_id}
+      operations:
+      - name: updatetimeentry
+        method: PUT
+        description: Update a time entry
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletetimeentry
+        method: DELETE
+        description: Delete a time entry
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: time_entries-time_entry_id-toggle_timer
+      path: /time_entries/{time_entry_id}/toggle_timer
+      operations:
+      - name: toggletimer
+        method: PUT
+        description: Toggle a timer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.FRESHDESK_USER}}'
+      password: '{{env.FRESHDESK_PASS}}'
+  exposes:
+  - type: rest
+    namespace: rest-time-entries-rest
+    port: 8080
+    description: REST adapter for Freshdesk REST API — Time Entries. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/tickets/{ticket-id}/time-entries
+      name: tickets-ticket-id-time-entries
+      description: REST surface for tickets-ticket_id-time_entries.
+      operations:
+      - method: GET
+        name: listtickettimeentries
+        description: List time entries for a ticket
+        call: rest-time-entries.listtickettimeentries
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createtimeentry
+        description: Create a time entry
+        call: rest-time-entries.createtimeentry
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/time-entries
+      name: time-entries
+      description: REST surface for time_entries.
+      operations:
+      - method: GET
+        name: listalltimeentries
+        description: List all time entries
+        call: rest-time-entries.listalltimeentries
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/time-entries/{time-entry-id}
+      name: time-entries-time-entry-id
+      description: REST surface for time_entries-time_entry_id.
+      operations:
+      - method: PUT
+        name: updatetimeentry
+        description: Update a time entry
+        call: rest-time-entries.updatetimeentry
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletetimeentry
+        description: Delete a time entry
+        call: rest-time-entries.deletetimeentry
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/time-entries/{time-entry-id}/toggle-timer
+      name: time-entries-time-entry-id-toggle-timer
+      description: REST surface for time_entries-time_entry_id-toggle_timer.
+      operations:
+      - method: PUT
+        name: toggletimer
+        description: Toggle a timer
+        call: rest-time-entries.toggletimer
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-time-entries-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshdesk REST API — Time Entries. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-time-entries-ticket
+      description: List time entries for a ticket
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-time-entries.listtickettimeentries
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-time-entry
+      description: Create a time entry
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-time-entries.createtimeentry
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-time-entries
+      description: List all time entries
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-time-entries.listalltimeentries
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-time-entry
+      description: Update a time entry
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-time-entries.updatetimeentry
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-time-entry
+      description: Delete a time entry
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-time-entries.deletetimeentry
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: toggle-timer
+      description: Toggle a timer
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-time-entries.toggletimer
+      outputParameters:
+      - type: object
+        mapping: $.

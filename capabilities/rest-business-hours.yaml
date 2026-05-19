@@ -1,0 +1,103 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshdesk REST API — Business Hours
+  description: 'Freshdesk REST API — Business Hours. 2 operations. Lead operation: List all business hours. Self-contained
+    Naftiko capability covering one Freshdesk business surface.'
+  tags:
+  - Freshdesk
+  - Business Hours
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHDESK_API_KEY: FRESHDESK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-business-hours
+    baseUri: https://{domain}.freshdesk.com/api/v2
+    description: Freshdesk REST API — Business Hours business capability. Self-contained, no shared references.
+    resources:
+    - name: business_hours
+      path: /business_hours
+      operations:
+      - name: listbusinesshours
+        method: GET
+        description: List all business hours
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: business_hours-business_hour_id
+      path: /business_hours/{business_hour_id}
+      operations:
+      - name: getbusinesshour
+        method: GET
+        description: View a business hour schedule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.FRESHDESK_USER}}'
+      password: '{{env.FRESHDESK_PASS}}'
+  exposes:
+  - type: rest
+    namespace: rest-business-hours-rest
+    port: 8080
+    description: REST adapter for Freshdesk REST API — Business Hours. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/business-hours
+      name: business-hours
+      description: REST surface for business_hours.
+      operations:
+      - method: GET
+        name: listbusinesshours
+        description: List all business hours
+        call: rest-business-hours.listbusinesshours
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/business-hours/{business-hour-id}
+      name: business-hours-business-hour-id
+      description: REST surface for business_hours-business_hour_id.
+      operations:
+      - method: GET
+        name: getbusinesshour
+        description: View a business hour schedule
+        call: rest-business-hours.getbusinesshour
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-business-hours-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshdesk REST API — Business Hours. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-all-business-hours
+      description: List all business hours
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-business-hours.listbusinesshours
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: view-business-hour-schedule
+      description: View a business hour schedule
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-business-hours.getbusinesshour
+      outputParameters:
+      - type: object
+        mapping: $.

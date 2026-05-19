@@ -1,0 +1,122 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshdesk REST API — Satisfaction Ratings
+  description: 'Freshdesk REST API — Satisfaction Ratings. 2 operations. Lead operation: List all satisfaction ratings. Self-contained
+    Naftiko capability covering one Freshdesk business surface.'
+  tags:
+  - Freshdesk
+  - Satisfaction Ratings
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHDESK_API_KEY: FRESHDESK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-satisfaction-ratings
+    baseUri: https://{domain}.freshdesk.com/api/v2
+    description: Freshdesk REST API — Satisfaction Ratings business capability. Self-contained, no shared references.
+    resources:
+    - name: surveys-satisfaction_ratings
+      path: /surveys/satisfaction_ratings
+      operations:
+      - name: listsatisfactionratings
+        method: GET
+        description: List all satisfaction ratings
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: created_since
+          in: query
+          type: string
+          description: Return ratings created since the given date-time.
+    - name: tickets-ticket_id-satisfaction_ratings
+      path: /tickets/{ticket_id}/satisfaction_ratings
+      operations:
+      - name: createsatisfactionrating
+        method: POST
+        description: Create a satisfaction rating
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.FRESHDESK_USER}}'
+      password: '{{env.FRESHDESK_PASS}}'
+  exposes:
+  - type: rest
+    namespace: rest-satisfaction-ratings-rest
+    port: 8080
+    description: REST adapter for Freshdesk REST API — Satisfaction Ratings. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/surveys/satisfaction-ratings
+      name: surveys-satisfaction-ratings
+      description: REST surface for surveys-satisfaction_ratings.
+      operations:
+      - method: GET
+        name: listsatisfactionratings
+        description: List all satisfaction ratings
+        call: rest-satisfaction-ratings.listsatisfactionratings
+        with:
+          created_since: rest.created_since
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tickets/{ticket-id}/satisfaction-ratings
+      name: tickets-ticket-id-satisfaction-ratings
+      description: REST surface for tickets-ticket_id-satisfaction_ratings.
+      operations:
+      - method: POST
+        name: createsatisfactionrating
+        description: Create a satisfaction rating
+        call: rest-satisfaction-ratings.createsatisfactionrating
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-satisfaction-ratings-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshdesk REST API — Satisfaction Ratings. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: list-all-satisfaction-ratings
+      description: List all satisfaction ratings
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-satisfaction-ratings.listsatisfactionratings
+      with:
+        created_since: tools.created_since
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-satisfaction-rating
+      description: Create a satisfaction rating
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-satisfaction-ratings.createsatisfactionrating
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

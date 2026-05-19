@@ -1,0 +1,103 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshdesk REST API — SLA Policies
+  description: 'Freshdesk REST API — SLA Policies. 2 operations. Lead operation: List all SLA policies. Self-contained Naftiko
+    capability covering one Freshdesk business surface.'
+  tags:
+  - Freshdesk
+  - SLA Policies
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHDESK_API_KEY: FRESHDESK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-sla-policies
+    baseUri: https://{domain}.freshdesk.com/api/v2
+    description: Freshdesk REST API — SLA Policies business capability. Self-contained, no shared references.
+    resources:
+    - name: sla_policies
+      path: /sla_policies
+      operations:
+      - name: listslapolicies
+        method: GET
+        description: List all SLA policies
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: sla_policies-sla_policy_id
+      path: /sla_policies/{sla_policy_id}
+      operations:
+      - name: getslapolicy
+        method: GET
+        description: View an SLA policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.FRESHDESK_USER}}'
+      password: '{{env.FRESHDESK_PASS}}'
+  exposes:
+  - type: rest
+    namespace: rest-sla-policies-rest
+    port: 8080
+    description: REST adapter for Freshdesk REST API — SLA Policies. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/sla-policies
+      name: sla-policies
+      description: REST surface for sla_policies.
+      operations:
+      - method: GET
+        name: listslapolicies
+        description: List all SLA policies
+        call: rest-sla-policies.listslapolicies
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/sla-policies/{sla-policy-id}
+      name: sla-policies-sla-policy-id
+      description: REST surface for sla_policies-sla_policy_id.
+      operations:
+      - method: GET
+        name: getslapolicy
+        description: View an SLA policy
+        call: rest-sla-policies.getslapolicy
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-sla-policies-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshdesk REST API — SLA Policies. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-all-sla-policies
+      description: List all SLA policies
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-sla-policies.listslapolicies
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: view-sla-policy
+      description: View an SLA policy
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-sla-policies.getslapolicy
+      outputParameters:
+      - type: object
+        mapping: $.
