@@ -1,27 +1,15 @@
-# Freshdesk GraphQL
+# Freshdesk GraphQL API
 
-## Description
+Freshdesk is a customer support and helpdesk platform developed by Freshworks. It provides a REST API (v2) as its primary programmatic interface. Freshdesk does not offer a native public GraphQL endpoint — all official API access is provided through the versioned REST API. The schema in `freshdesk-schema.graphql` is a conceptual data model derived from the Freshdesk REST API surface, provided for catalog enrichment, SDL tooling, code generation, and mock server use.
 
-Freshdesk is a customer support and helpdesk platform developed by Freshworks. It provides a REST API (v2) as its primary programmatic interface, available at `https://yourdomain.freshdesk.com/api/v2`.
+**Endpoint:** No native endpoint - conceptual schema
 
-## GraphQL Availability
+**Documentation:** https://developers.freshdesk.com/api/
 
-Freshdesk does **not** offer a native public GraphQL endpoint. All official API access is provided through the versioned REST API. There is no announced GraphQL layer, federation endpoint, or third-party GraphQL wrapper in Freshdesk's public developer documentation or GitHub organization (https://github.com/freshdesk).
+## References
 
-## Conceptual GraphQL Schema
-
-The schema in `freshdesk-schema.graphql` is a **conceptual data model** derived from the Freshdesk REST API surface. It is not backed by a live endpoint. It is provided for:
-
-- Catalog enrichment and API surface documentation
-- Tooling that ingests GraphQL SDL (schema linting, code generation, mock servers)
-- Mapping Freshdesk REST resources to a type-safe graph model
-
-## REST API Reference
-
-- Docs: https://developers.freshdesk.com/api/
+- Freshdesk REST API Docs: https://developers.freshdesk.com/api/
+- Freshworks GitHub: https://github.com/freshworks
 - Base URL: `https://yourdomain.freshdesk.com/api/v2`
-- Authentication: API key (HTTP Basic, key as username, any string as password)
-
-## Core Types Modeled
-
-Ticket, Contact, Company, Agent, Group, Role, Product, Category, Folder, Article, Note, ConversationEntry, TimeEntry, Forum, Topic, Post, EmailConfig, BusinessHour, SLAPolicy, EscalationMatrix, Automation, CannedResponse, TicketField, ContactField, SolutionCategory, SolutionFolder, SatisfactionRating, Export, AuditLog, App, Widget, Analytics
+- Authentication: API key (HTTP Basic — key as username, any string as password)
+- Freshdesk Developer Portal: https://developers.freshdesk.com/
