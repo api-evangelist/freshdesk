@@ -1,0 +1,879 @@
+"""
+Freshdesk Conceptual GraphQL Schema
+Derived from the Freshdesk REST API v2 (https://developers.freshdesk.com/api/)
+This is a conceptual model — Freshdesk does not expose a native GraphQL endpoint.
+"""
+
+scalar DateTime
+scalar JSON
+
+# ---------------------------------------------------------------------------
+# Enums
+# ---------------------------------------------------------------------------
+
+enum TicketStatus {
+  OPEN
+  PENDING
+  RESOLVED
+  CLOSED
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum TicketSource {
+  EMAIL
+  PORTAL
+  PHONE
+  CHAT
+  FEEDBACK_WIDGET
+  OUTBOUND_EMAIL
+  TWITTER
+  FACEBOOK
+  API
+  MOBIHELP
+  ECOMMERCE
+}
+
+enum AgentType {
+  SUPPORT
+  FIELD_SERVICE
+}
+
+enum ArticleStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum SatisfactionRatingValue {
+  UNHAPPY
+  NEUTRAL
+  HAPPY
+  VERY_HAPPY
+}
+
+# ---------------------------------------------------------------------------
+# Core Support Types
+# ---------------------------------------------------------------------------
+
+type Ticket {
+  id: ID!
+  subject: String!
+  description: String
+  descriptionText: String
+  status: TicketStatus!
+  priority: TicketPriority!
+  source: TicketSource
+  type: String
+  tags: [String!]
+  dueBy: DateTime
+  frDueBy: DateTime
+  isEscalated: Boolean
+  isSlaBreached: Boolean
+  spam: Boolean
+  deleted: Boolean
+  requester: Contact
+  responderId: Int
+  responder: Agent
+  companyId: Int
+  company: Company
+  groupId: Int
+  group: Group
+  productId: Int
+  product: Product
+  associatedTicketList: [Int]
+  toEmails: [String]
+  ccEmails: [String]
+  fwdEmails: [String]
+  replyCcEmails: [String]
+  customFields: JSON
+  conversations: [ConversationEntry]
+  notes: [Note]
+  timeEntries: [TimeEntry]
+  satisfactionRatings: [SatisfactionRating]
+  attachments: [Attachment]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Contact {
+  id: ID!
+  name: String!
+  email: String
+  phone: String
+  mobile: String
+  twitterId: String
+  uniqueExternalId: String
+  otherEmails: [String]
+  companyId: Int
+  company: Company
+  viewAllTickets: Boolean
+  active: Boolean
+  deleted: Boolean
+  jobTitle: String
+  language: String
+  timeZone: String
+  tags: [String]
+  avatar: Avatar
+  customFields: JSON
+  tickets: [Ticket]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Company {
+  id: ID!
+  name: String!
+  description: String
+  note: String
+  domains: [String]
+  externalId: String
+  healthScore: String
+  accountTier: String
+  renewalDate: DateTime
+  industry: String
+  customFields: JSON
+  contacts: [Contact]
+  tickets: [Ticket]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Agent {
+  id: ID!
+  contactId: Int!
+  name: String!
+  email: String!
+  phone: String
+  mobile: String
+  active: Boolean
+  type: AgentType
+  ticketScope: Int
+  skillIds: [Int]
+  groupIds: [Int]
+  groups: [Group]
+  roleIds: [Int]
+  roles: [Role]
+  focusMode: Boolean
+  signature: String
+  availabilityStatus: String
+  contact: Contact
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Group {
+  id: ID!
+  name: String!
+  description: String
+  escalateTo: Int
+  escalationAgent: Agent
+  agentIds: [Int]
+  agents: [Agent]
+  businessHourId: Int
+  businessHour: BusinessHour
+  autoTicketAssign: Boolean
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Role {
+  id: ID!
+  name: String!
+  description: String
+  default: Boolean
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Product {
+  id: ID!
+  name: String!
+  description: String
+  primaryEmail: String
+  emailConfigs: [EmailConfig]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Conversation & Notes
+# ---------------------------------------------------------------------------
+
+type ConversationEntry {
+  id: ID!
+  ticketId: Int!
+  ticket: Ticket
+  userId: Int
+  fromEmail: String
+  toEmails: [String]
+  ccEmails: [String]
+  bccEmails: [String]
+  body: String
+  bodyText: String
+  incoming: Boolean
+  private: Boolean
+  source: Int
+  supportEmail: String
+  attachments: [Attachment]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Note {
+  id: ID!
+  ticketId: Int!
+  ticket: Ticket
+  userId: Int
+  body: String
+  bodyText: String
+  incoming: Boolean
+  private: Boolean
+  attachments: [Attachment]
+  notifiedTo: [String]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type TimeEntry {
+  id: ID!
+  ticketId: Int!
+  ticket: Ticket
+  agentId: Int
+  agent: Agent
+  timeSpent: String
+  timeSpentInSeconds: Int
+  billable: Boolean
+  note: String
+  startTime: DateTime
+  timerRunning: Boolean
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Knowledge Base / Solutions
+# ---------------------------------------------------------------------------
+
+type SolutionCategory {
+  id: ID!
+  name: String!
+  description: String
+  portalId: Int
+  isDefault: Boolean
+  folders: [SolutionFolder]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type SolutionFolder {
+  id: ID!
+  name: String!
+  description: String
+  categoryId: Int!
+  category: SolutionCategory
+  visibility: Int
+  articles: [Article]
+  articleCount: Int
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Article {
+  id: ID!
+  title: String!
+  description: String
+  articleType: Int
+  status: ArticleStatus
+  seoData: SEOData
+  tags: [String]
+  attachments: [Attachment]
+  folderId: Int!
+  folder: SolutionFolder
+  categoryId: Int
+  category: SolutionCategory
+  authorId: Int
+  author: Agent
+  thumbsUp: Int
+  thumbsDown: Int
+  hits: Int
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type SEOData {
+  metaTitle: String
+  metaDescription: String
+  metaKeywords: [String]
+}
+
+# ---------------------------------------------------------------------------
+# Forums & Community
+# ---------------------------------------------------------------------------
+
+type Forum {
+  id: ID!
+  name: String!
+  description: String
+  forumType: Int
+  forumVisibility: Int
+  postsCount: Int
+  topicsCount: Int
+  topics: [Topic]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Topic {
+  id: ID!
+  title: String!
+  forumId: Int!
+  forum: Forum
+  userId: Int
+  user: Contact
+  hits: Int
+  postsCount: Int
+  answered: Boolean
+  locked: Boolean
+  sticky: Boolean
+  lastPostId: Int
+  posts: [Post]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Post {
+  id: ID!
+  body: String!
+  topicId: Int!
+  topic: Topic
+  userId: Int
+  user: Contact
+  answer: Boolean
+  attachments: [Attachment]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Configuration & Admin
+# ---------------------------------------------------------------------------
+
+type EmailConfig {
+  id: ID!
+  name: String!
+  replyEmail: String
+  toEmail: String
+  fromName: String
+  productId: Int
+  product: Product
+  default: Boolean
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type BusinessHour {
+  id: ID!
+  name: String!
+  description: String
+  isDefault: Boolean
+  timeZone: String
+  twentyFourHours: Boolean
+  businessHoursSchedule: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type SLAPolicy {
+  id: ID!
+  name: String!
+  description: String
+  isDefault: Boolean
+  active: Boolean
+  slaTargets: [SLATarget]
+  conditions: SLAConditions
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type SLATarget {
+  priority: TicketPriority
+  respondWithin: Int
+  resolveWithin: Int
+  businessHours: Boolean
+  escalationEnabled: Boolean
+}
+
+type SLAConditions {
+  matchType: String
+  properties: [SLAConditionProperty]
+}
+
+type SLAConditionProperty {
+  operatorType: String
+  value: String
+  name: String
+}
+
+type EscalationMatrix {
+  id: ID!
+  name: String!
+  slaId: Int
+  slaPolicy: SLAPolicy
+  escalationLevel1: EscalationLevel
+  escalationLevel2: EscalationLevel
+  escalationLevel3: EscalationLevel
+  escalationLevel4: EscalationLevel
+}
+
+type EscalationLevel {
+  agentIds: [Int]
+  agents: [Agent]
+  time: Int
+}
+
+# ---------------------------------------------------------------------------
+# Automation
+# ---------------------------------------------------------------------------
+
+type Automation {
+  id: ID!
+  name: String!
+  active: Boolean
+  position: Int
+  conditionOperator: String
+  conditions: JSON
+  actions: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type CannedResponse {
+  id: ID!
+  title: String!
+  content: String
+  contentHtml: String
+  visibility: Int
+  groupId: Int
+  group: Group
+  attachments: [Attachment]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Custom Fields
+# ---------------------------------------------------------------------------
+
+type TicketField {
+  id: ID!
+  name: String!
+  label: String
+  labelForAgents: String
+  type: String
+  default: Boolean
+  required: Boolean
+  requiredForClosure: Boolean
+  requiredForAgents: Boolean
+  customers: Boolean
+  agents: Boolean
+  portalCc: Boolean
+  portalCcTo: Boolean
+  position: Int
+  choices: JSON
+  nested: Boolean
+  sections: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type ContactField {
+  id: ID!
+  name: String!
+  label: String
+  type: String
+  default: Boolean
+  position: Int
+  required: Boolean
+  requiredForAgents: Boolean
+  customers: Boolean
+  agents: Boolean
+  choices: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Satisfaction
+# ---------------------------------------------------------------------------
+
+type SatisfactionRating {
+  id: ID!
+  ticketId: Int!
+  ticket: Ticket
+  agentId: Int
+  agent: Agent
+  groupId: Int
+  group: Group
+  rating: SatisfactionRatingValue
+  feedback: String
+  scores: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Audit & Analytics
+# ---------------------------------------------------------------------------
+
+type AuditLog {
+  id: ID!
+  actorId: Int
+  actor: Agent
+  ipAddress: String
+  actionType: String
+  actionTarget: String
+  description: String
+  changes: JSON
+  performedAt: DateTime!
+}
+
+type Analytics {
+  id: ID!
+  reportType: String
+  filters: JSON
+  metrics: JSON
+  generatedAt: DateTime!
+}
+
+type Export {
+  id: ID!
+  status: String
+  exportType: String
+  url: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Marketplace
+# ---------------------------------------------------------------------------
+
+type App {
+  id: ID!
+  name: String!
+  description: String
+  listingId: Int
+  version: String
+  enabled: Boolean
+  configs: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Widget {
+  id: ID!
+  name: String!
+  productId: Int
+  product: Product
+  color: String
+  position: Int
+  welcomeMessage: String
+  thankYouMessage: String
+  requireLogin: Boolean
+  showContactForm: Boolean
+  attachFile: Boolean
+  showCaptcha: Boolean
+  locale: String
+  contacts: [Contact]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Shared / Supporting Types
+# ---------------------------------------------------------------------------
+
+type Attachment {
+  id: ID!
+  name: String
+  contentType: String
+  size: Int
+  url: String
+  thumbUrl: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Avatar {
+  avatarUrl: String
+  medium: String
+  thumb: String
+}
+
+# ---------------------------------------------------------------------------
+# Pagination & Filtering Inputs
+# ---------------------------------------------------------------------------
+
+input PaginationInput {
+  page: Int
+  perPage: Int
+}
+
+input TicketFilterInput {
+  status: TicketStatus
+  priority: TicketPriority
+  source: TicketSource
+  type: String
+  assigneeId: Int
+  groupId: Int
+  companyId: Int
+  contactId: Int
+  tags: [String]
+  createdSince: DateTime
+  updatedSince: DateTime
+  dueBefore: DateTime
+}
+
+input ContactFilterInput {
+  companyId: Int
+  email: String
+  phone: String
+  createdSince: DateTime
+  updatedSince: DateTime
+}
+
+input ArticleFilterInput {
+  status: ArticleStatus
+  folderId: Int
+  categoryId: Int
+  authorId: Int
+}
+
+# ---------------------------------------------------------------------------
+# Root Types
+# ---------------------------------------------------------------------------
+
+type Query {
+  # Tickets
+  ticket(id: ID!): Ticket
+  tickets(filter: TicketFilterInput, pagination: PaginationInput): [Ticket!]!
+  ticketFields: [TicketField!]!
+
+  # Contacts
+  contact(id: ID!): Contact
+  contacts(filter: ContactFilterInput, pagination: PaginationInput): [Contact!]!
+  contactFields: [ContactField!]!
+
+  # Companies
+  company(id: ID!): Company
+  companies(pagination: PaginationInput): [Company!]!
+
+  # Agents
+  agent(id: ID!): Agent
+  agents(pagination: PaginationInput): [Agent!]!
+  currentAgent: Agent
+
+  # Groups & Roles
+  group(id: ID!): Group
+  groups(pagination: PaginationInput): [Group!]!
+  role(id: ID!): Role
+  roles(pagination: PaginationInput): [Role!]!
+
+  # Products
+  product(id: ID!): Product
+  products(pagination: PaginationInput): [Product!]!
+
+  # Conversations & Time
+  conversations(ticketId: ID!): [ConversationEntry!]!
+  timeEntries(ticketId: ID!): [TimeEntry!]!
+
+  # Solutions
+  solutionCategories(pagination: PaginationInput): [SolutionCategory!]!
+  solutionCategory(id: ID!): SolutionCategory
+  solutionFolder(id: ID!): SolutionFolder
+  article(id: ID!): Article
+  articles(filter: ArticleFilterInput, pagination: PaginationInput): [Article!]!
+
+  # Forums
+  forums(pagination: PaginationInput): [Forum!]!
+  forum(id: ID!): Forum
+  topic(id: ID!): Topic
+  post(id: ID!): Post
+
+  # Config
+  emailConfigs(pagination: PaginationInput): [EmailConfig!]!
+  businessHours(pagination: PaginationInput): [BusinessHour!]!
+  slaPolicies(pagination: PaginationInput): [SLAPolicy!]!
+
+  # Automation
+  automations(pagination: PaginationInput): [Automation!]!
+  cannedResponses(pagination: PaginationInput): [CannedResponse!]!
+
+  # Satisfaction
+  satisfactionRatings(ticketId: ID, pagination: PaginationInput): [SatisfactionRating!]!
+
+  # Audit & Analytics
+  auditLogs(pagination: PaginationInput): [AuditLog!]!
+  exports(pagination: PaginationInput): [Export!]!
+  analytics(reportType: String, filters: JSON): Analytics
+
+  # Apps & Widgets
+  apps(pagination: PaginationInput): [App!]!
+  widgets(pagination: PaginationInput): [Widget!]!
+}
+
+type Mutation {
+  # Tickets
+  createTicket(
+    subject: String!
+    description: String
+    status: TicketStatus
+    priority: TicketPriority
+    source: TicketSource
+    requesterId: Int
+    responderId: Int
+    groupId: Int
+    type: String
+    tags: [String]
+    customFields: JSON
+  ): Ticket
+
+  updateTicket(
+    id: ID!
+    subject: String
+    description: String
+    status: TicketStatus
+    priority: TicketPriority
+    responderId: Int
+    groupId: Int
+    type: String
+    tags: [String]
+    customFields: JSON
+  ): Ticket
+
+  deleteTicket(id: ID!): Boolean
+  restoreTicket(id: ID!): Boolean
+
+  # Contacts
+  createContact(
+    name: String!
+    email: String
+    phone: String
+    mobile: String
+    companyId: Int
+    tags: [String]
+    customFields: JSON
+  ): Contact
+
+  updateContact(
+    id: ID!
+    name: String
+    email: String
+    phone: String
+    companyId: Int
+    tags: [String]
+    customFields: JSON
+  ): Contact
+
+  deleteContact(id: ID!): Boolean
+  mergeContacts(parentId: ID!, childIds: [ID!]!): Contact
+
+  # Companies
+  createCompany(
+    name: String!
+    description: String
+    domains: [String]
+    customFields: JSON
+  ): Company
+
+  updateCompany(
+    id: ID!
+    name: String
+    description: String
+    domains: [String]
+    customFields: JSON
+  ): Company
+
+  deleteCompany(id: ID!): Boolean
+
+  # Conversations
+  replyToTicket(
+    ticketId: ID!
+    body: String!
+    toEmails: [String]
+    ccEmails: [String]
+    bccEmails: [String]
+    attachments: [ID]
+  ): ConversationEntry
+
+  addNote(
+    ticketId: ID!
+    body: String!
+    private: Boolean
+    notifyEmails: [String]
+    attachments: [ID]
+  ): Note
+
+  # Time Entries
+  createTimeEntry(
+    ticketId: ID!
+    timeSpent: String!
+    billable: Boolean
+    note: String
+    agentId: Int
+    startTime: DateTime
+  ): TimeEntry
+
+  updateTimeEntry(
+    id: ID!
+    timeSpent: String
+    billable: Boolean
+    note: String
+  ): TimeEntry
+
+  deleteTimeEntry(id: ID!): Boolean
+
+  # Solutions
+  createArticle(
+    title: String!
+    description: String
+    folderId: Int!
+    status: ArticleStatus
+    tags: [String]
+  ): Article
+
+  updateArticle(
+    id: ID!
+    title: String
+    description: String
+    status: ArticleStatus
+    tags: [String]
+  ): Article
+
+  deleteArticle(id: ID!): Boolean
+
+  # Agents
+  createAgent(
+    name: String!
+    email: String!
+    type: AgentType
+    ticketScope: Int
+    groupIds: [Int]
+    roleIds: [Int]
+  ): Agent
+
+  updateAgent(
+    id: ID!
+    type: AgentType
+    ticketScope: Int
+    groupIds: [Int]
+    roleIds: [Int]
+  ): Agent
+
+  deleteAgent(id: ID!): Boolean
+}
