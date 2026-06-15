@@ -1,0 +1,1827 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshdesk REST API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tickets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all tickets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Pre-defined filter to apply. Options include new_and_my_open, watching, spam, deleted."
+              },
+              {
+                "name": "requester_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter tickets by requester ID."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter tickets by requester email address."
+              },
+              {
+                "name": "updated_since",
+                "value": "",
+                "type": "query",
+                "description": "Return tickets updated since the given date-time in UTC format."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by."
+              },
+              {
+                "name": "order_type",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction for results."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Include additional information such as requester, stats, or description."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of tickets from the helpdesk. By default, only tickets that have not been deleted or marked as spam are returned. Use filter query parameters to narrow results by status, requester, agent, group, or updated date."
+        },
+        {
+          "info": {
+            "name": "Create a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new support ticket. At minimum, a requester identifier (email, phone, requester_id, or twitter_id) and a subject or description must be provided."
+        },
+        {
+          "info": {
+            "name": "View a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Include additional information in the response."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific ticket by its ID, including all standard and custom fields."
+        },
+        {
+          "info": {
+            "name": "Update a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing ticket. Only the fields provided in the request body will be updated."
+        },
+        {
+          "info": {
+            "name": "Delete a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              }
+            ]
+          },
+          "docs": "Soft-deletes a ticket, moving it to the trash. The ticket can be restored later using the restore endpoint."
+        },
+        {
+          "info": {
+            "name": "Restore a deleted ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id/restore",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              }
+            ]
+          },
+          "docs": "Restores a previously soft-deleted ticket from the trash."
+        },
+        {
+          "info": {
+            "name": "Create an outbound email ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/outbound_email",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new outbound email ticket, allowing agents to initiate email conversations with customers."
+        },
+        {
+          "info": {
+            "name": "List watchers on a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id/watchers",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              }
+            ]
+          },
+          "docs": "Retrieves the list of agents watching the specified ticket."
+        },
+        {
+          "info": {
+            "name": "Watch a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id/watch",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              }
+            ]
+          },
+          "docs": "Adds the authenticated agent as a watcher on the specified ticket."
+        },
+        {
+          "info": {
+            "name": "List associated tickets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id/associated_tickets",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              }
+            ]
+          },
+          "docs": "Retrieves tickets associated with the specified tracker ticket."
+        },
+        {
+          "info": {
+            "name": "Merge tickets",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/merge",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Merges one or more secondary tickets into a primary ticket. The secondary tickets are closed and their conversations are added to the primary ticket."
+        },
+        {
+          "info": {
+            "name": "Bulk update tickets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/bulk_update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates properties on multiple tickets at once."
+        },
+        {
+          "info": {
+            "name": "Bulk delete tickets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/bulk_delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Soft-deletes multiple tickets at once, moving them to the trash."
+        },
+        {
+          "info": {
+            "name": "List all ticket fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/ticket_fields"
+          },
+          "docs": "Retrieves all default and custom ticket fields."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Conversations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List conversations on a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id/conversations",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves all conversations (replies and notes) associated with the specified ticket."
+        },
+        {
+          "info": {
+            "name": "Reply to a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id/reply",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a reply to the specified ticket. The reply is sent as an email to the requester and any CC'd addresses."
+        },
+        {
+          "info": {
+            "name": "Create a note on a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id/notes",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds an internal or public note to the specified ticket. Private notes are visible only to agents."
+        },
+        {
+          "info": {
+            "name": "Forward a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id/forward",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Forwards the specified ticket to one or more email addresses."
+        },
+        {
+          "info": {
+            "name": "Update a conversation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/conversations/:conversation_id",
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the conversation."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the body of an existing conversation (reply or note)."
+        },
+        {
+          "info": {
+            "name": "Delete a conversation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshdesk.com/api/v2/conversations/:conversation_id",
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the conversation."
+              }
+            ]
+          },
+          "docs": "Deletes a conversation (note) from a ticket. Only notes can be deleted; replies cannot be removed."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Time Entries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List time entries for a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id/time_entries",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              }
+            ]
+          },
+          "docs": "Retrieves all time entries associated with the specified ticket."
+        },
+        {
+          "info": {
+            "name": "Create a time entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id/time_entries",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a new time entry to the specified ticket to track agent effort."
+        },
+        {
+          "info": {
+            "name": "List all time entries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/time_entries",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves all time entries across all tickets, with optional filters."
+        },
+        {
+          "info": {
+            "name": "Update a time entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/time_entries/:time_entry_id",
+            "params": [
+              {
+                "name": "time_entry_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the time entry."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing time entry."
+        },
+        {
+          "info": {
+            "name": "Delete a time entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshdesk.com/api/v2/time_entries/:time_entry_id",
+            "params": [
+              {
+                "name": "time_entry_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the time entry."
+              }
+            ]
+          },
+          "docs": "Deletes a time entry from a ticket."
+        },
+        {
+          "info": {
+            "name": "Toggle a timer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/time_entries/:time_entry_id/toggle_timer",
+            "params": [
+              {
+                "name": "time_entry_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the time entry."
+              }
+            ]
+          },
+          "docs": "Starts or stops the timer on a time entry."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Satisfaction Ratings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a satisfaction rating",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id/satisfaction_ratings",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a satisfaction rating for the specified ticket."
+        },
+        {
+          "info": {
+            "name": "List all satisfaction ratings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/surveys/satisfaction_ratings",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              },
+              {
+                "name": "created_since",
+                "value": "",
+                "type": "query",
+                "description": "Return ratings created since the given date-time."
+              }
+            ]
+          },
+          "docs": "Retrieves all satisfaction ratings across tickets, with optional filters for date range and satisfaction score."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Contacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/contacts",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter contacts by email address."
+              },
+              {
+                "name": "phone",
+                "value": "",
+                "type": "query",
+                "description": "Filter contacts by phone number."
+              },
+              {
+                "name": "mobile",
+                "value": "",
+                "type": "query",
+                "description": "Filter contacts by mobile number."
+              },
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter contacts by company ID."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filter contacts by state."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of contacts. Contacts can be filtered by email, phone, mobile, company, or state."
+        },
+        {
+          "info": {
+            "name": "Create a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/contacts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new contact in the helpdesk. At minimum, an email, phone, mobile, or twitter_id must be provided."
+        },
+        {
+          "info": {
+            "name": "View a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/contacts/:contact_id",
+            "params": [
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the contact."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific contact by ID."
+        },
+        {
+          "info": {
+            "name": "Update a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/contacts/:contact_id",
+            "params": [
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the contact."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing contact."
+        },
+        {
+          "info": {
+            "name": "Delete a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshdesk.com/api/v2/contacts/:contact_id",
+            "params": [
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the contact."
+              }
+            ]
+          },
+          "docs": "Soft-deletes a contact. The contact can be restored later."
+        },
+        {
+          "info": {
+            "name": "Restore a deleted contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/contacts/:contact_id/restore",
+            "params": [
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the contact."
+              }
+            ]
+          },
+          "docs": "Restores a previously soft-deleted contact."
+        },
+        {
+          "info": {
+            "name": "Merge contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/contacts/merge",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Merges secondary contacts into a primary contact. The secondary contacts are deleted and their tickets are reassigned to the primary."
+        },
+        {
+          "info": {
+            "name": "Export contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/contacts/export"
+          },
+          "docs": "Initiates an export of contacts and returns a job ID to check status."
+        },
+        {
+          "info": {
+            "name": "List all contact fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/contact_fields"
+          },
+          "docs": "Retrieves all default and custom contact fields."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Companies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all companies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/companies",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of companies."
+        },
+        {
+          "info": {
+            "name": "Create a company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/companies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new company in the helpdesk."
+        },
+        {
+          "info": {
+            "name": "View a company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/companies/:company_id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the company."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific company by ID."
+        },
+        {
+          "info": {
+            "name": "Update a company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/companies/:company_id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the company."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing company."
+        },
+        {
+          "info": {
+            "name": "Delete a company",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshdesk.com/api/v2/companies/:company_id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the company."
+              }
+            ]
+          },
+          "docs": "Deletes a company from the helpdesk."
+        },
+        {
+          "info": {
+            "name": "List all company fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/company_fields"
+          },
+          "docs": "Retrieves all default and custom company fields."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Agents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all agents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/agents",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter agents by email address."
+              },
+              {
+                "name": "phone",
+                "value": "",
+                "type": "query",
+                "description": "Filter agents by phone number."
+              },
+              {
+                "name": "mobile",
+                "value": "",
+                "type": "query",
+                "description": "Filter agents by mobile number."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filter agents by state."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of agents. Agents can be filtered by email, phone, mobile, or state."
+        },
+        {
+          "info": {
+            "name": "View an agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/agents/:agent_id",
+            "params": [
+              {
+                "name": "agent_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the agent."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific agent by ID."
+        },
+        {
+          "info": {
+            "name": "Update an agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/agents/:agent_id",
+            "params": [
+              {
+                "name": "agent_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the agent."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing agent."
+        },
+        {
+          "info": {
+            "name": "Delete an agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshdesk.com/api/v2/agents/:agent_id",
+            "params": [
+              {
+                "name": "agent_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the agent."
+              }
+            ]
+          },
+          "docs": "Deletes an agent from the helpdesk. The agent's tickets will need to be reassigned."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/groups",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of agent groups."
+        },
+        {
+          "info": {
+            "name": "Create a group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/groups",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new agent group in the helpdesk."
+        },
+        {
+          "info": {
+            "name": "View a group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/groups/:group_id",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the group."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific group by ID."
+        },
+        {
+          "info": {
+            "name": "Update a group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/groups/:group_id",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the group."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing group."
+        },
+        {
+          "info": {
+            "name": "Delete a group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshdesk.com/api/v2/groups/:group_id",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the group."
+              }
+            ]
+          },
+          "docs": "Deletes a group from the helpdesk."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Roles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/roles"
+          },
+          "docs": "Retrieves a list of all roles defined in the helpdesk."
+        },
+        {
+          "info": {
+            "name": "View a role",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/roles/:role_id",
+            "params": [
+              {
+                "name": "role_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the role."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific role by ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/products",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of products."
+        },
+        {
+          "info": {
+            "name": "View a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/products/:product_id",
+            "params": [
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the product."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific product by ID."
+        },
+        {
+          "info": {
+            "name": "Create a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/products/:product_id",
+            "params": [
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the product."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new product in the helpdesk."
+        },
+        {
+          "info": {
+            "name": "Update a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/products/:product_id",
+            "params": [
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the product."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing product."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Email Configs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all email configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/email_configs"
+          },
+          "docs": "Retrieves a list of all email mailbox configurations."
+        },
+        {
+          "info": {
+            "name": "View an email configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/email_configs/:email_config_id",
+            "params": [
+              {
+                "name": "email_config_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the email configuration."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific email configuration by ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "SLA Policies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all SLA policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/sla_policies"
+          },
+          "docs": "Retrieves a list of all SLA policies defined in the helpdesk."
+        },
+        {
+          "info": {
+            "name": "View an SLA policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/sla_policies/:sla_policy_id",
+            "params": [
+              {
+                "name": "sla_policy_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the SLA policy."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific SLA policy by ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Business Hours",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all business hours",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/business_hours"
+          },
+          "docs": "Retrieves a list of all business hour schedules."
+        },
+        {
+          "info": {
+            "name": "View a business hour schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/business_hours/:business_hour_id",
+            "params": [
+              {
+                "name": "business_hour_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the business hour schedule."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific business hour schedule by ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Solutions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all solution categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/categories"
+          },
+          "docs": "Retrieves a list of all solution categories in the knowledge base."
+        },
+        {
+          "info": {
+            "name": "Create a solution category",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/categories",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new solution category in the knowledge base."
+        },
+        {
+          "info": {
+            "name": "View a solution category",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/categories/:category_id",
+            "params": [
+              {
+                "name": "category_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution category."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific solution category by ID."
+        },
+        {
+          "info": {
+            "name": "Update a solution category",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/categories/:category_id",
+            "params": [
+              {
+                "name": "category_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution category."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing solution category."
+        },
+        {
+          "info": {
+            "name": "Delete a solution category",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/categories/:category_id",
+            "params": [
+              {
+                "name": "category_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution category."
+              }
+            ]
+          },
+          "docs": "Deletes a solution category and all its folders and articles."
+        },
+        {
+          "info": {
+            "name": "List solution folders in a category",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/categories/:category_id/folders",
+            "params": [
+              {
+                "name": "category_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution category."
+              }
+            ]
+          },
+          "docs": "Retrieves all solution folders within the specified category."
+        },
+        {
+          "info": {
+            "name": "Create a solution folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/categories/:category_id/folders",
+            "params": [
+              {
+                "name": "category_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution category."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new solution folder within the specified category."
+        },
+        {
+          "info": {
+            "name": "View a solution folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/folders/:folder_id",
+            "params": [
+              {
+                "name": "folder_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution folder."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific solution folder by ID."
+        },
+        {
+          "info": {
+            "name": "Update a solution folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/folders/:folder_id",
+            "params": [
+              {
+                "name": "folder_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution folder."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing solution folder."
+        },
+        {
+          "info": {
+            "name": "Delete a solution folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/folders/:folder_id",
+            "params": [
+              {
+                "name": "folder_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution folder."
+              }
+            ]
+          },
+          "docs": "Deletes a solution folder and all its articles."
+        },
+        {
+          "info": {
+            "name": "List solution articles in a folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/folders/:folder_id/articles",
+            "params": [
+              {
+                "name": "folder_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution folder."
+              }
+            ]
+          },
+          "docs": "Retrieves all solution articles within the specified folder."
+        },
+        {
+          "info": {
+            "name": "Create a solution article",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/folders/:folder_id/articles",
+            "params": [
+              {
+                "name": "folder_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution folder."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new solution article within the specified folder."
+        },
+        {
+          "info": {
+            "name": "View a solution article",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/articles/:article_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution article."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific solution article by ID."
+        },
+        {
+          "info": {
+            "name": "Update a solution article",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/articles/:article_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution article."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing solution article."
+        },
+        {
+          "info": {
+            "name": "Delete a solution article",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/articles/:article_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution article."
+              }
+            ]
+          },
+          "docs": "Deletes a solution article from the knowledge base."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search tickets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/search/tickets",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Search query using Freshdesk query language, e.g. \"priority:1 AND status:2\"."
+              }
+            ]
+          },
+          "docs": "Searches for tickets using Freshdesk query language. Supports filtering by any ticket field using a SQL-like query syntax."
+        },
+        {
+          "info": {
+            "name": "Search contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/search/contacts",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Search query using Freshdesk query language."
+              }
+            ]
+          },
+          "docs": "Searches for contacts using Freshdesk query language."
+        },
+        {
+          "info": {
+            "name": "Search companies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/search/companies",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Search query using Freshdesk query language."
+              }
+            ]
+          },
+          "docs": "Searches for companies using Freshdesk query language."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
