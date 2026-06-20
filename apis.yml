@@ -10,7 +10,7 @@ apis:
   - Customer Support
   - Helpdesk
   - Tickets
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://yourdomain.freshdesk.com/api/v2
   humanURL: https://developers.freshdesk.com/api/
   properties:
@@ -34,7 +34,7 @@ apis:
   - Events
   - Notifications
   - Webhooks
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://api.example.com
   humanURL: https://support.freshdesk.com/support/solutions/folders/272646
   properties:
@@ -55,7 +55,7 @@ apis:
   - Marketplace
   - Plugins
   - SDK
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://api.example.com
   humanURL: https://developers.freshdesk.com/
   properties:
