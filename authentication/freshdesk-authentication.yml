@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/freshdesk-rest-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: Freshdesk uses API key-based authentication. Pass your API key as the username
+    with any string (e.g. X) as the password using HTTP Basic Authentication.
+  sources:
+  - openapi/freshdesk-rest-api-openapi.yml
