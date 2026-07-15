@@ -69,6 +69,8 @@ apis:
     runtimes, the SDK provides tools for creating front-end interfaces using the Crayons
     component library and server-side logic through serverless apps.
 common:
+- type: AgenticAccess
+  url: agentic-access/freshdesk-agentic-access.yml
 - type: DomainSecurity
   url: security/freshdesk-domain-security.yml
 - type: Authentication
