@@ -1,0 +1,137 @@
+openapi: 3.1.0
+info:
+  title: Freshdesk REST Agents Roles API
+  description: The Freshdesk REST API (v2) provides programmatic access to helpdesk data and operations within Freshdesk, a customer support platform by Freshworks. It exposes endpoints for managing tickets, contacts, companies, agents, groups, conversations, products, email configurations, SLA policies, business hours, time entries, satisfaction ratings, solution categories, solution folders, solution articles, and more. The API uses JSON for request and response payloads, supports API key-based authentication, and follows RESTful conventions for CRUD operations.
+  version: '2.0'
+  contact:
+    name: Freshdesk Support
+    url: https://support.freshdesk.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshdesk.com/api/v2
+  description: Freshdesk Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.
+security:
+- basicAuth: []
+tags:
+- name: Roles
+  description: Manage roles that define agent permissions.
+paths:
+  /roles:
+    get:
+      operationId: listRoles
+      summary: List all roles
+      description: Retrieves a list of all roles defined in the helpdesk.
+      tags:
+      - Roles
+      responses:
+        '200':
+          description: Successfully retrieved list of roles.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Role'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /roles/{role_id}:
+    get:
+      operationId: getRole
+      summary: View a role
+      description: Retrieves the details of a specific role by ID.
+      tags:
+      - Roles
+      parameters:
+      - $ref: '#/components/parameters/roleId'
+      responses:
+        '200':
+          description: Successfully retrieved role details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Role:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the role.
+        name:
+          type: string
+          description: Name of the role.
+        description:
+          type: string
+          nullable: true
+          description: Description of the role.
+        default:
+          type: boolean
+          description: Whether this is a default system role.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the role was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the role was last updated.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
+  parameters:
+    roleId:
+      name: role_id
+      in: path
+      required: true
+      description: Unique identifier of the role.
+      schema:
+        type: integer
+        format: int64
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Freshdesk uses API key-based authentication. Pass your API key as the username with any string (e.g. X) as the password using HTTP Basic Authentication.
+externalDocs:
+  description: Freshdesk API Documentation
+  url: https://developers.freshdesk.com/api/

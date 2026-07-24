@@ -1,0 +1,593 @@
+openapi: 3.1.0
+info:
+  title: Freshdesk REST Agents Solutions API
+  description: The Freshdesk REST API (v2) provides programmatic access to helpdesk data and operations within Freshdesk, a customer support platform by Freshworks. It exposes endpoints for managing tickets, contacts, companies, agents, groups, conversations, products, email configurations, SLA policies, business hours, time entries, satisfaction ratings, solution categories, solution folders, solution articles, and more. The API uses JSON for request and response payloads, supports API key-based authentication, and follows RESTful conventions for CRUD operations.
+  version: '2.0'
+  contact:
+    name: Freshdesk Support
+    url: https://support.freshdesk.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshdesk.com/api/v2
+  description: Freshdesk Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.
+security:
+- basicAuth: []
+tags:
+- name: Solutions
+  description: Manage knowledge base solution categories, folders, and articles.
+paths:
+  /solutions/categories:
+    get:
+      operationId: listSolutionCategories
+      summary: List all solution categories
+      description: Retrieves a list of all solution categories in the knowledge base.
+      tags:
+      - Solutions
+      responses:
+        '200':
+          description: Successfully retrieved solution categories.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SolutionCategory'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createSolutionCategory
+      summary: Create a solution category
+      description: Creates a new solution category in the knowledge base.
+      tags:
+      - Solutions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: Name of the solution category.
+                description:
+                  type: string
+                  description: Description of the solution category.
+      responses:
+        '201':
+          description: Solution category created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionCategory'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /solutions/categories/{category_id}:
+    get:
+      operationId: getSolutionCategory
+      summary: View a solution category
+      description: Retrieves the details of a specific solution category by ID.
+      tags:
+      - Solutions
+      parameters:
+      - $ref: '#/components/parameters/categoryId'
+      responses:
+        '200':
+          description: Successfully retrieved solution category.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionCategory'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateSolutionCategory
+      summary: Update a solution category
+      description: Updates the properties of an existing solution category.
+      tags:
+      - Solutions
+      parameters:
+      - $ref: '#/components/parameters/categoryId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the solution category.
+                description:
+                  type: string
+                  description: Description of the solution category.
+      responses:
+        '200':
+          description: Solution category updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionCategory'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteSolutionCategory
+      summary: Delete a solution category
+      description: Deletes a solution category and all its folders and articles.
+      tags:
+      - Solutions
+      parameters:
+      - $ref: '#/components/parameters/categoryId'
+      responses:
+        '204':
+          description: Solution category deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /solutions/categories/{category_id}/folders:
+    get:
+      operationId: listSolutionFolders
+      summary: List solution folders in a category
+      description: Retrieves all solution folders within the specified category.
+      tags:
+      - Solutions
+      parameters:
+      - $ref: '#/components/parameters/categoryId'
+      responses:
+        '200':
+          description: Successfully retrieved solution folders.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SolutionFolder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: createSolutionFolder
+      summary: Create a solution folder
+      description: Creates a new solution folder within the specified category.
+      tags:
+      - Solutions
+      parameters:
+      - $ref: '#/components/parameters/categoryId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              - visibility
+              properties:
+                name:
+                  type: string
+                  description: Name of the solution folder.
+                description:
+                  type: string
+                  description: Description of the solution folder.
+                visibility:
+                  type: integer
+                  description: Visibility of the folder. 1 for all users, 2 for logged-in users, 3 for agents only, 4 for selected companies.
+                  enum:
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+      responses:
+        '201':
+          description: Solution folder created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionFolder'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /solutions/folders/{folder_id}:
+    get:
+      operationId: getSolutionFolder
+      summary: View a solution folder
+      description: Retrieves the details of a specific solution folder by ID.
+      tags:
+      - Solutions
+      parameters:
+      - $ref: '#/components/parameters/folderId'
+      responses:
+        '200':
+          description: Successfully retrieved solution folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionFolder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateSolutionFolder
+      summary: Update a solution folder
+      description: Updates the properties of an existing solution folder.
+      tags:
+      - Solutions
+      parameters:
+      - $ref: '#/components/parameters/folderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the solution folder.
+                description:
+                  type: string
+                  description: Description of the solution folder.
+                visibility:
+                  type: integer
+                  description: Visibility of the folder.
+      responses:
+        '200':
+          description: Solution folder updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionFolder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteSolutionFolder
+      summary: Delete a solution folder
+      description: Deletes a solution folder and all its articles.
+      tags:
+      - Solutions
+      parameters:
+      - $ref: '#/components/parameters/folderId'
+      responses:
+        '204':
+          description: Solution folder deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /solutions/folders/{folder_id}/articles:
+    get:
+      operationId: listSolutionArticles
+      summary: List solution articles in a folder
+      description: Retrieves all solution articles within the specified folder.
+      tags:
+      - Solutions
+      parameters:
+      - $ref: '#/components/parameters/folderId'
+      responses:
+        '200':
+          description: Successfully retrieved solution articles.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SolutionArticle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: createSolutionArticle
+      summary: Create a solution article
+      description: Creates a new solution article within the specified folder.
+      tags:
+      - Solutions
+      parameters:
+      - $ref: '#/components/parameters/folderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - title
+              - description
+              - status
+              properties:
+                title:
+                  type: string
+                  description: Title of the solution article.
+                description:
+                  type: string
+                  description: Content of the solution article in HTML format.
+                status:
+                  type: integer
+                  description: Publication status. 1 for draft, 2 for published.
+                  enum:
+                  - 1
+                  - 2
+      responses:
+        '201':
+          description: Solution article created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionArticle'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /solutions/articles/{article_id}:
+    get:
+      operationId: getSolutionArticle
+      summary: View a solution article
+      description: Retrieves the details of a specific solution article by ID.
+      tags:
+      - Solutions
+      parameters:
+      - $ref: '#/components/parameters/articleId'
+      responses:
+        '200':
+          description: Successfully retrieved solution article.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionArticle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateSolutionArticle
+      summary: Update a solution article
+      description: Updates the properties of an existing solution article.
+      tags:
+      - Solutions
+      parameters:
+      - $ref: '#/components/parameters/articleId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Title of the solution article.
+                description:
+                  type: string
+                  description: Content of the solution article in HTML format.
+                status:
+                  type: integer
+                  description: Publication status. 1 for draft, 2 for published.
+      responses:
+        '200':
+          description: Solution article updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolutionArticle'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteSolutionArticle
+      summary: Delete a solution article
+      description: Deletes a solution article from the knowledge base.
+      tags:
+      - Solutions
+      parameters:
+      - $ref: '#/components/parameters/articleId'
+      responses:
+        '204':
+          description: Solution article deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    SolutionCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the solution category.
+        name:
+          type: string
+          description: Name of the solution category.
+        description:
+          type: string
+          nullable: true
+          description: Description of the solution category.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the category was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the category was last updated.
+    SolutionFolder:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the solution folder.
+        name:
+          type: string
+          description: Name of the solution folder.
+        description:
+          type: string
+          nullable: true
+          description: Description of the solution folder.
+        category_id:
+          type: integer
+          format: int64
+          description: ID of the parent category.
+        visibility:
+          type: integer
+          description: Visibility setting. 1=All users, 2=Logged-in users, 3=Agents only, 4=Selected companies.
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+        articles_count:
+          type: integer
+          description: Number of articles in the folder.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the folder was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the folder was last updated.
+    SolutionArticle:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the solution article.
+        title:
+          type: string
+          description: Title of the article.
+        description:
+          type: string
+          description: Content of the article in HTML format.
+        description_text:
+          type: string
+          description: Content of the article in plain text.
+        folder_id:
+          type: integer
+          format: int64
+          description: ID of the parent folder.
+        category_id:
+          type: integer
+          format: int64
+          description: ID of the parent category.
+        status:
+          type: integer
+          description: Publication status. 1=Draft, 2=Published.
+          enum:
+          - 1
+          - 2
+        thumbs_up:
+          type: integer
+          description: Number of positive votes.
+        thumbs_down:
+          type: integer
+          description: Number of negative votes.
+        hits:
+          type: integer
+          description: Number of views.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags associated with the article.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the article was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the article was last updated.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
+  responses:
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request is invalid or malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    folderId:
+      name: folder_id
+      in: path
+      required: true
+      description: Unique identifier of the solution folder.
+      schema:
+        type: integer
+        format: int64
+    articleId:
+      name: article_id
+      in: path
+      required: true
+      description: Unique identifier of the solution article.
+      schema:
+        type: integer
+        format: int64
+    categoryId:
+      name: category_id
+      in: path
+      required: true
+      description: Unique identifier of the solution category.
+      schema:
+        type: integer
+        format: int64
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Freshdesk uses API key-based authentication. Pass your API key as the username with any string (e.g. X) as the password using HTTP Basic Authentication.
+externalDocs:
+  description: Freshdesk API Documentation
+  url: https://developers.freshdesk.com/api/

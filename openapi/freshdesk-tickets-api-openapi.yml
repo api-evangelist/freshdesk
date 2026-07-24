@@ -1,0 +1,790 @@
+openapi: 3.1.0
+info:
+  title: Freshdesk REST Agents Tickets API
+  description: The Freshdesk REST API (v2) provides programmatic access to helpdesk data and operations within Freshdesk, a customer support platform by Freshworks. It exposes endpoints for managing tickets, contacts, companies, agents, groups, conversations, products, email configurations, SLA policies, business hours, time entries, satisfaction ratings, solution categories, solution folders, solution articles, and more. The API uses JSON for request and response payloads, supports API key-based authentication, and follows RESTful conventions for CRUD operations.
+  version: '2.0'
+  contact:
+    name: Freshdesk Support
+    url: https://support.freshdesk.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshdesk.com/api/v2
+  description: Freshdesk Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.
+security:
+- basicAuth: []
+tags:
+- name: Tickets
+  description: Manage support tickets including creation, updates, bulk operations, merging, and lifecycle management.
+paths:
+  /tickets:
+    get:
+      operationId: listTickets
+      summary: List all tickets
+      description: Retrieves a paginated list of tickets from the helpdesk. By default, only tickets that have not been deleted or marked as spam are returned. Use filter query parameters to narrow results by status, requester, agent, group, or updated date.
+      tags:
+      - Tickets
+      parameters:
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/perPage'
+      - name: filter
+        in: query
+        description: Pre-defined filter to apply. Options include new_and_my_open, watching, spam, deleted.
+        schema:
+          type: string
+          enum:
+          - new_and_my_open
+          - watching
+          - spam
+          - deleted
+      - name: requester_id
+        in: query
+        description: Filter tickets by requester ID.
+        schema:
+          type: integer
+          format: int64
+      - name: email
+        in: query
+        description: Filter tickets by requester email address.
+        schema:
+          type: string
+          format: email
+      - name: updated_since
+        in: query
+        description: Return tickets updated since the given date-time in UTC format.
+        schema:
+          type: string
+          format: date-time
+      - name: order_by
+        in: query
+        description: Field to order results by.
+        schema:
+          type: string
+          enum:
+          - created_at
+          - due_by
+          - updated_at
+          - status
+          default: created_at
+      - name: order_type
+        in: query
+        description: Sort direction for results.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: include
+        in: query
+        description: Include additional information such as requester, stats, or description.
+        schema:
+          type: string
+          enum:
+          - requester
+          - stats
+          - description
+      responses:
+        '200':
+          description: Successfully retrieved list of tickets.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ticket'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createTicket
+      summary: Create a ticket
+      description: Creates a new support ticket. At minimum, a requester identifier (email, phone, requester_id, or twitter_id) and a subject or description must be provided.
+      tags:
+      - Tickets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketCreate'
+      responses:
+        '201':
+          description: Ticket created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tickets/{ticket_id}:
+    get:
+      operationId: getTicket
+      summary: View a ticket
+      description: Retrieves the details of a specific ticket by its ID, including all standard and custom fields.
+      tags:
+      - Tickets
+      parameters:
+      - $ref: '#/components/parameters/ticketId'
+      - name: include
+        in: query
+        description: Include additional information in the response.
+        schema:
+          type: string
+          enum:
+          - conversations
+          - requester
+          - company
+          - stats
+      responses:
+        '200':
+          description: Successfully retrieved ticket details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateTicket
+      summary: Update a ticket
+      description: Updates the properties of an existing ticket. Only the fields provided in the request body will be updated.
+      tags:
+      - Tickets
+      parameters:
+      - $ref: '#/components/parameters/ticketId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketUpdate'
+      responses:
+        '200':
+          description: Ticket updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteTicket
+      summary: Delete a ticket
+      description: Soft-deletes a ticket, moving it to the trash. The ticket can be restored later using the restore endpoint.
+      tags:
+      - Tickets
+      parameters:
+      - $ref: '#/components/parameters/ticketId'
+      responses:
+        '204':
+          description: Ticket deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tickets/{ticket_id}/restore:
+    put:
+      operationId: restoreTicket
+      summary: Restore a deleted ticket
+      description: Restores a previously soft-deleted ticket from the trash.
+      tags:
+      - Tickets
+      parameters:
+      - $ref: '#/components/parameters/ticketId'
+      responses:
+        '204':
+          description: Ticket restored successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tickets/outbound_email:
+    post:
+      operationId: createOutboundEmail
+      summary: Create an outbound email ticket
+      description: Creates a new outbound email ticket, allowing agents to initiate email conversations with customers.
+      tags:
+      - Tickets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketCreate'
+      responses:
+        '201':
+          description: Outbound email ticket created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tickets/{ticket_id}/watchers:
+    get:
+      operationId: listTicketWatchers
+      summary: List watchers on a ticket
+      description: Retrieves the list of agents watching the specified ticket.
+      tags:
+      - Tickets
+      parameters:
+      - $ref: '#/components/parameters/ticketId'
+      responses:
+        '200':
+          description: Successfully retrieved watchers.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  watcher_ids:
+                    type: array
+                    items:
+                      type: integer
+                      format: int64
+                    description: List of agent IDs watching the ticket.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tickets/{ticket_id}/watch:
+    post:
+      operationId: watchTicket
+      summary: Watch a ticket
+      description: Adds the authenticated agent as a watcher on the specified ticket.
+      tags:
+      - Tickets
+      parameters:
+      - $ref: '#/components/parameters/ticketId'
+      responses:
+        '204':
+          description: Successfully added as a watcher.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tickets/{ticket_id}/associated_tickets:
+    get:
+      operationId: listAssociatedTickets
+      summary: List associated tickets
+      description: Retrieves tickets associated with the specified tracker ticket.
+      tags:
+      - Tickets
+      parameters:
+      - $ref: '#/components/parameters/ticketId'
+      responses:
+        '200':
+          description: Successfully retrieved associated tickets.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ticket'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tickets/merge:
+    put:
+      operationId: mergeTickets
+      summary: Merge tickets
+      description: Merges one or more secondary tickets into a primary ticket. The secondary tickets are closed and their conversations are added to the primary ticket.
+      tags:
+      - Tickets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - primary_id
+              - ticket_ids
+              properties:
+                primary_id:
+                  type: integer
+                  format: int64
+                  description: ID of the primary ticket to merge into.
+                ticket_ids:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: IDs of secondary tickets to merge.
+      responses:
+        '200':
+          description: Tickets merged successfully.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tickets/bulk_update:
+    post:
+      operationId: bulkUpdateTickets
+      summary: Bulk update tickets
+      description: Updates properties on multiple tickets at once.
+      tags:
+      - Tickets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - ids
+              - properties
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: IDs of tickets to update.
+                properties:
+                  type: object
+                  description: Key-value pairs of ticket properties to update.
+      responses:
+        '202':
+          description: Bulk update accepted for processing.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tickets/bulk_delete:
+    post:
+      operationId: bulkDeleteTickets
+      summary: Bulk delete tickets
+      description: Soft-deletes multiple tickets at once, moving them to the trash.
+      tags:
+      - Tickets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - ids
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: IDs of tickets to delete.
+      responses:
+        '202':
+          description: Bulk delete accepted for processing.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /ticket_fields:
+    get:
+      operationId: listTicketFields
+      summary: List all ticket fields
+      description: Retrieves all default and custom ticket fields.
+      tags:
+      - Tickets
+      responses:
+        '200':
+          description: Successfully retrieved ticket fields.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Field'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request is invalid or malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    TicketCreate:
+      type: object
+      properties:
+        subject:
+          type: string
+          description: Subject of the ticket.
+        description:
+          type: string
+          description: HTML content of the ticket description.
+        email:
+          type: string
+          format: email
+          description: Email address of the requester. Required if requester_id, phone, or twitter_id is not provided.
+        phone:
+          type: string
+          description: Phone number of the requester.
+        requester_id:
+          type: integer
+          format: int64
+          description: ID of the requester contact.
+        status:
+          type: integer
+          description: Status of the ticket. 2=Open, 3=Pending, 4=Resolved, 5=Closed.
+          enum:
+          - 2
+          - 3
+          - 4
+          - 5
+        priority:
+          type: integer
+          description: Priority of the ticket. 1=Low, 2=Medium, 3=High, 4=Urgent.
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+        source:
+          type: integer
+          description: Channel source of the ticket.
+        type:
+          type: string
+          description: Type of the ticket.
+        responder_id:
+          type: integer
+          format: int64
+          description: ID of the agent to assign.
+        group_id:
+          type: integer
+          format: int64
+          description: ID of the group to assign.
+        product_id:
+          type: integer
+          format: int64
+          description: ID of the associated product.
+        cc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses to CC.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags to add to the ticket.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom field values keyed by field name with cf_ prefix.
+    Field:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the field.
+        name:
+          type: string
+          description: Internal name of the field.
+        label:
+          type: string
+          description: Display label of the field.
+        description:
+          type: string
+          nullable: true
+          description: Description of the field.
+        type:
+          type: string
+          description: Data type of the field.
+        default:
+          type: boolean
+          description: Whether this is a default system field.
+        required_for_closure:
+          type: boolean
+          description: Whether this field must be filled before closing a ticket.
+        required_for_agents:
+          type: boolean
+          description: Whether this field is required when agents create tickets.
+        required_for_customers:
+          type: boolean
+          description: Whether this field is required when customers create tickets.
+        choices:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: Available choices for dropdown fields.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the field was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the field was last updated.
+    Ticket:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the ticket.
+        subject:
+          type: string
+          description: Subject of the ticket.
+        description:
+          type: string
+          description: HTML content of the ticket description.
+        description_text:
+          type: string
+          description: Plain-text content of the ticket description.
+        status:
+          type: integer
+          description: Status of the ticket. 2=Open, 3=Pending, 4=Resolved, 5=Closed.
+          enum:
+          - 2
+          - 3
+          - 4
+          - 5
+        priority:
+          type: integer
+          description: Priority of the ticket. 1=Low, 2=Medium, 3=High, 4=Urgent.
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+        source:
+          type: integer
+          description: Channel through which the ticket was created. 1=Email, 2=Portal, 3=Phone, 7=Chat, 9=Feedback Widget, 10=Outbound Email.
+          enum:
+          - 1
+          - 2
+          - 3
+          - 7
+          - 9
+          - 10
+        type:
+          type: string
+          nullable: true
+          description: Type of the ticket, e.g. Question, Incident, Problem, Feature Request.
+        requester_id:
+          type: integer
+          format: int64
+          description: ID of the contact who raised the ticket.
+        responder_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: ID of the agent assigned to the ticket.
+        group_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: ID of the group the ticket is assigned to.
+        product_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: ID of the product associated with the ticket.
+        company_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: ID of the company associated with the ticket.
+        email_config_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: ID of the email configuration used for the ticket.
+        cc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses CC'd on the ticket.
+        fwd_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses the ticket was forwarded to.
+        reply_cc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses CC'd on replies.
+        to_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          nullable: true
+          description: Email addresses in the To field.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags associated with the ticket.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom fields set on the ticket, keyed by field name with cf_ prefix.
+        fr_escalated:
+          type: boolean
+          description: Whether the ticket has been escalated for first response SLA breach.
+        spam:
+          type: boolean
+          description: Whether the ticket has been marked as spam.
+        is_escalated:
+          type: boolean
+          description: Whether the ticket has been escalated.
+        due_by:
+          type: string
+          format: date-time
+          description: Timestamp when the ticket resolution is due.
+        fr_due_by:
+          type: string
+          format: date-time
+          description: Timestamp when the first response is due.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the ticket was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the ticket was last updated.
+    TicketUpdate:
+      type: object
+      properties:
+        subject:
+          type: string
+          description: Subject of the ticket.
+        description:
+          type: string
+          description: HTML content of the ticket description.
+        status:
+          type: integer
+          description: Status of the ticket.
+          enum:
+          - 2
+          - 3
+          - 4
+          - 5
+        priority:
+          type: integer
+          description: Priority of the ticket.
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+        source:
+          type: integer
+          description: Channel source of the ticket.
+        type:
+          type: string
+          description: Type of the ticket.
+        responder_id:
+          type: integer
+          format: int64
+          description: ID of the agent to assign.
+        group_id:
+          type: integer
+          format: int64
+          description: ID of the group to assign.
+        product_id:
+          type: integer
+          format: int64
+          description: ID of the associated product.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags to set on the ticket.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom field values to update.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
+  parameters:
+    perPage:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+    ticketId:
+      name: ticket_id
+      in: path
+      required: true
+      description: Unique identifier of the ticket.
+      schema:
+        type: integer
+        format: int64
+    page:
+      name: page
+      in: query
+      description: Page number for paginated results.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Freshdesk uses API key-based authentication. Pass your API key as the username with any string (e.g. X) as the password using HTTP Basic Authentication.
+externalDocs:
+  description: Freshdesk API Documentation
+  url: https://developers.freshdesk.com/api/

@@ -1,0 +1,415 @@
+openapi: 3.1.0
+info:
+  title: Freshdesk REST Agents Search API
+  description: The Freshdesk REST API (v2) provides programmatic access to helpdesk data and operations within Freshdesk, a customer support platform by Freshworks. It exposes endpoints for managing tickets, contacts, companies, agents, groups, conversations, products, email configurations, SLA policies, business hours, time entries, satisfaction ratings, solution categories, solution folders, solution articles, and more. The API uses JSON for request and response payloads, supports API key-based authentication, and follows RESTful conventions for CRUD operations.
+  version: '2.0'
+  contact:
+    name: Freshdesk Support
+    url: https://support.freshdesk.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshdesk.com/api/v2
+  description: Freshdesk Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.
+security:
+- basicAuth: []
+tags:
+- name: Search
+  description: Search across tickets, contacts, and companies using query syntax.
+paths:
+  /search/tickets:
+    get:
+      operationId: searchTickets
+      summary: Search tickets
+      description: Searches for tickets using Freshdesk query language. Supports filtering by any ticket field using a SQL-like query syntax.
+      tags:
+      - Search
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: Search query using Freshdesk query language, e.g. "priority:1 AND status:2".
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved search results.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    description: Total number of matching tickets.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Ticket'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /search/contacts:
+    get:
+      operationId: searchContacts
+      summary: Search contacts
+      description: Searches for contacts using Freshdesk query language.
+      tags:
+      - Search
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: Search query using Freshdesk query language.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved search results.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    description: Total number of matching contacts.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Contact'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /search/companies:
+    get:
+      operationId: searchCompanies
+      summary: Search companies
+      description: Searches for companies using Freshdesk query language.
+      tags:
+      - Search
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: Search query using Freshdesk query language.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved search results.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    description: Total number of matching companies.
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Company'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Contact:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the contact.
+        name:
+          type: string
+          description: Full name of the contact.
+        email:
+          type: string
+          format: email
+          description: Primary email address of the contact.
+        phone:
+          type: string
+          nullable: true
+          description: Phone number of the contact.
+        mobile:
+          type: string
+          nullable: true
+          description: Mobile phone number of the contact.
+        twitter_id:
+          type: string
+          nullable: true
+          description: Twitter handle of the contact.
+        address:
+          type: string
+          nullable: true
+          description: Physical address of the contact.
+        description:
+          type: string
+          nullable: true
+          description: Description or notes about the contact.
+        job_title:
+          type: string
+          nullable: true
+          description: Job title of the contact.
+        language:
+          type: string
+          nullable: true
+          description: Language preference of the contact.
+        time_zone:
+          type: string
+          nullable: true
+          description: Time zone of the contact.
+        company_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: ID of the company the contact belongs to.
+        active:
+          type: boolean
+          description: Whether the contact is active.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags associated with the contact.
+        other_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Additional email addresses for the contact.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom fields set on the contact.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the contact was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the contact was last updated.
+    Company:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the company.
+        name:
+          type: string
+          description: Name of the company.
+        description:
+          type: string
+          nullable: true
+          description: Description of the company.
+        note:
+          type: string
+          nullable: true
+          description: Notes about the company.
+        domains:
+          type: array
+          items:
+            type: string
+          description: Email domains associated with the company.
+        health_score:
+          type: string
+          nullable: true
+          description: Health score of the company relationship.
+        account_tier:
+          type: string
+          nullable: true
+          description: Account tier or plan level.
+        renewal_date:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date when the company's account renews.
+        industry:
+          type: string
+          nullable: true
+          description: Industry the company belongs to.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom fields set on the company.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the company was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the company was last updated.
+    Ticket:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the ticket.
+        subject:
+          type: string
+          description: Subject of the ticket.
+        description:
+          type: string
+          description: HTML content of the ticket description.
+        description_text:
+          type: string
+          description: Plain-text content of the ticket description.
+        status:
+          type: integer
+          description: Status of the ticket. 2=Open, 3=Pending, 4=Resolved, 5=Closed.
+          enum:
+          - 2
+          - 3
+          - 4
+          - 5
+        priority:
+          type: integer
+          description: Priority of the ticket. 1=Low, 2=Medium, 3=High, 4=Urgent.
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+        source:
+          type: integer
+          description: Channel through which the ticket was created. 1=Email, 2=Portal, 3=Phone, 7=Chat, 9=Feedback Widget, 10=Outbound Email.
+          enum:
+          - 1
+          - 2
+          - 3
+          - 7
+          - 9
+          - 10
+        type:
+          type: string
+          nullable: true
+          description: Type of the ticket, e.g. Question, Incident, Problem, Feature Request.
+        requester_id:
+          type: integer
+          format: int64
+          description: ID of the contact who raised the ticket.
+        responder_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: ID of the agent assigned to the ticket.
+        group_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: ID of the group the ticket is assigned to.
+        product_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: ID of the product associated with the ticket.
+        company_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: ID of the company associated with the ticket.
+        email_config_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: ID of the email configuration used for the ticket.
+        cc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses CC'd on the ticket.
+        fwd_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses the ticket was forwarded to.
+        reply_cc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses CC'd on replies.
+        to_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          nullable: true
+          description: Email addresses in the To field.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags associated with the ticket.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom fields set on the ticket, keyed by field name with cf_ prefix.
+        fr_escalated:
+          type: boolean
+          description: Whether the ticket has been escalated for first response SLA breach.
+        spam:
+          type: boolean
+          description: Whether the ticket has been marked as spam.
+        is_escalated:
+          type: boolean
+          description: Whether the ticket has been escalated.
+        due_by:
+          type: string
+          format: date-time
+          description: Timestamp when the ticket resolution is due.
+        fr_due_by:
+          type: string
+          format: date-time
+          description: Timestamp when the first response is due.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the ticket was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the ticket was last updated.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Freshdesk uses API key-based authentication. Pass your API key as the username with any string (e.g. X) as the password using HTTP Basic Authentication.
+externalDocs:
+  description: Freshdesk API Documentation
+  url: https://developers.freshdesk.com/api/

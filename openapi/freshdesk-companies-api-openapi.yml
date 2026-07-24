@@ -1,0 +1,355 @@
+openapi: 3.1.0
+info:
+  title: Freshdesk REST Agents Companies API
+  description: The Freshdesk REST API (v2) provides programmatic access to helpdesk data and operations within Freshdesk, a customer support platform by Freshworks. It exposes endpoints for managing tickets, contacts, companies, agents, groups, conversations, products, email configurations, SLA policies, business hours, time entries, satisfaction ratings, solution categories, solution folders, solution articles, and more. The API uses JSON for request and response payloads, supports API key-based authentication, and follows RESTful conventions for CRUD operations.
+  version: '2.0'
+  contact:
+    name: Freshdesk Support
+    url: https://support.freshdesk.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshdesk.com/api/v2
+  description: Freshdesk Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.
+security:
+- basicAuth: []
+tags:
+- name: Companies
+  description: Manage companies (organizations) associated with contacts.
+paths:
+  /companies:
+    get:
+      operationId: listCompanies
+      summary: List all companies
+      description: Retrieves a paginated list of companies.
+      tags:
+      - Companies
+      parameters:
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/perPage'
+      responses:
+        '200':
+          description: Successfully retrieved list of companies.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Company'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createCompany
+      summary: Create a company
+      description: Creates a new company in the helpdesk.
+      tags:
+      - Companies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyCreate'
+      responses:
+        '201':
+          description: Company created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /companies/{company_id}:
+    get:
+      operationId: getCompany
+      summary: View a company
+      description: Retrieves the details of a specific company by ID.
+      tags:
+      - Companies
+      parameters:
+      - $ref: '#/components/parameters/companyId'
+      responses:
+        '200':
+          description: Successfully retrieved company details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateCompany
+      summary: Update a company
+      description: Updates the properties of an existing company.
+      tags:
+      - Companies
+      parameters:
+      - $ref: '#/components/parameters/companyId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyCreate'
+      responses:
+        '200':
+          description: Company updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteCompany
+      summary: Delete a company
+      description: Deletes a company from the helpdesk.
+      tags:
+      - Companies
+      parameters:
+      - $ref: '#/components/parameters/companyId'
+      responses:
+        '204':
+          description: Company deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /company_fields:
+    get:
+      operationId: listCompanyFields
+      summary: List all company fields
+      description: Retrieves all default and custom company fields.
+      tags:
+      - Companies
+      responses:
+        '200':
+          description: Successfully retrieved company fields.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Field'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request is invalid or malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    companyId:
+      name: company_id
+      in: path
+      required: true
+      description: Unique identifier of the company.
+      schema:
+        type: integer
+        format: int64
+    perPage:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+    page:
+      name: page
+      in: query
+      description: Page number for paginated results.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+  schemas:
+    Field:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the field.
+        name:
+          type: string
+          description: Internal name of the field.
+        label:
+          type: string
+          description: Display label of the field.
+        description:
+          type: string
+          nullable: true
+          description: Description of the field.
+        type:
+          type: string
+          description: Data type of the field.
+        default:
+          type: boolean
+          description: Whether this is a default system field.
+        required_for_closure:
+          type: boolean
+          description: Whether this field must be filled before closing a ticket.
+        required_for_agents:
+          type: boolean
+          description: Whether this field is required when agents create tickets.
+        required_for_customers:
+          type: boolean
+          description: Whether this field is required when customers create tickets.
+        choices:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: Available choices for dropdown fields.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the field was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the field was last updated.
+    Company:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the company.
+        name:
+          type: string
+          description: Name of the company.
+        description:
+          type: string
+          nullable: true
+          description: Description of the company.
+        note:
+          type: string
+          nullable: true
+          description: Notes about the company.
+        domains:
+          type: array
+          items:
+            type: string
+          description: Email domains associated with the company.
+        health_score:
+          type: string
+          nullable: true
+          description: Health score of the company relationship.
+        account_tier:
+          type: string
+          nullable: true
+          description: Account tier or plan level.
+        renewal_date:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date when the company's account renews.
+        industry:
+          type: string
+          nullable: true
+          description: Industry the company belongs to.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom fields set on the company.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the company was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the company was last updated.
+    CompanyCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the company.
+        description:
+          type: string
+          description: Description of the company.
+        note:
+          type: string
+          description: Notes about the company.
+        domains:
+          type: array
+          items:
+            type: string
+          description: Email domains to associate.
+        health_score:
+          type: string
+          description: Health score.
+        account_tier:
+          type: string
+          description: Account tier.
+        renewal_date:
+          type: string
+          format: date-time
+          description: Renewal date.
+        industry:
+          type: string
+          description: Industry.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Freshdesk uses API key-based authentication. Pass your API key as the username with any string (e.g. X) as the password using HTTP Basic Authentication.
+externalDocs:
+  description: Freshdesk API Documentation
+  url: https://developers.freshdesk.com/api/

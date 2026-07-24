@@ -1,0 +1,354 @@
+openapi: 3.1.0
+info:
+  title: Freshdesk REST Agents API
+  description: The Freshdesk REST API (v2) provides programmatic access to helpdesk data and operations within Freshdesk, a customer support platform by Freshworks. It exposes endpoints for managing tickets, contacts, companies, agents, groups, conversations, products, email configurations, SLA policies, business hours, time entries, satisfaction ratings, solution categories, solution folders, solution articles, and more. The API uses JSON for request and response payloads, supports API key-based authentication, and follows RESTful conventions for CRUD operations.
+  version: '2.0'
+  contact:
+    name: Freshdesk Support
+    url: https://support.freshdesk.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshdesk.com/api/v2
+  description: Freshdesk Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.
+security:
+- basicAuth: []
+tags:
+- name: Agents
+  description: Manage support agents and their properties.
+paths:
+  /agents:
+    get:
+      operationId: listAgents
+      summary: List all agents
+      description: Retrieves a paginated list of agents. Agents can be filtered by email, phone, mobile, or state.
+      tags:
+      - Agents
+      parameters:
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/perPage'
+      - name: email
+        in: query
+        description: Filter agents by email address.
+        schema:
+          type: string
+          format: email
+      - name: phone
+        in: query
+        description: Filter agents by phone number.
+        schema:
+          type: string
+      - name: mobile
+        in: query
+        description: Filter agents by mobile number.
+        schema:
+          type: string
+      - name: state
+        in: query
+        description: Filter agents by state.
+        schema:
+          type: string
+          enum:
+          - fulltime
+          - occasional
+      responses:
+        '200':
+          description: Successfully retrieved list of agents.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Agent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /agents/{agent_id}:
+    get:
+      operationId: getAgent
+      summary: View an agent
+      description: Retrieves the details of a specific agent by ID.
+      tags:
+      - Agents
+      parameters:
+      - $ref: '#/components/parameters/agentId'
+      responses:
+        '200':
+          description: Successfully retrieved agent details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateAgent
+      summary: Update an agent
+      description: Updates the properties of an existing agent.
+      tags:
+      - Agents
+      parameters:
+      - $ref: '#/components/parameters/agentId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentUpdate'
+      responses:
+        '200':
+          description: Agent updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteAgent
+      summary: Delete an agent
+      description: Deletes an agent from the helpdesk. The agent's tickets will need to be reassigned.
+      tags:
+      - Agents
+      parameters:
+      - $ref: '#/components/parameters/agentId'
+      responses:
+        '204':
+          description: Agent deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    AgentUpdate:
+      type: object
+      properties:
+        occasional:
+          type: boolean
+          description: Whether the agent is occasional.
+        signature:
+          type: string
+          description: Agent signature in HTML.
+        ticket_scope:
+          type: integer
+          description: Ticket scope.
+        group_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: Groups to assign.
+        role_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: Roles to assign.
+    Contact:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the contact.
+        name:
+          type: string
+          description: Full name of the contact.
+        email:
+          type: string
+          format: email
+          description: Primary email address of the contact.
+        phone:
+          type: string
+          nullable: true
+          description: Phone number of the contact.
+        mobile:
+          type: string
+          nullable: true
+          description: Mobile phone number of the contact.
+        twitter_id:
+          type: string
+          nullable: true
+          description: Twitter handle of the contact.
+        address:
+          type: string
+          nullable: true
+          description: Physical address of the contact.
+        description:
+          type: string
+          nullable: true
+          description: Description or notes about the contact.
+        job_title:
+          type: string
+          nullable: true
+          description: Job title of the contact.
+        language:
+          type: string
+          nullable: true
+          description: Language preference of the contact.
+        time_zone:
+          type: string
+          nullable: true
+          description: Time zone of the contact.
+        company_id:
+          type: integer
+          format: int64
+          nullable: true
+          description: ID of the company the contact belongs to.
+        active:
+          type: boolean
+          description: Whether the contact is active.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags associated with the contact.
+        other_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Additional email addresses for the contact.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom fields set on the contact.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the contact was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the contact was last updated.
+    Agent:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the agent.
+        available:
+          type: boolean
+          description: Whether the agent is currently available.
+        occasional:
+          type: boolean
+          description: Whether the agent is an occasional agent.
+        signature:
+          type: string
+          nullable: true
+          description: Signature of the agent in HTML format.
+        ticket_scope:
+          type: integer
+          description: Ticket scope of the agent. 1=Global, 2=Group, 3=Restricted.
+          enum:
+          - 1
+          - 2
+          - 3
+        group_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: IDs of the groups the agent belongs to.
+        role_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: IDs of the roles assigned to the agent.
+        contact:
+          $ref: '#/components/schemas/Contact'
+        type:
+          type: string
+          description: Type of the agent (e.g., support_agent).
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the agent was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the agent was last updated.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
+  responses:
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request is invalid or malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    agentId:
+      name: agent_id
+      in: path
+      required: true
+      description: Unique identifier of the agent.
+      schema:
+        type: integer
+        format: int64
+    perPage:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+    page:
+      name: page
+      in: query
+      description: Page number for paginated results.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Freshdesk uses API key-based authentication. Pass your API key as the username with any string (e.g. X) as the password using HTTP Basic Authentication.
+externalDocs:
+  description: Freshdesk API Documentation
+  url: https://developers.freshdesk.com/api/
