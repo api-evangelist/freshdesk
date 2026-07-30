@@ -1,31 +1,20 @@
 aid: freshdesk
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/freshdesk.png
 url: https://raw.githubusercontent.com/api-evangelist/freshdesk/refs/heads/main/apis.yml
 apis:
-- aid: freshdesk:rest-api
-  name: Freshdesk REST API
-  tags:
-  - Agents
-  - Companies
-  - Contacts
-  - Customer Support
-  - Helpdesk
-  - Tickets
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  baseURL: https://yourdomain.freshdesk.com/api/v2
-  humanURL: https://developers.freshdesk.com/api/
-  properties:
-  - url: https://developers.freshdesk.com/api/
-    type: Documentation
-  - url: openapi/freshdesk-rest-api-openapi.yml
-    type: OpenAPI
-  - url: graphql/freshdesk-graphql.md
-    type: GraphQL
-  description: The Freshdesk REST API (v2) provides programmatic access to helpdesk
-    data and operations within Freshdesk, a customer support platform by Freshworks.
-    It exposes endpoints for managing tickets, contacts, companies, agents, groups,
-    conversations, products, email configurations, SLA policies, and business hours.
-    The API uses JSON for request and response payloads, supports API key-based authentication,
-    and follows RESTful conventions for CRUD operations.
 - aid: freshdesk:webhook-api
   name: Freshdesk Webhook API
   tags:
@@ -42,11 +31,11 @@ apis:
     type: Documentation
   - url: asyncapi/freshdesk-webhook-api-asyncapi.yml
     type: AsyncAPI
-  description: The Freshdesk Webhook API enables real-time communication between Freshdesk
-    and external systems by sending HTTP POST requests when specific events occur
-    within the helpdesk. Webhooks can be triggered by ticket creation, updates, status
-    changes, and other support events, allowing developers to build event-driven integrations
-    without polling the REST API.
+  description: >-
+    The Freshdesk Webhook API enables real-time communication between Freshdesk and external systems by
+    sending HTTP POST requests when specific events occur within the helpdesk. Webhooks can be triggered
+    by ticket creation, updates, status changes, and other support events, allowing developers to build
+    event-driven integrations without polling the REST API.
 - aid: freshdesk:app-sdk
   name: Freshdesk App SDK
   tags:
@@ -63,11 +52,222 @@ apis:
     type: Documentation
   - url: https://developers.freshworks.com/docs/app-sdk/v3.0/support_ticket/rest-apis/
     type: Documentation
-  description: The Freshdesk App SDK allows developers to build custom applications
-    that extend the functionality of the Freshdesk helpdesk platform. Backed by a
-    Platform-as-a-Service infrastructure that includes a data store and serverless
-    runtimes, the SDK provides tools for creating front-end interfaces using the Crayons
-    component library and server-side logic through serverless apps.
+  description: >-
+    The Freshdesk App SDK allows developers to build custom applications that extend the functionality
+    of the Freshdesk helpdesk platform. Backed by a Platform-as-a-Service infrastructure that includes
+    a data store and serverless runtimes, the SDK provides tools for creating front-end interfaces using
+    the Crayons component library and server-side logic through serverless apps.
+- aid: freshdesk:freshdesk-agents-api
+  name: freshdesk Agents API
+  description: Manage support agents and their properties.
+  humanURL: https://developers.freshdesk.com/api/
+  baseURL: https://yourdomain.freshdesk.com/api/v2
+  tags:
+  - Agents
+  properties:
+  - type: OpenAPI
+    url: openapi/freshdesk-agents-api-openapi.yml
+  - type: Documentation
+    url: https://developers.freshdesk.com/api/
+  - type: GraphQL
+    url: graphql/freshdesk-graphql.md
+- aid: freshdesk:freshdesk-business-hours-api
+  name: freshdesk Business Hours API
+  description: Manage business hour schedules used in SLA calculations.
+  humanURL: https://developers.freshdesk.com/api/
+  baseURL: https://yourdomain.freshdesk.com/api/v2
+  tags:
+  - Business Hours
+  properties:
+  - type: OpenAPI
+    url: openapi/freshdesk-business-hours-api-openapi.yml
+  - type: Documentation
+    url: https://developers.freshdesk.com/api/
+  - type: GraphQL
+    url: graphql/freshdesk-graphql.md
+- aid: freshdesk:freshdesk-companies-api
+  name: freshdesk Companies API
+  description: Manage companies (organizations) associated with contacts.
+  humanURL: https://developers.freshdesk.com/api/
+  baseURL: https://yourdomain.freshdesk.com/api/v2
+  tags:
+  - Companies
+  properties:
+  - type: OpenAPI
+    url: openapi/freshdesk-companies-api-openapi.yml
+  - type: Documentation
+    url: https://developers.freshdesk.com/api/
+  - type: GraphQL
+    url: graphql/freshdesk-graphql.md
+- aid: freshdesk:freshdesk-contacts-api
+  name: freshdesk Contacts API
+  description: Manage contacts (end users) who submit support tickets.
+  humanURL: https://developers.freshdesk.com/api/
+  baseURL: https://yourdomain.freshdesk.com/api/v2
+  tags:
+  - Contacts
+  properties:
+  - type: OpenAPI
+    url: openapi/freshdesk-contacts-api-openapi.yml
+  - type: Documentation
+    url: https://developers.freshdesk.com/api/
+  - type: GraphQL
+    url: graphql/freshdesk-graphql.md
+- aid: freshdesk:freshdesk-conversations-api
+  name: freshdesk Conversations API
+  description: Manage replies, notes, and conversation threads on tickets.
+  humanURL: https://developers.freshdesk.com/api/
+  baseURL: https://yourdomain.freshdesk.com/api/v2
+  tags:
+  - Conversations
+  properties:
+  - type: OpenAPI
+    url: openapi/freshdesk-conversations-api-openapi.yml
+  - type: Documentation
+    url: https://developers.freshdesk.com/api/
+  - type: GraphQL
+    url: graphql/freshdesk-graphql.md
+- aid: freshdesk:freshdesk-email-configs-api
+  name: freshdesk Email Configs API
+  description: Manage email mailbox configurations for the helpdesk.
+  humanURL: https://developers.freshdesk.com/api/
+  baseURL: https://yourdomain.freshdesk.com/api/v2
+  tags:
+  - Email Configs
+  properties:
+  - type: OpenAPI
+    url: openapi/freshdesk-email-configs-api-openapi.yml
+  - type: Documentation
+    url: https://developers.freshdesk.com/api/
+  - type: GraphQL
+    url: graphql/freshdesk-graphql.md
+- aid: freshdesk:freshdesk-groups-api
+  name: freshdesk Groups API
+  description: Manage agent groups for ticket assignment and routing.
+  humanURL: https://developers.freshdesk.com/api/
+  baseURL: https://yourdomain.freshdesk.com/api/v2
+  tags:
+  - Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/freshdesk-groups-api-openapi.yml
+  - type: Documentation
+    url: https://developers.freshdesk.com/api/
+  - type: GraphQL
+    url: graphql/freshdesk-graphql.md
+- aid: freshdesk:freshdesk-products-api
+  name: freshdesk Products API
+  description: Manage products to categorize tickets by product line.
+  humanURL: https://developers.freshdesk.com/api/
+  baseURL: https://yourdomain.freshdesk.com/api/v2
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/freshdesk-products-api-openapi.yml
+  - type: Documentation
+    url: https://developers.freshdesk.com/api/
+  - type: GraphQL
+    url: graphql/freshdesk-graphql.md
+- aid: freshdesk:freshdesk-roles-api
+  name: freshdesk Roles API
+  description: Manage roles that define agent permissions.
+  humanURL: https://developers.freshdesk.com/api/
+  baseURL: https://yourdomain.freshdesk.com/api/v2
+  tags:
+  - Roles
+  properties:
+  - type: OpenAPI
+    url: openapi/freshdesk-roles-api-openapi.yml
+  - type: Documentation
+    url: https://developers.freshdesk.com/api/
+  - type: GraphQL
+    url: graphql/freshdesk-graphql.md
+- aid: freshdesk:freshdesk-satisfaction-ratings-api
+  name: freshdesk Satisfaction Ratings API
+  description: View customer satisfaction survey ratings on tickets.
+  humanURL: https://developers.freshdesk.com/api/
+  baseURL: https://yourdomain.freshdesk.com/api/v2
+  tags:
+  - Satisfaction Ratings
+  properties:
+  - type: OpenAPI
+    url: openapi/freshdesk-satisfaction-ratings-api-openapi.yml
+  - type: Documentation
+    url: https://developers.freshdesk.com/api/
+  - type: GraphQL
+    url: graphql/freshdesk-graphql.md
+- aid: freshdesk:freshdesk-search-api
+  name: freshdesk Search API
+  description: Search across tickets, contacts, and companies using query syntax.
+  humanURL: https://developers.freshdesk.com/api/
+  baseURL: https://yourdomain.freshdesk.com/api/v2
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/freshdesk-search-api-openapi.yml
+  - type: Documentation
+    url: https://developers.freshdesk.com/api/
+  - type: GraphQL
+    url: graphql/freshdesk-graphql.md
+- aid: freshdesk:freshdesk-sla-policies-api
+  name: freshdesk SLA Policies API
+  description: Manage service level agreement policies for ticket response and resolution times.
+  humanURL: https://developers.freshdesk.com/api/
+  baseURL: https://yourdomain.freshdesk.com/api/v2
+  tags:
+  - SLA Policies
+  properties:
+  - type: OpenAPI
+    url: openapi/freshdesk-sla-policies-api-openapi.yml
+  - type: Documentation
+    url: https://developers.freshdesk.com/api/
+  - type: GraphQL
+    url: graphql/freshdesk-graphql.md
+- aid: freshdesk:freshdesk-solutions-api
+  name: freshdesk Solutions API
+  description: Manage knowledge base solution categories, folders, and articles.
+  humanURL: https://developers.freshdesk.com/api/
+  baseURL: https://yourdomain.freshdesk.com/api/v2
+  tags:
+  - Solutions
+  properties:
+  - type: OpenAPI
+    url: openapi/freshdesk-solutions-api-openapi.yml
+  - type: Documentation
+    url: https://developers.freshdesk.com/api/
+  - type: GraphQL
+    url: graphql/freshdesk-graphql.md
+- aid: freshdesk:freshdesk-tickets-api
+  name: freshdesk Tickets API
+  description: >-
+    Manage support tickets including creation, updates, bulk operations, merging, and lifecycle management.
+  humanURL: https://developers.freshdesk.com/api/
+  baseURL: https://yourdomain.freshdesk.com/api/v2
+  tags:
+  - Tickets
+  properties:
+  - type: OpenAPI
+    url: openapi/freshdesk-tickets-api-openapi.yml
+  - type: Documentation
+    url: https://developers.freshdesk.com/api/
+  - type: GraphQL
+    url: graphql/freshdesk-graphql.md
+- aid: freshdesk:freshdesk-time-entries-api
+  name: freshdesk Time Entries API
+  description: Track time spent on tickets by agents.
+  humanURL: https://developers.freshdesk.com/api/
+  baseURL: https://yourdomain.freshdesk.com/api/v2
+  tags:
+  - Time Entries
+  properties:
+  - type: OpenAPI
+    url: openapi/freshdesk-time-entries-api-openapi.yml
+  - type: Documentation
+    url: https://developers.freshdesk.com/api/
+  - type: GraphQL
+    url: graphql/freshdesk-graphql.md
 common:
 - type: AgenticAccess
   url: agentic-access/freshdesk-agentic-access.yml
