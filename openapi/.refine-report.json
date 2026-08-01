@@ -1,0 +1,42 @@
+{
+  "provider": "freshdesk",
+  "sources": [
+    "freshdesk-agents-api-openapi.yml",
+    "freshdesk-business-hours-api-openapi.yml",
+    "freshdesk-companies-api-openapi.yml",
+    "freshdesk-contacts-api-openapi.yml",
+    "freshdesk-conversations-api-openapi.yml",
+    "freshdesk-email-configs-api-openapi.yml",
+    "freshdesk-groups-api-openapi.yml",
+    "freshdesk-products-api-openapi.yml",
+    "freshdesk-roles-api-openapi.yml",
+    "freshdesk-satisfaction-ratings-api-openapi.yml",
+    "freshdesk-search-api-openapi.yml",
+    "freshdesk-sla-policies-api-openapi.yml",
+    "freshdesk-solutions-api-openapi.yml",
+    "freshdesk-tickets-api-openapi.yml",
+    "freshdesk-time-entries-api-openapi.yml"
+  ],
+  "outputs": [
+    "freshdesk-agents-api-openapi.yml",
+    "freshdesk-business-hours-api-openapi.yml",
+    "freshdesk-companies-api-openapi.yml",
+    "freshdesk-contacts-api-openapi.yml",
+    "freshdesk-conversations-api-openapi.yml",
+    "freshdesk-email-configs-api-openapi.yml",
+    "freshdesk-groups-api-openapi.yml",
+    "freshdesk-products-api-openapi.yml",
+    "freshdesk-roles-api-openapi.yml",
+    "freshdesk-satisfaction-ratings-api-openapi.yml",
+    "freshdesk-search-api-openapi.yml",
+    "freshdesk-sla-policies-api-openapi.yml",
+    "freshdesk-solutions-api-openapi.yml",
+    "freshdesk-tickets-api-openapi.yml",
+    "freshdesk-time-entries-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
