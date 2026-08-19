@@ -1,0 +1,167 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshdesk REST Agents Conversations API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Conversations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List conversations on a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id/conversations",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves all conversations (replies and notes) associated with the specified ticket."
+        },
+        {
+          "info": {
+            "name": "Reply to a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id/reply",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a reply to the specified ticket. The reply is sent as an email to the requester and any CC'd addresses."
+        },
+        {
+          "info": {
+            "name": "Create a note on a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id/notes",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds an internal or public note to the specified ticket. Private notes are visible only to agents."
+        },
+        {
+          "info": {
+            "name": "Forward a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id/forward",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Forwards the specified ticket to one or more email addresses."
+        },
+        {
+          "info": {
+            "name": "Update a conversation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/conversations/:conversation_id",
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the conversation."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the body of an existing conversation (reply or note)."
+        },
+        {
+          "info": {
+            "name": "Delete a conversation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshdesk.com/api/v2/conversations/:conversation_id",
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the conversation."
+              }
+            ]
+          },
+          "docs": "Deletes a conversation (note) from a ticket. Only notes can be deleted; replies cannot be removed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshdesk REST Agents Email Configs API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Email Configs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all email configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/email_configs"
+          },
+          "docs": "Retrieves a list of all email mailbox configurations."
+        },
+        {
+          "info": {
+            "name": "View an email configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/email_configs/:email_config_id",
+            "params": [
+              {
+                "name": "email_config_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the email configuration."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific email configuration by ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

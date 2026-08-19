@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshdesk REST Agents SLA Policies API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SLA Policies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all SLA policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/sla_policies"
+          },
+          "docs": "Retrieves a list of all SLA policies defined in the helpdesk."
+        },
+        {
+          "info": {
+            "name": "View an SLA policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/sla_policies/:sla_policy_id",
+            "params": [
+              {
+                "name": "sla_policy_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the SLA policy."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific SLA policy by ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

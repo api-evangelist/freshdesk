@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshdesk REST Agents Roles API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Roles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/roles"
+          },
+          "docs": "Retrieves a list of all roles defined in the helpdesk."
+        },
+        {
+          "info": {
+            "name": "View a role",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/roles/:role_id",
+            "params": [
+              {
+                "name": "role_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the role."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific role by ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1054 @@
+{
+  "item": [
+    {
+      "id": "73834231-5da1-40e0-84c0-83b6662b85e7",
+      "name": "Agents",
+      "description": {
+        "content": "Manage support agents and their properties.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d77c4a0e-5574-4618-a292-79f51602a5d8",
+          "name": "List all agents",
+          "request": {
+            "name": "List all agents",
+            "description": {
+              "content": "Retrieves a paginated list of agents. Agents can be filtered by email, phone, mobile, or state.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "agents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for paginated results."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "Number of results per page (max 100)."
+                },
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<email>",
+                  "description": "Filter agents by email address."
+                },
+                {
+                  "disabled": false,
+                  "key": "phone",
+                  "value": "<string>",
+                  "description": "Filter agents by phone number."
+                },
+                {
+                  "disabled": false,
+                  "key": "mobile",
+                  "value": "<string>",
+                  "description": "Filter agents by mobile number."
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "Filter agents by state."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c36ee3ba-30c0-4e27-a7fd-dbeddcd8d777",
+              "name": "Successfully retrieved list of agents.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mobile",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 2012,\n    \"available\": false,\n    \"occasional\": true,\n    \"signature\": \"string\",\n    \"ticket_scope\": 2,\n    \"group_ids\": [\n      3030,\n      6855\n    ],\n    \"role_ids\": [\n      5105,\n      5288\n    ],\n    \"contact\": {\n      \"id\": 8338,\n      \"name\": \"string\",\n      \"email\": \"MtIlbVR@ZMTjVgqBjfiDpZkrUjPbhTYiMfccd.ypjw\",\n      \"phone\": \"string\",\n      \"mobile\": \"string\",\n      \"twitter_id\": \"string\",\n      \"address\": \"string\",\n      \"description\": \"string\",\n      \"job_title\": \"string\",\n      \"language\": \"string\",\n      \"time_zone\": \"string\",\n      \"company_id\": 2732,\n      \"active\": true,\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"other_emails\": [\n        \"H2iQBCPbTY@usAsVshbPvtIFnsAsGcuGonx.zuq\",\n        \"3yxEoHw@KAf.ocf\"\n      ],\n      \"custom_fields\": {\n        \"key_0\": true,\n        \"key_1\": \"string\"\n      },\n      \"created_at\": \"2012-01-05T01:30:29.496Z\",\n      \"updated_at\": \"1960-04-23T18:35:29.021Z\"\n    },\n    \"type\": \"string\",\n    \"created_at\": \"2001-01-15T15:30:15.607Z\",\n    \"updated_at\": \"1950-03-19T00:17:34.462Z\"\n  },\n  {\n    \"id\": 6630,\n    \"available\": true,\n    \"occasional\": false,\n    \"signature\": \"string\",\n    \"ticket_scope\": 2,\n    \"group_ids\": [\n      602,\n      3863\n    ],\n    \"role_ids\": [\n      2501,\n      2256\n    ],\n    \"contact\": {\n      \"id\": 7346,\n      \"name\": \"string\",\n      \"email\": \"1fQLd0enJ2fLAmb@zhxNJqYnpSeAfQGnvGYIdzzZTh.dsl\",\n      \"phone\": \"string\",\n      \"mobile\": \"string\",\n      \"twitter_id\": \"string\",\n      \"address\": \"string\",\n      \"description\": \"string\",\n      \"job_title\": \"string\",\n      \"language\": \"string\",\n      \"time_zone\": \"string\",\n      \"company_id\": 9294,\n      \"active\": true,\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"other_emails\": [\n        \"yYUMu42wxg@eapirPrNAGxpPLVhKkOLzQIhU.ixy\",\n        \"fTMsFSjtHlNZ@QIuEJVvDVVtHkdDoHmgNwbJEWVIi.xu\"\n      ],\n      \"custom_fields\": {\n        \"key_0\": \"string\",\n        \"key_1\": 5580.925471580345\n      },\n      \"created_at\": \"2025-06-25T01:24:29.393Z\",\n      \"updated_at\": \"2013-01-30T03:16:37.330Z\"\n    },\n    \"type\": \"string\",\n    \"created_at\": \"1967-10-22T11:41:56.110Z\",\n    \"updated_at\": \"1957-12-08T03:48:12.570Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb1994ea-7db3-42fc-b9a5-84f86a56a1bd",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mobile",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "add18767-a224-44f9-8aa4-79cbc7a978db",
+          "name": "View an agent",
+          "request": {
+            "name": "View an agent",
+            "description": {
+              "content": "Retrieves the details of a specific agent by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "agents",
+                ":agent_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "agent_id",
+                  "description": "(Required) Unique identifier of the agent."
+                },
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7befce7c-ddb5-445e-aad0-3c72c20efac7",
+              "name": "Successfully retrieved agent details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agents",
+                    ":agent_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "agent_id",
+                      "description": "(Required) Unique identifier of the agent."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 9058,\n  \"available\": true,\n  \"occasional\": false,\n  \"signature\": \"string\",\n  \"ticket_scope\": 1,\n  \"group_ids\": [\n    5275,\n    654\n  ],\n  \"role_ids\": [\n    2171,\n    3373\n  ],\n  \"contact\": {\n    \"id\": 212,\n    \"name\": \"string\",\n    \"email\": \"kGa06@jkDIUspAITQuSeQsmskFDtgV.bvs\",\n    \"phone\": \"string\",\n    \"mobile\": \"string\",\n    \"twitter_id\": \"string\",\n    \"address\": \"string\",\n    \"description\": \"string\",\n    \"job_title\": \"string\",\n    \"language\": \"string\",\n    \"time_zone\": \"string\",\n    \"company_id\": 1209,\n    \"active\": false,\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"other_emails\": [\n      \"2UBVAMi5@naRPaEZWMPnyHfBAEVfHHUMdaPgZ.bo\",\n      \"Iz7by3bhc3Zdd8f@srqK.wc\"\n    ],\n    \"custom_fields\": {\n      \"key_0\": 6577,\n      \"key_1\": false\n    },\n    \"created_at\": \"2025-10-21T11:23:23.624Z\",\n    \"updated_at\": \"1979-01-14T23:33:42.918Z\"\n  },\n  \"type\": \"string\",\n  \"created_at\": \"1975-01-08T16:27:20.773Z\",\n  \"updated_at\": \"2007-12-09T06:36:56.691Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83cf4abe-7dec-450c-81c4-602abe5d9896",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agents",
+                    ":agent_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "agent_id",
+                      "description": "(Required) Unique identifier of the agent."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9c7f203-082f-4bfe-b883-43a3daa69507",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agents",
+                    ":agent_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "agent_id",
+                      "description": "(Required) Unique identifier of the agent."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5856fc8f-60ab-4ed6-9d72-94aafcbd1c2b",
+          "name": "Update an agent",
+          "request": {
+            "name": "Update an agent",
+            "description": {
+              "content": "Updates the properties of an existing agent.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "agents",
+                ":agent_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "agent_id",
+                  "description": "(Required) Unique identifier of the agent."
+                },
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"occasional\": \"<boolean>\",\n  \"signature\": \"<string>\",\n  \"ticket_scope\": \"<integer>\",\n  \"group_ids\": [\n    \"<long>\",\n    \"<long>\"\n  ],\n  \"role_ids\": [\n    \"<long>\",\n    \"<long>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5399d974-d553-443d-993b-b44078631b9b",
+              "name": "Agent updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agents",
+                    ":agent_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "agent_id",
+                      "description": "(Required) Unique identifier of the agent."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"occasional\": \"<boolean>\",\n  \"signature\": \"<string>\",\n  \"ticket_scope\": \"<integer>\",\n  \"group_ids\": [\n    \"<long>\",\n    \"<long>\"\n  ],\n  \"role_ids\": [\n    \"<long>\",\n    \"<long>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 9058,\n  \"available\": true,\n  \"occasional\": false,\n  \"signature\": \"string\",\n  \"ticket_scope\": 1,\n  \"group_ids\": [\n    5275,\n    654\n  ],\n  \"role_ids\": [\n    2171,\n    3373\n  ],\n  \"contact\": {\n    \"id\": 212,\n    \"name\": \"string\",\n    \"email\": \"kGa06@jkDIUspAITQuSeQsmskFDtgV.bvs\",\n    \"phone\": \"string\",\n    \"mobile\": \"string\",\n    \"twitter_id\": \"string\",\n    \"address\": \"string\",\n    \"description\": \"string\",\n    \"job_title\": \"string\",\n    \"language\": \"string\",\n    \"time_zone\": \"string\",\n    \"company_id\": 1209,\n    \"active\": false,\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"other_emails\": [\n      \"2UBVAMi5@naRPaEZWMPnyHfBAEVfHHUMdaPgZ.bo\",\n      \"Iz7by3bhc3Zdd8f@srqK.wc\"\n    ],\n    \"custom_fields\": {\n      \"key_0\": 6577,\n      \"key_1\": false\n    },\n    \"created_at\": \"2025-10-21T11:23:23.624Z\",\n    \"updated_at\": \"1979-01-14T23:33:42.918Z\"\n  },\n  \"type\": \"string\",\n  \"created_at\": \"1975-01-08T16:27:20.773Z\",\n  \"updated_at\": \"2007-12-09T06:36:56.691Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae42ba25-30f3-4ba7-88a1-795cf19bfb96",
+              "name": "The request is invalid or malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agents",
+                    ":agent_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "agent_id",
+                      "description": "(Required) Unique identifier of the agent."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"occasional\": \"<boolean>\",\n  \"signature\": \"<string>\",\n  \"ticket_scope\": \"<integer>\",\n  \"group_ids\": [\n    \"<long>\",\n    \"<long>\"\n  ],\n  \"role_ids\": [\n    \"<long>\",\n    \"<long>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1fea2f34-8cbd-41dd-88c3-6550f9f9e94d",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agents",
+                    ":agent_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "agent_id",
+                      "description": "(Required) Unique identifier of the agent."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"occasional\": \"<boolean>\",\n  \"signature\": \"<string>\",\n  \"ticket_scope\": \"<integer>\",\n  \"group_ids\": [\n    \"<long>\",\n    \"<long>\"\n  ],\n  \"role_ids\": [\n    \"<long>\",\n    \"<long>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "abcb6dd7-baa3-441b-aa3a-7c33dc42a265",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agents",
+                    ":agent_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "agent_id",
+                      "description": "(Required) Unique identifier of the agent."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"occasional\": \"<boolean>\",\n  \"signature\": \"<string>\",\n  \"ticket_scope\": \"<integer>\",\n  \"group_ids\": [\n    \"<long>\",\n    \"<long>\"\n  ],\n  \"role_ids\": [\n    \"<long>\",\n    \"<long>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce122a5a-00cf-4f2c-b0b3-188623a1eb81",
+          "name": "Delete an agent",
+          "request": {
+            "name": "Delete an agent",
+            "description": {
+              "content": "Deletes an agent from the helpdesk. The agent's tickets will need to be reassigned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "agents",
+                ":agent_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "agent_id",
+                  "description": "(Required) Unique identifier of the agent."
+                },
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b624d563-6c4b-4e91-b371-c151c6231923",
+              "name": "Agent deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agents",
+                    ":agent_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "agent_id",
+                      "description": "(Required) Unique identifier of the agent."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f9c3dc33-2ab0-435f-b4d8-ab0fe3980f5f",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agents",
+                    ":agent_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "agent_id",
+                      "description": "(Required) Unique identifier of the agent."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0dde1ce0-8500-4335-b4f9-4d01a0aae4e0",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agents",
+                    ":agent_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "agent_id",
+                      "description": "(Required) Unique identifier of the agent."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "yourdomain",
+      "key": "domain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{domain}}.freshdesk.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5b5658ea-c732-4766-a959-c05b8428a9e2",
+    "name": "Freshdesk REST Agents API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Freshdesk REST API (v2) provides programmatic access to helpdesk data and operations within Freshdesk, a customer support platform by Freshworks. It exposes endpoints for managing tickets, contacts, companies, agents, groups, conversations, products, email configurations, SLA policies, business hours, time entries, satisfaction ratings, solution categories, solution folders, solution articles, and more. The API uses JSON for request and response payloads, supports API key-based authentication, and follows RESTful conventions for CRUD operations.\n\nContact Support:\n Name: Freshdesk Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,2037 @@
+{
+  "item": [
+    {
+      "id": "cf2c4d89-0fad-4f7b-ad30-b7b6409122e2",
+      "name": "Contacts",
+      "description": {
+        "content": "Manage contacts (end users) who submit support tickets.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1be9a1a6-0f85-4de5-a4a4-1c758b983e1f",
+          "name": "List all contacts",
+          "request": {
+            "name": "List all contacts",
+            "description": {
+              "content": "Retrieves a paginated list of contacts. Contacts can be filtered by email, phone, mobile, company, or state.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for paginated results."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "Number of results per page (max 100)."
+                },
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<email>",
+                  "description": "Filter contacts by email address."
+                },
+                {
+                  "disabled": false,
+                  "key": "phone",
+                  "value": "<string>",
+                  "description": "Filter contacts by phone number."
+                },
+                {
+                  "disabled": false,
+                  "key": "mobile",
+                  "value": "<string>",
+                  "description": "Filter contacts by mobile number."
+                },
+                {
+                  "disabled": false,
+                  "key": "company_id",
+                  "value": "<long>",
+                  "description": "Filter contacts by company ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "Filter contacts by state."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "72cc4811-5373-44a1-b855-a8638c4656c4",
+              "name": "Successfully retrieved list of contacts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mobile",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "company_id",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 2668,\n    \"name\": \"string\",\n    \"email\": \"R-faJhOYBHK5T@WZMkkngYnqI.joq\",\n    \"phone\": \"string\",\n    \"mobile\": \"string\",\n    \"twitter_id\": \"string\",\n    \"address\": \"string\",\n    \"description\": \"string\",\n    \"job_title\": \"string\",\n    \"language\": \"string\",\n    \"time_zone\": \"string\",\n    \"company_id\": 6780,\n    \"active\": false,\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"other_emails\": [\n      \"hMKVwNySial@VznHzksjiLDUTIOTRQZVKFOtFwsBGPQb.sizq\",\n      \"7LnauVeaAWJXoq@kwwdSyoJwjboceOPQ.dx\"\n    ],\n    \"custom_fields\": {\n      \"key_0\": 230\n    },\n    \"created_at\": \"1972-05-04T06:56:28.135Z\",\n    \"updated_at\": \"1987-04-23T01:24:48.060Z\"\n  },\n  {\n    \"id\": 6775,\n    \"name\": \"string\",\n    \"email\": \"JC-VT1Q@ag.yrap\",\n    \"phone\": \"string\",\n    \"mobile\": \"string\",\n    \"twitter_id\": \"string\",\n    \"address\": \"string\",\n    \"description\": \"string\",\n    \"job_title\": \"string\",\n    \"language\": \"string\",\n    \"time_zone\": \"string\",\n    \"company_id\": 9190,\n    \"active\": true,\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"other_emails\": [\n      \"7R3a5@hpIPcYcjrjMLYCe.wum\",\n      \"IrD4vnqTNrO@ZwbLKuOVavKCrcViODPEKwjASdBi.fb\"\n    ],\n    \"custom_fields\": {\n      \"key_0\": 4145\n    },\n    \"created_at\": \"2005-08-26T02:51:28.836Z\",\n    \"updated_at\": \"2025-03-26T14:05:59.568Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "341e0526-d0f1-4b22-9218-9ebc01589980",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mobile",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "company_id",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "acb77c95-1ef4-4cf0-b1ed-eb21dde158f2",
+          "name": "Create a contact",
+          "request": {
+            "name": "Create a contact",
+            "description": {
+              "content": "Creates a new contact in the helpdesk. At minimum, an email, phone, mobile, or twitter_id must be provided.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"mobile\": \"<string>\",\n  \"twitter_id\": \"<string>\",\n  \"address\": \"<string>\",\n  \"description\": \"<string>\",\n  \"job_title\": \"<string>\",\n  \"language\": \"<string>\",\n  \"time_zone\": \"<string>\",\n  \"company_id\": \"<long>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"other_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": 1780.4340936043993\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "09407500-6565-46ec-8c43-45be0c0268e7",
+              "name": "Contact created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"mobile\": \"<string>\",\n  \"twitter_id\": \"<string>\",\n  \"address\": \"<string>\",\n  \"description\": \"<string>\",\n  \"job_title\": \"<string>\",\n  \"language\": \"<string>\",\n  \"time_zone\": \"<string>\",\n  \"company_id\": \"<long>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"other_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": 6009.764163694838\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 8370,\n  \"name\": \"string\",\n  \"email\": \"8-WVEki@FdrlyDI.juyu\",\n  \"phone\": \"string\",\n  \"mobile\": \"string\",\n  \"twitter_id\": \"string\",\n  \"address\": \"string\",\n  \"description\": \"string\",\n  \"job_title\": \"string\",\n  \"language\": \"string\",\n  \"time_zone\": \"string\",\n  \"company_id\": 4751,\n  \"active\": true,\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"other_emails\": [\n    \"Vn95piU-PPh@PTNbWzQh.hgdj\",\n    \"F3TZIcFBO@TVxFSMtXjZTOmqTICbLZwKCFrXw.lpoy\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": true\n  },\n  \"created_at\": \"1953-02-24T10:48:10.067Z\",\n  \"updated_at\": \"1998-10-09T10:17:57.176Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f9561ed-8d03-45d4-b762-8ea963900b90",
+              "name": "The request is invalid or malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"mobile\": \"<string>\",\n  \"twitter_id\": \"<string>\",\n  \"address\": \"<string>\",\n  \"description\": \"<string>\",\n  \"job_title\": \"<string>\",\n  \"language\": \"<string>\",\n  \"time_zone\": \"<string>\",\n  \"company_id\": \"<long>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"other_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": 6009.764163694838\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92f9c045-de3a-4277-b93f-0de4e013c179",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"mobile\": \"<string>\",\n  \"twitter_id\": \"<string>\",\n  \"address\": \"<string>\",\n  \"description\": \"<string>\",\n  \"job_title\": \"<string>\",\n  \"language\": \"<string>\",\n  \"time_zone\": \"<string>\",\n  \"company_id\": \"<long>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"other_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": 6009.764163694838\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0d17ccd2-485f-4c4a-be53-dc22820503dd",
+          "name": "View a contact",
+          "request": {
+            "name": "View a contact",
+            "description": {
+              "content": "Retrieves the details of a specific contact by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                ":contact_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "contact_id",
+                  "description": "(Required) Unique identifier of the contact."
+                },
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6f09274f-065e-4cf4-8836-dc90fd5fe7ae",
+              "name": "Successfully retrieved contact details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contact_id",
+                      "description": "(Required) Unique identifier of the contact."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 8370,\n  \"name\": \"string\",\n  \"email\": \"8-WVEki@FdrlyDI.juyu\",\n  \"phone\": \"string\",\n  \"mobile\": \"string\",\n  \"twitter_id\": \"string\",\n  \"address\": \"string\",\n  \"description\": \"string\",\n  \"job_title\": \"string\",\n  \"language\": \"string\",\n  \"time_zone\": \"string\",\n  \"company_id\": 4751,\n  \"active\": true,\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"other_emails\": [\n    \"Vn95piU-PPh@PTNbWzQh.hgdj\",\n    \"F3TZIcFBO@TVxFSMtXjZTOmqTICbLZwKCFrXw.lpoy\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": true\n  },\n  \"created_at\": \"1953-02-24T10:48:10.067Z\",\n  \"updated_at\": \"1998-10-09T10:17:57.176Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16437b21-ba7d-48fd-b7f5-04fa901ad5a6",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contact_id",
+                      "description": "(Required) Unique identifier of the contact."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51e8d7db-c11a-4070-87bc-f98aa456cb5e",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contact_id",
+                      "description": "(Required) Unique identifier of the contact."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a6c52282-3d67-4a51-8be7-4525a8823953",
+          "name": "Update a contact",
+          "request": {
+            "name": "Update a contact",
+            "description": {
+              "content": "Updates the properties of an existing contact.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                ":contact_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "contact_id",
+                  "description": "(Required) Unique identifier of the contact."
+                },
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"mobile\": \"<string>\",\n  \"twitter_id\": \"<string>\",\n  \"address\": \"<string>\",\n  \"description\": \"<string>\",\n  \"job_title\": \"<string>\",\n  \"language\": \"<string>\",\n  \"time_zone\": \"<string>\",\n  \"company_id\": \"<long>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"other_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": 1780.4340936043993\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0e304252-8df1-48b0-9891-af6f9ce2d6f5",
+              "name": "Contact updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contact_id",
+                      "description": "(Required) Unique identifier of the contact."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"mobile\": \"<string>\",\n  \"twitter_id\": \"<string>\",\n  \"address\": \"<string>\",\n  \"description\": \"<string>\",\n  \"job_title\": \"<string>\",\n  \"language\": \"<string>\",\n  \"time_zone\": \"<string>\",\n  \"company_id\": \"<long>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"other_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": 6009.764163694838\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 8370,\n  \"name\": \"string\",\n  \"email\": \"8-WVEki@FdrlyDI.juyu\",\n  \"phone\": \"string\",\n  \"mobile\": \"string\",\n  \"twitter_id\": \"string\",\n  \"address\": \"string\",\n  \"description\": \"string\",\n  \"job_title\": \"string\",\n  \"language\": \"string\",\n  \"time_zone\": \"string\",\n  \"company_id\": 4751,\n  \"active\": true,\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"other_emails\": [\n    \"Vn95piU-PPh@PTNbWzQh.hgdj\",\n    \"F3TZIcFBO@TVxFSMtXjZTOmqTICbLZwKCFrXw.lpoy\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": true\n  },\n  \"created_at\": \"1953-02-24T10:48:10.067Z\",\n  \"updated_at\": \"1998-10-09T10:17:57.176Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbf2d985-0262-4e8e-a7c2-1ba76ac1b4ea",
+              "name": "The request is invalid or malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contact_id",
+                      "description": "(Required) Unique identifier of the contact."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"mobile\": \"<string>\",\n  \"twitter_id\": \"<string>\",\n  \"address\": \"<string>\",\n  \"description\": \"<string>\",\n  \"job_title\": \"<string>\",\n  \"language\": \"<string>\",\n  \"time_zone\": \"<string>\",\n  \"company_id\": \"<long>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"other_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": 6009.764163694838\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76be6d93-7db8-4b26-bb96-b41e39bc5edf",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contact_id",
+                      "description": "(Required) Unique identifier of the contact."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"mobile\": \"<string>\",\n  \"twitter_id\": \"<string>\",\n  \"address\": \"<string>\",\n  \"description\": \"<string>\",\n  \"job_title\": \"<string>\",\n  \"language\": \"<string>\",\n  \"time_zone\": \"<string>\",\n  \"company_id\": \"<long>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"other_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": 6009.764163694838\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9931c218-d55c-4836-bd51-9eae2309077b",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contact_id",
+                      "description": "(Required) Unique identifier of the contact."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"mobile\": \"<string>\",\n  \"twitter_id\": \"<string>\",\n  \"address\": \"<string>\",\n  \"description\": \"<string>\",\n  \"job_title\": \"<string>\",\n  \"language\": \"<string>\",\n  \"time_zone\": \"<string>\",\n  \"company_id\": \"<long>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"other_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": 6009.764163694838\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c195644d-9a97-47b4-8e1a-a35181378326",
+          "name": "Delete a contact",
+          "request": {
+            "name": "Delete a contact",
+            "description": {
+              "content": "Soft-deletes a contact. The contact can be restored later.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                ":contact_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "contact_id",
+                  "description": "(Required) Unique identifier of the contact."
+                },
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fb341787-8eb7-4bd4-8b27-67fbde196e38",
+              "name": "Contact deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contact_id",
+                      "description": "(Required) Unique identifier of the contact."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "94bde0eb-4abb-4c2c-907e-a336569d8e9a",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contact_id",
+                      "description": "(Required) Unique identifier of the contact."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aface6ab-5058-4e52-b21e-f55d33fa3214",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contact_id",
+                      "description": "(Required) Unique identifier of the contact."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "73d75aeb-5748-485e-806f-0d727a24685b",
+          "name": "Restore a deleted contact",
+          "request": {
+            "name": "Restore a deleted contact",
+            "description": {
+              "content": "Restores a previously soft-deleted contact.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                ":contact_id",
+                "restore"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "contact_id",
+                  "description": "(Required) Unique identifier of the contact."
+                },
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "38fcfdfe-96a1-4c0c-9a5e-d68e4e22bc4b",
+              "name": "Contact restored successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contact_id",
+                      "description": "(Required) Unique identifier of the contact."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "541eefb4-89e1-4175-8357-f86aa92f8a94",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contact_id",
+                      "description": "(Required) Unique identifier of the contact."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e151b82-ae63-473f-8757-fd1ee23b497c",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":contact_id",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contact_id",
+                      "description": "(Required) Unique identifier of the contact."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4a1a5c22-db63-4d60-81e2-2ea187b14cc8",
+          "name": "Merge contacts",
+          "request": {
+            "name": "Merge contacts",
+            "description": {
+              "content": "Merges secondary contacts into a primary contact. The secondary contacts are deleted and their tickets are reassigned to the primary.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                "merge"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"primary_contact_id\": \"<long>\",\n  \"secondary_contact_ids\": [\n    \"<long>\",\n    \"<long>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e7873c8d-68ee-403b-bde4-b6d6c3b4ad3b",
+              "name": "Contacts merged successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"primary_contact_id\": \"<long>\",\n  \"secondary_contact_ids\": [\n    \"<long>\",\n    \"<long>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f4a9b204-2543-4bb3-86b6-bf4c5ff195e3",
+              "name": "The request is invalid or malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"primary_contact_id\": \"<long>\",\n  \"secondary_contact_ids\": [\n    \"<long>\",\n    \"<long>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6230b311-f40c-4dbc-a1df-810ea0230f59",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"primary_contact_id\": \"<long>\",\n  \"secondary_contact_ids\": [\n    \"<long>\",\n    \"<long>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "41a8c527-c12b-4236-825f-3f75cba10dca",
+          "name": "Export contacts",
+          "request": {
+            "name": "Export contacts",
+            "description": {
+              "content": "Initiates an export of contacts and returns a job ID to check status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                "export"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "74e536d8-de68-4f8b-9740-6af4f5c20e69",
+              "name": "Export job initiated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2b20ce9-833d-4c0a-88dc-c107e945d18c",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f91fae11-b1c3-41f4-9bf8-1a408306151e",
+          "name": "List all contact fields",
+          "request": {
+            "name": "List all contact fields",
+            "description": {
+              "content": "Retrieves all default and custom contact fields.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contact_fields"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "222014b0-8581-415e-bc3c-c147912e92c9",
+              "name": "Successfully retrieved contact fields.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contact_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 6280,\n    \"name\": \"string\",\n    \"label\": \"string\",\n    \"description\": \"string\",\n    \"type\": \"string\",\n    \"default\": false,\n    \"required_for_closure\": false,\n    \"required_for_agents\": false,\n    \"required_for_customers\": true,\n    \"choices\": [\n      \"string\",\n      \"string\"\n    ],\n    \"created_at\": \"2011-03-02T01:26:13.288Z\",\n    \"updated_at\": \"1970-03-11T20:16:38.334Z\"\n  },\n  {\n    \"id\": 4554,\n    \"name\": \"string\",\n    \"label\": \"string\",\n    \"description\": \"string\",\n    \"type\": \"string\",\n    \"default\": false,\n    \"required_for_closure\": true,\n    \"required_for_agents\": false,\n    \"required_for_customers\": true,\n    \"choices\": [\n      \"string\",\n      \"string\"\n    ],\n    \"created_at\": \"1963-01-14T18:51:26.479Z\",\n    \"updated_at\": \"2005-02-02T00:25:04.611Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2aa45811-e3af-4977-96dc-faa7cc9c2a17",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contact_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "yourdomain",
+      "key": "domain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{domain}}.freshdesk.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "01bedad2-cbf0-4413-b3f4-49ebbc708f52",
+    "name": "Freshdesk REST Agents Contacts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Freshdesk REST API (v2) provides programmatic access to helpdesk data and operations within Freshdesk, a customer support platform by Freshworks. It exposes endpoints for managing tickets, contacts, companies, agents, groups, conversations, products, email configurations, SLA policies, business hours, time entries, satisfaction ratings, solution categories, solution folders, solution articles, and more. The API uses JSON for request and response payloads, supports API key-based authentication, and follows RESTful conventions for CRUD operations.\n\nContact Support:\n Name: Freshdesk Support",
+      "type": "text/plain"
+    }
+  }
+}

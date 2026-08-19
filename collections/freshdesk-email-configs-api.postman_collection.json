@@ -1,0 +1,420 @@
+{
+  "item": [
+    {
+      "id": "18bd15cd-b596-4af4-9272-30105a30d2fa",
+      "name": "Email Configs",
+      "description": {
+        "content": "Manage email mailbox configurations for the helpdesk.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e8ca2138-17fa-4cc8-9c6d-420d891c407e",
+          "name": "List all email configurations",
+          "request": {
+            "name": "List all email configurations",
+            "description": {
+              "content": "Retrieves a list of all email mailbox configurations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "email_configs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "04ea7af3-7af6-4eb9-ab2a-be2118a51dce",
+              "name": "Successfully retrieved email configurations.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email_configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 6108,\n    \"name\": \"string\",\n    \"reply_email\": \"arK@NLaprPjomHdabIAdOzKTwFoxUByQJmEVh.vgin\",\n    \"support_email\": \"bCVvtt0JE6Y@cCrKknaZiPGrMcdfppDyBlJ.br\",\n    \"product_id\": 4521,\n    \"primary_role\": false,\n    \"to_email\": \"xWNMMd0bsfAVl5@nXzQgKbbhaADGcD.lg\",\n    \"active\": false,\n    \"created_at\": \"1978-01-21T10:32:18.785Z\",\n    \"updated_at\": \"2022-03-09T17:30:14.016Z\"\n  },\n  {\n    \"id\": 6350,\n    \"name\": \"string\",\n    \"reply_email\": \"pexanhA@PzZxJHHbnbBpbGHTWtmQsybfadyrn.wm\",\n    \"support_email\": \"h-YswlRT@BNTJlkbACYthsVqluWKjPHtLRoGWa.gu\",\n    \"product_id\": 5220,\n    \"primary_role\": false,\n    \"to_email\": \"FMibhRqv1A@IlOMobLngijsaWoRMJHnivevMqzAD.qtfv\",\n    \"active\": false,\n    \"created_at\": \"1958-03-15T18:41:14.152Z\",\n    \"updated_at\": \"1973-01-21T14:46:07.522Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e02d0267-5b27-4b95-bc08-aca6182bce5c",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email_configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1e1e60ff-5f95-44cd-83fa-52e83eca2f33",
+          "name": "View an email configuration",
+          "request": {
+            "name": "View an email configuration",
+            "description": {
+              "content": "Retrieves the details of a specific email configuration by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "email_configs",
+                ":email_config_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "email_config_id",
+                  "description": "(Required) Unique identifier of the email configuration."
+                },
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0c92fe04-30c6-40f9-bfbf-59622208cd45",
+              "name": "Successfully retrieved email configuration.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email_configs",
+                    ":email_config_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "email_config_id",
+                      "description": "(Required) Unique identifier of the email configuration."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 6704,\n  \"name\": \"string\",\n  \"reply_email\": \"klm3@XRyDQWPATAH.th\",\n  \"support_email\": \"o13ua@cpAyOuroBuqXL.xoyp\",\n  \"product_id\": 1500,\n  \"primary_role\": true,\n  \"to_email\": \"E8NFtbwaW3f@ZF.lrau\",\n  \"active\": false,\n  \"created_at\": \"1989-04-14T08:40:50.021Z\",\n  \"updated_at\": \"2022-09-10T07:38:13.350Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10d6d598-b94f-4f8b-8b00-db617ed032cc",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email_configs",
+                    ":email_config_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "email_config_id",
+                      "description": "(Required) Unique identifier of the email configuration."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a36eb98-8d36-4d78-aaea-5117c0e297ab",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email_configs",
+                    ":email_config_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "email_config_id",
+                      "description": "(Required) Unique identifier of the email configuration."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "yourdomain",
+      "key": "domain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{domain}}.freshdesk.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b8c9703b-547d-4d70-afdb-43db1d062d67",
+    "name": "Freshdesk REST Agents Email Configs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Freshdesk REST API (v2) provides programmatic access to helpdesk data and operations within Freshdesk, a customer support platform by Freshworks. It exposes endpoints for managing tickets, contacts, companies, agents, groups, conversations, products, email configurations, SLA policies, business hours, time entries, satisfaction ratings, solution categories, solution folders, solution articles, and more. The API uses JSON for request and response payloads, supports API key-based authentication, and follows RESTful conventions for CRUD operations.\n\nContact Support:\n Name: Freshdesk Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshdesk REST Agents Time Entries API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Time Entries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List time entries for a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id/time_entries",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              }
+            ]
+          },
+          "docs": "Retrieves all time entries associated with the specified ticket."
+        },
+        {
+          "info": {
+            "name": "Create a time entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id/time_entries",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a new time entry to the specified ticket to track agent effort."
+        },
+        {
+          "info": {
+            "name": "List all time entries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/time_entries",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves all time entries across all tickets, with optional filters."
+        },
+        {
+          "info": {
+            "name": "Update a time entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/time_entries/:time_entry_id",
+            "params": [
+              {
+                "name": "time_entry_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the time entry."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing time entry."
+        },
+        {
+          "info": {
+            "name": "Delete a time entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshdesk.com/api/v2/time_entries/:time_entry_id",
+            "params": [
+              {
+                "name": "time_entry_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the time entry."
+              }
+            ]
+          },
+          "docs": "Deletes a time entry from a ticket."
+        },
+        {
+          "info": {
+            "name": "Toggle a timer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/time_entries/:time_entry_id/toggle_timer",
+            "params": [
+              {
+                "name": "time_entry_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the time entry."
+              }
+            ]
+          },
+          "docs": "Starts or stops the timer on a time entry."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

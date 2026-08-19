@@ -1,0 +1,420 @@
+{
+  "item": [
+    {
+      "id": "ab1989d9-7c35-472d-9a6b-59083d981f5c",
+      "name": "SLA Policies",
+      "description": {
+        "content": "Manage service level agreement policies for ticket response and resolution times.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ae813f9c-7755-4df3-be1e-1562e52e370a",
+          "name": "List all SLA policies",
+          "request": {
+            "name": "List all SLA policies",
+            "description": {
+              "content": "Retrieves a list of all SLA policies defined in the helpdesk.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sla_policies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3e8713b8-6cd2-4037-af55-7c693811d79c",
+              "name": "Successfully retrieved SLA policies.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sla_policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 8173,\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"is_default\": true,\n    \"active\": false,\n    \"sla_target\": {\n      \"key_0\": true\n    },\n    \"applicable_to\": {\n      \"key_0\": 6123.438401308963,\n      \"key_1\": 2522\n    },\n    \"escalation\": {\n      \"key_0\": \"string\",\n      \"key_1\": false\n    },\n    \"created_at\": \"1972-04-03T07:04:15.058Z\",\n    \"updated_at\": \"1961-07-30T00:52:35.625Z\"\n  },\n  {\n    \"id\": 80,\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"is_default\": true,\n    \"active\": true,\n    \"sla_target\": {\n      \"key_0\": 2082.598711229807,\n      \"key_1\": true\n    },\n    \"applicable_to\": {\n      \"key_0\": 2450.3134193099295,\n      \"key_1\": 1464\n    },\n    \"escalation\": {\n      \"key_0\": true,\n      \"key_1\": 9173\n    },\n    \"created_at\": \"2017-01-26T11:20:06.468Z\",\n    \"updated_at\": \"1965-03-25T21:05:31.561Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ae7ebbe-3eaf-4724-b9f5-0483ea11f39b",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sla_policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "519c5e0f-82a2-4c3a-a2d7-cf53ce5d916b",
+          "name": "View an SLA policy",
+          "request": {
+            "name": "View an SLA policy",
+            "description": {
+              "content": "Retrieves the details of a specific SLA policy by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sla_policies",
+                ":sla_policy_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "sla_policy_id",
+                  "description": "(Required) Unique identifier of the SLA policy."
+                },
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d4a1a3f4-f9dc-4fdb-8657-6f199b832fbf",
+              "name": "Successfully retrieved SLA policy.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sla_policies",
+                    ":sla_policy_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "sla_policy_id",
+                      "description": "(Required) Unique identifier of the SLA policy."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 8801,\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"is_default\": false,\n  \"active\": false,\n  \"sla_target\": {\n    \"key_0\": 1953.950108492819,\n    \"key_1\": \"string\"\n  },\n  \"applicable_to\": {\n    \"key_0\": 1763.1505836810059\n  },\n  \"escalation\": {\n    \"key_0\": 9836.443551850129\n  },\n  \"created_at\": \"1954-08-27T05:51:38.752Z\",\n  \"updated_at\": \"1977-09-06T05:07:27.010Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1335decc-2f43-4fed-bbf3-d03ff0dadbdc",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sla_policies",
+                    ":sla_policy_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "sla_policy_id",
+                      "description": "(Required) Unique identifier of the SLA policy."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e067ed0f-bd33-4483-8fee-6b0edbe465de",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sla_policies",
+                    ":sla_policy_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "sla_policy_id",
+                      "description": "(Required) Unique identifier of the SLA policy."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "yourdomain",
+      "key": "domain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{domain}}.freshdesk.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2da59764-cc6f-40e2-89a5-0df6d2c1bf14",
+    "name": "Freshdesk REST Agents SLA Policies API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Freshdesk REST API (v2) provides programmatic access to helpdesk data and operations within Freshdesk, a customer support platform by Freshworks. It exposes endpoints for managing tickets, contacts, companies, agents, groups, conversations, products, email configurations, SLA policies, business hours, time entries, satisfaction ratings, solution categories, solution folders, solution articles, and more. The API uses JSON for request and response payloads, supports API key-based authentication, and follows RESTful conventions for CRUD operations.\n\nContact Support:\n Name: Freshdesk Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshdesk REST Agents API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Agents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all agents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/agents",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter agents by email address."
+              },
+              {
+                "name": "phone",
+                "value": "",
+                "type": "query",
+                "description": "Filter agents by phone number."
+              },
+              {
+                "name": "mobile",
+                "value": "",
+                "type": "query",
+                "description": "Filter agents by mobile number."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filter agents by state."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of agents. Agents can be filtered by email, phone, mobile, or state."
+        },
+        {
+          "info": {
+            "name": "View an agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/agents/:agent_id",
+            "params": [
+              {
+                "name": "agent_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the agent."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific agent by ID."
+        },
+        {
+          "info": {
+            "name": "Update an agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/agents/:agent_id",
+            "params": [
+              {
+                "name": "agent_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the agent."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing agent."
+        },
+        {
+          "info": {
+            "name": "Delete an agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshdesk.com/api/v2/agents/:agent_id",
+            "params": [
+              {
+                "name": "agent_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the agent."
+              }
+            ]
+          },
+          "docs": "Deletes an agent from the helpdesk. The agent's tickets will need to be reassigned."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

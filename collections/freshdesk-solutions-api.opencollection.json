@@ -1,0 +1,318 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshdesk REST Agents Solutions API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Solutions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all solution categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/categories"
+          },
+          "docs": "Retrieves a list of all solution categories in the knowledge base."
+        },
+        {
+          "info": {
+            "name": "Create a solution category",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/categories",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new solution category in the knowledge base."
+        },
+        {
+          "info": {
+            "name": "View a solution category",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/categories/:category_id",
+            "params": [
+              {
+                "name": "category_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution category."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific solution category by ID."
+        },
+        {
+          "info": {
+            "name": "Update a solution category",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/categories/:category_id",
+            "params": [
+              {
+                "name": "category_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution category."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing solution category."
+        },
+        {
+          "info": {
+            "name": "Delete a solution category",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/categories/:category_id",
+            "params": [
+              {
+                "name": "category_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution category."
+              }
+            ]
+          },
+          "docs": "Deletes a solution category and all its folders and articles."
+        },
+        {
+          "info": {
+            "name": "List solution folders in a category",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/categories/:category_id/folders",
+            "params": [
+              {
+                "name": "category_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution category."
+              }
+            ]
+          },
+          "docs": "Retrieves all solution folders within the specified category."
+        },
+        {
+          "info": {
+            "name": "Create a solution folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/categories/:category_id/folders",
+            "params": [
+              {
+                "name": "category_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution category."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new solution folder within the specified category."
+        },
+        {
+          "info": {
+            "name": "View a solution folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/folders/:folder_id",
+            "params": [
+              {
+                "name": "folder_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution folder."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific solution folder by ID."
+        },
+        {
+          "info": {
+            "name": "Update a solution folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/folders/:folder_id",
+            "params": [
+              {
+                "name": "folder_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution folder."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing solution folder."
+        },
+        {
+          "info": {
+            "name": "Delete a solution folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/folders/:folder_id",
+            "params": [
+              {
+                "name": "folder_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution folder."
+              }
+            ]
+          },
+          "docs": "Deletes a solution folder and all its articles."
+        },
+        {
+          "info": {
+            "name": "List solution articles in a folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/folders/:folder_id/articles",
+            "params": [
+              {
+                "name": "folder_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution folder."
+              }
+            ]
+          },
+          "docs": "Retrieves all solution articles within the specified folder."
+        },
+        {
+          "info": {
+            "name": "Create a solution article",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/folders/:folder_id/articles",
+            "params": [
+              {
+                "name": "folder_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution folder."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new solution article within the specified folder."
+        },
+        {
+          "info": {
+            "name": "View a solution article",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/articles/:article_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution article."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific solution article by ID."
+        },
+        {
+          "info": {
+            "name": "Update a solution article",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/articles/:article_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution article."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing solution article."
+        },
+        {
+          "info": {
+            "name": "Delete a solution article",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshdesk.com/api/v2/solutions/articles/:article_id",
+            "params": [
+              {
+                "name": "article_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the solution article."
+              }
+            ]
+          },
+          "docs": "Deletes a solution article from the knowledge base."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

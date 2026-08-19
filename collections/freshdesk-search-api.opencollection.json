@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshdesk REST Agents Search API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search tickets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/search/tickets",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Search query using Freshdesk query language, e.g. \"priority:1 AND status:2\"."
+              }
+            ]
+          },
+          "docs": "Searches for tickets using Freshdesk query language. Supports filtering by any ticket field using a SQL-like query syntax."
+        },
+        {
+          "info": {
+            "name": "Search contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/search/contacts",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Search query using Freshdesk query language."
+              }
+            ]
+          },
+          "docs": "Searches for contacts using Freshdesk query language."
+        },
+        {
+          "info": {
+            "name": "Search companies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/search/companies",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Search query using Freshdesk query language."
+              }
+            ]
+          },
+          "docs": "Searches for companies using Freshdesk query language."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

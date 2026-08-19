@@ -1,0 +1,79 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshdesk REST Agents Satisfaction Ratings API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Satisfaction Ratings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a satisfaction rating",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/tickets/:ticket_id/satisfaction_ratings",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the ticket."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a satisfaction rating for the specified ticket."
+        },
+        {
+          "info": {
+            "name": "List all satisfaction ratings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/surveys/satisfaction_ratings",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              },
+              {
+                "name": "created_since",
+                "value": "",
+                "type": "query",
+                "description": "Return ratings created since the given date-time."
+              }
+            ]
+          },
+          "docs": "Retrieves all satisfaction ratings across tickets, with optional filters for date range and satisfaction score."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

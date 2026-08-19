@@ -1,0 +1,3313 @@
+{
+  "item": [
+    {
+      "id": "dd6c94f6-bb54-4220-8c6c-1c3ff3a1c815",
+      "name": "Tickets",
+      "description": {
+        "content": "Manage support tickets including creation, updates, bulk operations, merging, and lifecycle management.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3cddca7a-b1f1-47db-9756-117f52b3b549",
+          "name": "List all tickets",
+          "request": {
+            "name": "List all tickets",
+            "description": {
+              "content": "Retrieves a paginated list of tickets from the helpdesk. By default, only tickets that have not been deleted or marked as spam are returned. Use filter query parameters to narrow results by status, requester, agent, group, or updated date.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tickets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for paginated results."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "Number of results per page (max 100)."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Pre-defined filter to apply. Options include new_and_my_open, watching, spam, deleted."
+                },
+                {
+                  "disabled": false,
+                  "key": "requester_id",
+                  "value": "<long>",
+                  "description": "Filter tickets by requester ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<email>",
+                  "description": "Filter tickets by requester email address."
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_since",
+                  "value": "<dateTime>",
+                  "description": "Return tickets updated since the given date-time in UTC format."
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "created_at",
+                  "description": "Field to order results by."
+                },
+                {
+                  "disabled": false,
+                  "key": "order_type",
+                  "value": "desc",
+                  "description": "Sort direction for results."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Include additional information such as requester, stats, or description."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "287fb581-8c61-4694-933a-d8b679c851cf",
+              "name": "Successfully retrieved list of tickets.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "requester_id",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "updated_since",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "created_at"
+                    },
+                    {
+                      "key": "order_type",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 6703,\n    \"subject\": \"string\",\n    \"description\": \"string\",\n    \"description_text\": \"string\",\n    \"status\": 5,\n    \"priority\": 4,\n    \"source\": 3,\n    \"type\": \"string\",\n    \"requester_id\": 4809,\n    \"responder_id\": 4992,\n    \"group_id\": 8239,\n    \"product_id\": 3532,\n    \"company_id\": 1664,\n    \"email_config_id\": 8910,\n    \"cc_emails\": [\n      \"4GSof9@cdfSJFgaVGcvLDSFE.wq\",\n      \"jG9@meiBiYzxInrHnuWhKoNIiuGdXyZKv.febf\"\n    ],\n    \"fwd_emails\": [\n      \"0mnV3J2w@sZKbxY.pp\",\n      \"jcRJ@Yo.ey\"\n    ],\n    \"reply_cc_emails\": [\n      \"5ypDqptfbZTVKmB@bpJHk.tctz\",\n      \"gnR1u43@xDOZCCwkaXT.sbi\"\n    ],\n    \"to_emails\": [\n      \"PYq@RsgAbnECQvBeDKNtHY.jhe\",\n      \"pxYi@ZPEwQQKCjktNkDhosCdoIKjAby.zorc\"\n    ],\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"custom_fields\": {\n      \"key_0\": \"string\"\n    },\n    \"fr_escalated\": true,\n    \"spam\": true,\n    \"is_escalated\": true,\n    \"due_by\": \"1954-03-30T07:59:33.014Z\",\n    \"fr_due_by\": \"1980-12-10T10:46:27.575Z\",\n    \"created_at\": \"1982-10-23T17:18:41.323Z\",\n    \"updated_at\": \"2019-12-13T02:18:05.123Z\"\n  },\n  {\n    \"id\": 6853,\n    \"subject\": \"string\",\n    \"description\": \"string\",\n    \"description_text\": \"string\",\n    \"status\": 3,\n    \"priority\": 1,\n    \"source\": 1,\n    \"type\": \"string\",\n    \"requester_id\": 8720,\n    \"responder_id\": 2325,\n    \"group_id\": 727,\n    \"product_id\": 5707,\n    \"company_id\": 3368,\n    \"email_config_id\": 924,\n    \"cc_emails\": [\n      \"io47pAMDVcW0WC7@fmcrWP.so\",\n      \"JGXKHpPffW8DE@Bj.hv\"\n    ],\n    \"fwd_emails\": [\n      \"CyXvpOQrdfX3now@zpTTQjQtR.bana\",\n      \"ySf8M@jgyHxKuLLpHJJQwdtYWv.ir\"\n    ],\n    \"reply_cc_emails\": [\n      \"dPhBOmTV3K@oQSwVlSIUuVyBRcqOxdfZPvLKQQIADzMi.yrzd\",\n      \"CJ0Rg5mp3pzj@YVFYQHtTcJuNpwQhgPrsUEFl.lzeg\"\n    ],\n    \"to_emails\": [\n      \"g2DBNX3auwtJYL@FGWnXrvomnYRUibLBOHvDx.ql\",\n      \"pv8Ou3yfH@VrCgMRweJemGElqJRAxce.mdde\"\n    ],\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"custom_fields\": {\n      \"key_0\": 8508.344682899187\n    },\n    \"fr_escalated\": false,\n    \"spam\": true,\n    \"is_escalated\": false,\n    \"due_by\": \"2003-05-02T04:05:51.636Z\",\n    \"fr_due_by\": \"2016-01-18T13:06:00.161Z\",\n    \"created_at\": \"1976-07-08T04:10:11.288Z\",\n    \"updated_at\": \"2005-04-22T15:54:31.387Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0c6cfae-a5dc-4fbc-8c55-94df96f98605",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "requester_id",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<email>"
+                    },
+                    {
+                      "key": "updated_since",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "created_at"
+                    },
+                    {
+                      "key": "order_type",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d4fa1d0a-2fb1-4972-9cc3-08665b32fc58",
+          "name": "Create a ticket",
+          "request": {
+            "name": "Create a ticket",
+            "description": {
+              "content": "Creates a new support ticket. At minimum, a requester identifier (email, phone, requester_id, or twitter_id) and a subject or description must be provided.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tickets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"<string>\",\n  \"description\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"requester_id\": \"<long>\",\n  \"status\": \"<integer>\",\n  \"priority\": \"<integer>\",\n  \"source\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"responder_id\": \"<long>\",\n  \"group_id\": \"<long>\",\n  \"product_id\": \"<long>\",\n  \"cc_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": \"string\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9eae49b8-d848-4276-a7d3-d7b6cdc604c7",
+              "name": "Ticket created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"<string>\",\n  \"description\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"requester_id\": \"<long>\",\n  \"status\": \"<integer>\",\n  \"priority\": \"<integer>\",\n  \"source\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"responder_id\": \"<long>\",\n  \"group_id\": \"<long>\",\n  \"product_id\": \"<long>\",\n  \"cc_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": \"string\",\n    \"key_1\": 7679.505540074652,\n    \"key_2\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 2773,\n  \"subject\": \"string\",\n  \"description\": \"string\",\n  \"description_text\": \"string\",\n  \"status\": 2,\n  \"priority\": 1,\n  \"source\": 10,\n  \"type\": \"string\",\n  \"requester_id\": 4102,\n  \"responder_id\": 805,\n  \"group_id\": 2395,\n  \"product_id\": 1149,\n  \"company_id\": 9471,\n  \"email_config_id\": 3773,\n  \"cc_emails\": [\n    \"19cOwCR1YGjr@lHcsGRodtJCZTjnzoJRogQuCUKs.kt\",\n    \"fMDv@vBxsg.hlx\"\n  ],\n  \"fwd_emails\": [\n    \"74W5WE@WRYcTtd.etz\",\n    \"TXoHRsNt@wPkPpWLDyRJmkyzstnhOBPAD.hihk\"\n  ],\n  \"reply_cc_emails\": [\n    \"CnT@CViBTzKOlTNhVmDAqN.yvp\",\n    \"5LlYsGn2eof@SUSmlZ.rjd\"\n  ],\n  \"to_emails\": [\n    \"EXO5G@OwRfPsy.lc\",\n    \"LE-crxDVFmk7@nElXQkcOgAqwIBeyrvrOH.dz\"\n  ],\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": 3516,\n    \"key_1\": true,\n    \"key_2\": \"string\"\n  },\n  \"fr_escalated\": false,\n  \"spam\": true,\n  \"is_escalated\": true,\n  \"due_by\": \"2019-03-08T22:42:41.902Z\",\n  \"fr_due_by\": \"1974-02-15T02:47:00.544Z\",\n  \"created_at\": \"2009-07-14T05:34:59.485Z\",\n  \"updated_at\": \"1957-11-23T12:18:24.435Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "22945b28-5ac2-403e-8bfc-e93937656d19",
+              "name": "The request is invalid or malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"<string>\",\n  \"description\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"requester_id\": \"<long>\",\n  \"status\": \"<integer>\",\n  \"priority\": \"<integer>\",\n  \"source\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"responder_id\": \"<long>\",\n  \"group_id\": \"<long>\",\n  \"product_id\": \"<long>\",\n  \"cc_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": \"string\",\n    \"key_1\": 7679.505540074652,\n    \"key_2\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca72ce5b-5592-42c1-bcf5-b2af938d73c2",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"<string>\",\n  \"description\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"requester_id\": \"<long>\",\n  \"status\": \"<integer>\",\n  \"priority\": \"<integer>\",\n  \"source\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"responder_id\": \"<long>\",\n  \"group_id\": \"<long>\",\n  \"product_id\": \"<long>\",\n  \"cc_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": \"string\",\n    \"key_1\": 7679.505540074652,\n    \"key_2\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e97033b-cd0f-4534-9ece-4f1fb3b181ad",
+          "name": "View a ticket",
+          "request": {
+            "name": "View a ticket",
+            "description": {
+              "content": "Retrieves the details of a specific ticket by its ID, including all standard and custom fields.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tickets",
+                ":ticket_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Include additional information in the response."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "ticket_id",
+                  "description": "(Required) Unique identifier of the ticket."
+                },
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "71590652-c7ef-40a6-a0f4-420d1ba47862",
+              "name": "Successfully retrieved ticket details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 2773,\n  \"subject\": \"string\",\n  \"description\": \"string\",\n  \"description_text\": \"string\",\n  \"status\": 2,\n  \"priority\": 1,\n  \"source\": 10,\n  \"type\": \"string\",\n  \"requester_id\": 4102,\n  \"responder_id\": 805,\n  \"group_id\": 2395,\n  \"product_id\": 1149,\n  \"company_id\": 9471,\n  \"email_config_id\": 3773,\n  \"cc_emails\": [\n    \"19cOwCR1YGjr@lHcsGRodtJCZTjnzoJRogQuCUKs.kt\",\n    \"fMDv@vBxsg.hlx\"\n  ],\n  \"fwd_emails\": [\n    \"74W5WE@WRYcTtd.etz\",\n    \"TXoHRsNt@wPkPpWLDyRJmkyzstnhOBPAD.hihk\"\n  ],\n  \"reply_cc_emails\": [\n    \"CnT@CViBTzKOlTNhVmDAqN.yvp\",\n    \"5LlYsGn2eof@SUSmlZ.rjd\"\n  ],\n  \"to_emails\": [\n    \"EXO5G@OwRfPsy.lc\",\n    \"LE-crxDVFmk7@nElXQkcOgAqwIBeyrvrOH.dz\"\n  ],\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": 3516,\n    \"key_1\": true,\n    \"key_2\": \"string\"\n  },\n  \"fr_escalated\": false,\n  \"spam\": true,\n  \"is_escalated\": true,\n  \"due_by\": \"2019-03-08T22:42:41.902Z\",\n  \"fr_due_by\": \"1974-02-15T02:47:00.544Z\",\n  \"created_at\": \"2009-07-14T05:34:59.485Z\",\n  \"updated_at\": \"1957-11-23T12:18:24.435Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "214838e8-c13b-4eba-ae3c-162f5b7a07ac",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb1ae16e-2296-457c-820f-3ddd70a63d3d",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "23c6e30a-bd1d-42c3-b515-630e067af30a",
+          "name": "Update a ticket",
+          "request": {
+            "name": "Update a ticket",
+            "description": {
+              "content": "Updates the properties of an existing ticket. Only the fields provided in the request body will be updated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tickets",
+                ":ticket_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "ticket_id",
+                  "description": "(Required) Unique identifier of the ticket."
+                },
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"priority\": \"<integer>\",\n  \"source\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"responder_id\": \"<long>\",\n  \"group_id\": \"<long>\",\n  \"product_id\": \"<long>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": true,\n    \"key_1\": \"string\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "83f543ea-b1f5-416d-b43c-a42537798609",
+              "name": "Ticket updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"priority\": \"<integer>\",\n  \"source\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"responder_id\": \"<long>\",\n  \"group_id\": \"<long>\",\n  \"product_id\": \"<long>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 2773,\n  \"subject\": \"string\",\n  \"description\": \"string\",\n  \"description_text\": \"string\",\n  \"status\": 2,\n  \"priority\": 1,\n  \"source\": 10,\n  \"type\": \"string\",\n  \"requester_id\": 4102,\n  \"responder_id\": 805,\n  \"group_id\": 2395,\n  \"product_id\": 1149,\n  \"company_id\": 9471,\n  \"email_config_id\": 3773,\n  \"cc_emails\": [\n    \"19cOwCR1YGjr@lHcsGRodtJCZTjnzoJRogQuCUKs.kt\",\n    \"fMDv@vBxsg.hlx\"\n  ],\n  \"fwd_emails\": [\n    \"74W5WE@WRYcTtd.etz\",\n    \"TXoHRsNt@wPkPpWLDyRJmkyzstnhOBPAD.hihk\"\n  ],\n  \"reply_cc_emails\": [\n    \"CnT@CViBTzKOlTNhVmDAqN.yvp\",\n    \"5LlYsGn2eof@SUSmlZ.rjd\"\n  ],\n  \"to_emails\": [\n    \"EXO5G@OwRfPsy.lc\",\n    \"LE-crxDVFmk7@nElXQkcOgAqwIBeyrvrOH.dz\"\n  ],\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": 3516,\n    \"key_1\": true,\n    \"key_2\": \"string\"\n  },\n  \"fr_escalated\": false,\n  \"spam\": true,\n  \"is_escalated\": true,\n  \"due_by\": \"2019-03-08T22:42:41.902Z\",\n  \"fr_due_by\": \"1974-02-15T02:47:00.544Z\",\n  \"created_at\": \"2009-07-14T05:34:59.485Z\",\n  \"updated_at\": \"1957-11-23T12:18:24.435Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e92eeea1-56e9-4311-ac2b-ae07136ea77e",
+              "name": "The request is invalid or malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"priority\": \"<integer>\",\n  \"source\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"responder_id\": \"<long>\",\n  \"group_id\": \"<long>\",\n  \"product_id\": \"<long>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c3a4c66-5aaa-4918-9f13-7bc506a20177",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"priority\": \"<integer>\",\n  \"source\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"responder_id\": \"<long>\",\n  \"group_id\": \"<long>\",\n  \"product_id\": \"<long>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04a53678-21a0-466f-aadb-dc9ae2a3d7dd",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"<string>\",\n  \"description\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"priority\": \"<integer>\",\n  \"source\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"responder_id\": \"<long>\",\n  \"group_id\": \"<long>\",\n  \"product_id\": \"<long>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ca6e1a72-d240-4721-a151-83506fa3456c",
+          "name": "Delete a ticket",
+          "request": {
+            "name": "Delete a ticket",
+            "description": {
+              "content": "Soft-deletes a ticket, moving it to the trash. The ticket can be restored later using the restore endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tickets",
+                ":ticket_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "ticket_id",
+                  "description": "(Required) Unique identifier of the ticket."
+                },
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "164c3035-6221-49c5-878c-4e446a711441",
+              "name": "Ticket deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "26435603-167b-4b2a-8e5d-7776dc6fdeb7",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3cf4dd31-c38c-4ecc-b570-f61e5d5a5440",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ad495946-209e-4708-b8fd-3fd04f045178",
+          "name": "Restore a deleted ticket",
+          "request": {
+            "name": "Restore a deleted ticket",
+            "description": {
+              "content": "Restores a previously soft-deleted ticket from the trash.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tickets",
+                ":ticket_id",
+                "restore"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "ticket_id",
+                  "description": "(Required) Unique identifier of the ticket."
+                },
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "32444242-a6e4-49c2-8b05-182e26916b3f",
+              "name": "Ticket restored successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b44f1df5-93b5-4256-b4cc-b59754b9f261",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a6e84e4-7d24-4f72-9424-07d69b1fba9e",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a4d1494a-05fe-4ffd-88bc-abb4db8af6d9",
+          "name": "Create an outbound email ticket",
+          "request": {
+            "name": "Create an outbound email ticket",
+            "description": {
+              "content": "Creates a new outbound email ticket, allowing agents to initiate email conversations with customers.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tickets",
+                "outbound_email"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"<string>\",\n  \"description\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"requester_id\": \"<long>\",\n  \"status\": \"<integer>\",\n  \"priority\": \"<integer>\",\n  \"source\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"responder_id\": \"<long>\",\n  \"group_id\": \"<long>\",\n  \"product_id\": \"<long>\",\n  \"cc_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": \"string\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d6f3218b-1d61-476c-8a6c-746671f6c9e6",
+              "name": "Outbound email ticket created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    "outbound_email"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"<string>\",\n  \"description\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"requester_id\": \"<long>\",\n  \"status\": \"<integer>\",\n  \"priority\": \"<integer>\",\n  \"source\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"responder_id\": \"<long>\",\n  \"group_id\": \"<long>\",\n  \"product_id\": \"<long>\",\n  \"cc_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": \"string\",\n    \"key_1\": 7679.505540074652,\n    \"key_2\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 2773,\n  \"subject\": \"string\",\n  \"description\": \"string\",\n  \"description_text\": \"string\",\n  \"status\": 2,\n  \"priority\": 1,\n  \"source\": 10,\n  \"type\": \"string\",\n  \"requester_id\": 4102,\n  \"responder_id\": 805,\n  \"group_id\": 2395,\n  \"product_id\": 1149,\n  \"company_id\": 9471,\n  \"email_config_id\": 3773,\n  \"cc_emails\": [\n    \"19cOwCR1YGjr@lHcsGRodtJCZTjnzoJRogQuCUKs.kt\",\n    \"fMDv@vBxsg.hlx\"\n  ],\n  \"fwd_emails\": [\n    \"74W5WE@WRYcTtd.etz\",\n    \"TXoHRsNt@wPkPpWLDyRJmkyzstnhOBPAD.hihk\"\n  ],\n  \"reply_cc_emails\": [\n    \"CnT@CViBTzKOlTNhVmDAqN.yvp\",\n    \"5LlYsGn2eof@SUSmlZ.rjd\"\n  ],\n  \"to_emails\": [\n    \"EXO5G@OwRfPsy.lc\",\n    \"LE-crxDVFmk7@nElXQkcOgAqwIBeyrvrOH.dz\"\n  ],\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": 3516,\n    \"key_1\": true,\n    \"key_2\": \"string\"\n  },\n  \"fr_escalated\": false,\n  \"spam\": true,\n  \"is_escalated\": true,\n  \"due_by\": \"2019-03-08T22:42:41.902Z\",\n  \"fr_due_by\": \"1974-02-15T02:47:00.544Z\",\n  \"created_at\": \"2009-07-14T05:34:59.485Z\",\n  \"updated_at\": \"1957-11-23T12:18:24.435Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3af9071d-1d7e-4bc0-8383-dc6b6d09aaf4",
+              "name": "The request is invalid or malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    "outbound_email"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"<string>\",\n  \"description\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"requester_id\": \"<long>\",\n  \"status\": \"<integer>\",\n  \"priority\": \"<integer>\",\n  \"source\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"responder_id\": \"<long>\",\n  \"group_id\": \"<long>\",\n  \"product_id\": \"<long>\",\n  \"cc_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": \"string\",\n    \"key_1\": 7679.505540074652,\n    \"key_2\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6a9ae37-012e-4ea3-ab52-ecde1f0602e8",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    "outbound_email"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"<string>\",\n  \"description\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"requester_id\": \"<long>\",\n  \"status\": \"<integer>\",\n  \"priority\": \"<integer>\",\n  \"source\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"responder_id\": \"<long>\",\n  \"group_id\": \"<long>\",\n  \"product_id\": \"<long>\",\n  \"cc_emails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"custom_fields\": {\n    \"key_0\": \"string\",\n    \"key_1\": 7679.505540074652,\n    \"key_2\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "934ad0c1-5445-49f9-a464-f8225d6b14c4",
+          "name": "List watchers on a ticket",
+          "request": {
+            "name": "List watchers on a ticket",
+            "description": {
+              "content": "Retrieves the list of agents watching the specified ticket.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tickets",
+                ":ticket_id",
+                "watchers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "ticket_id",
+                  "description": "(Required) Unique identifier of the ticket."
+                },
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f6e35abd-7cfc-43a2-892c-a0a9e345c0df",
+              "name": "Successfully retrieved watchers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id",
+                    "watchers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"watcher_ids\": [\n    1140,\n    9254\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ebc9a3f-9d4f-4078-84a8-38c988990a04",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id",
+                    "watchers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1cbf1164-2941-4b1a-a812-f52424d650ca",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id",
+                    "watchers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e2a8ce50-759c-42dc-82e8-062944f4276c",
+          "name": "Watch a ticket",
+          "request": {
+            "name": "Watch a ticket",
+            "description": {
+              "content": "Adds the authenticated agent as a watcher on the specified ticket.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tickets",
+                ":ticket_id",
+                "watch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "ticket_id",
+                  "description": "(Required) Unique identifier of the ticket."
+                },
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2a6b6a7d-b6b0-4084-a384-984a2a76f3ef",
+              "name": "Successfully added as a watcher.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id",
+                    "watch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "35e853ae-46b3-4783-8b4e-7ac13d12a01d",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id",
+                    "watch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a119e0c4-66e7-435f-82e3-4b9668874de7",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id",
+                    "watch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d46906c3-5d22-4840-af56-09ad6f3fcf42",
+          "name": "List associated tickets",
+          "request": {
+            "name": "List associated tickets",
+            "description": {
+              "content": "Retrieves tickets associated with the specified tracker ticket.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tickets",
+                ":ticket_id",
+                "associated_tickets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "ticket_id",
+                  "description": "(Required) Unique identifier of the ticket."
+                },
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3ee82466-b74c-49ba-8b7a-738f9e7f2c5d",
+              "name": "Successfully retrieved associated tickets.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id",
+                    "associated_tickets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 6703,\n    \"subject\": \"string\",\n    \"description\": \"string\",\n    \"description_text\": \"string\",\n    \"status\": 5,\n    \"priority\": 4,\n    \"source\": 3,\n    \"type\": \"string\",\n    \"requester_id\": 4809,\n    \"responder_id\": 4992,\n    \"group_id\": 8239,\n    \"product_id\": 3532,\n    \"company_id\": 1664,\n    \"email_config_id\": 8910,\n    \"cc_emails\": [\n      \"4GSof9@cdfSJFgaVGcvLDSFE.wq\",\n      \"jG9@meiBiYzxInrHnuWhKoNIiuGdXyZKv.febf\"\n    ],\n    \"fwd_emails\": [\n      \"0mnV3J2w@sZKbxY.pp\",\n      \"jcRJ@Yo.ey\"\n    ],\n    \"reply_cc_emails\": [\n      \"5ypDqptfbZTVKmB@bpJHk.tctz\",\n      \"gnR1u43@xDOZCCwkaXT.sbi\"\n    ],\n    \"to_emails\": [\n      \"PYq@RsgAbnECQvBeDKNtHY.jhe\",\n      \"pxYi@ZPEwQQKCjktNkDhosCdoIKjAby.zorc\"\n    ],\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"custom_fields\": {\n      \"key_0\": \"string\"\n    },\n    \"fr_escalated\": true,\n    \"spam\": true,\n    \"is_escalated\": true,\n    \"due_by\": \"1954-03-30T07:59:33.014Z\",\n    \"fr_due_by\": \"1980-12-10T10:46:27.575Z\",\n    \"created_at\": \"1982-10-23T17:18:41.323Z\",\n    \"updated_at\": \"2019-12-13T02:18:05.123Z\"\n  },\n  {\n    \"id\": 6853,\n    \"subject\": \"string\",\n    \"description\": \"string\",\n    \"description_text\": \"string\",\n    \"status\": 3,\n    \"priority\": 1,\n    \"source\": 1,\n    \"type\": \"string\",\n    \"requester_id\": 8720,\n    \"responder_id\": 2325,\n    \"group_id\": 727,\n    \"product_id\": 5707,\n    \"company_id\": 3368,\n    \"email_config_id\": 924,\n    \"cc_emails\": [\n      \"io47pAMDVcW0WC7@fmcrWP.so\",\n      \"JGXKHpPffW8DE@Bj.hv\"\n    ],\n    \"fwd_emails\": [\n      \"CyXvpOQrdfX3now@zpTTQjQtR.bana\",\n      \"ySf8M@jgyHxKuLLpHJJQwdtYWv.ir\"\n    ],\n    \"reply_cc_emails\": [\n      \"dPhBOmTV3K@oQSwVlSIUuVyBRcqOxdfZPvLKQQIADzMi.yrzd\",\n      \"CJ0Rg5mp3pzj@YVFYQHtTcJuNpwQhgPrsUEFl.lzeg\"\n    ],\n    \"to_emails\": [\n      \"g2DBNX3auwtJYL@FGWnXrvomnYRUibLBOHvDx.ql\",\n      \"pv8Ou3yfH@VrCgMRweJemGElqJRAxce.mdde\"\n    ],\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"custom_fields\": {\n      \"key_0\": 8508.344682899187\n    },\n    \"fr_escalated\": false,\n    \"spam\": true,\n    \"is_escalated\": false,\n    \"due_by\": \"2003-05-02T04:05:51.636Z\",\n    \"fr_due_by\": \"2016-01-18T13:06:00.161Z\",\n    \"created_at\": \"1976-07-08T04:10:11.288Z\",\n    \"updated_at\": \"2005-04-22T15:54:31.387Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88c5b316-c48b-4a6f-9864-4537db30cbbd",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id",
+                    "associated_tickets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a97b0315-f357-4e82-af35-20f523641ea9",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    ":ticket_id",
+                    "associated_tickets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "ticket_id",
+                      "description": "(Required) Unique identifier of the ticket."
+                    },
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "74c5cbb1-c3d6-40d0-a1d7-ce3e50880e4d",
+          "name": "Merge tickets",
+          "request": {
+            "name": "Merge tickets",
+            "description": {
+              "content": "Merges one or more secondary tickets into a primary ticket. The secondary tickets are closed and their conversations are added to the primary ticket.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tickets",
+                "merge"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"primary_id\": \"<long>\",\n  \"ticket_ids\": [\n    \"<long>\",\n    \"<long>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9f12ee02-098b-4956-89b5-413afcd177f0",
+              "name": "Tickets merged successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"primary_id\": \"<long>\",\n  \"ticket_ids\": [\n    \"<long>\",\n    \"<long>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bf515d20-36bf-43b3-9487-7e5aeea0a8fa",
+              "name": "The request is invalid or malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"primary_id\": \"<long>\",\n  \"ticket_ids\": [\n    \"<long>\",\n    \"<long>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbf8f864-ed1c-4c41-a599-d52f66bc6842",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"primary_id\": \"<long>\",\n  \"ticket_ids\": [\n    \"<long>\",\n    \"<long>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c1ec2240-553e-4444-8b4f-0af03c71a1f8",
+          "name": "Bulk update tickets",
+          "request": {
+            "name": "Bulk update tickets",
+            "description": {
+              "content": "Updates properties on multiple tickets at once.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tickets",
+                "bulk_update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ids\": [\n    \"<long>\",\n    \"<long>\"\n  ],\n  \"properties\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2131e4b4-6c8f-42b9-921f-a2ae35e38dc5",
+              "name": "Bulk update accepted for processing.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    "bulk_update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"<long>\",\n    \"<long>\"\n  ],\n  \"properties\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c6da5982-f949-4172-ac86-7174fa5f4756",
+              "name": "The request is invalid or malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    "bulk_update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"<long>\",\n    \"<long>\"\n  ],\n  \"properties\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "137d945c-2936-4f35-abb3-1923214654b4",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    "bulk_update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"<long>\",\n    \"<long>\"\n  ],\n  \"properties\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7d4d0ec3-51d2-449d-99e7-db41609f3b4e",
+          "name": "Bulk delete tickets",
+          "request": {
+            "name": "Bulk delete tickets",
+            "description": {
+              "content": "Soft-deletes multiple tickets at once, moving them to the trash.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tickets",
+                "bulk_delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ids\": [\n    \"<long>\",\n    \"<long>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eddab15d-d584-401d-9d3b-fed9127e8322",
+              "name": "Bulk delete accepted for processing.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    "bulk_delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"<long>\",\n    \"<long>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f400a689-8440-4881-876a-5a87b43646d8",
+              "name": "The request is invalid or malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    "bulk_delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"<long>\",\n    \"<long>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28799dbc-035a-4203-a090-3c2ebed9771d",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickets",
+                    "bulk_delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    \"<long>\",\n    \"<long>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e38cbfef-7364-4625-be6d-cf8e71183fef",
+          "name": "List all ticket fields",
+          "request": {
+            "name": "List all ticket fields",
+            "description": {
+              "content": "Retrieves all default and custom ticket fields.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ticket_fields"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fa39759a-10d0-4b25-b809-39e07572697f",
+              "name": "Successfully retrieved ticket fields.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ticket_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 5061,\n    \"name\": \"string\",\n    \"label\": \"string\",\n    \"description\": \"string\",\n    \"type\": \"string\",\n    \"default\": false,\n    \"required_for_closure\": true,\n    \"required_for_agents\": false,\n    \"required_for_customers\": false,\n    \"choices\": [\n      \"string\",\n      \"string\"\n    ],\n    \"created_at\": \"1987-07-28T22:27:18.999Z\",\n    \"updated_at\": \"1966-02-13T16:16:06.220Z\"\n  },\n  {\n    \"id\": 6462,\n    \"name\": \"string\",\n    \"label\": \"string\",\n    \"description\": \"string\",\n    \"type\": \"string\",\n    \"default\": false,\n    \"required_for_closure\": false,\n    \"required_for_agents\": true,\n    \"required_for_customers\": false,\n    \"choices\": [\n      \"string\",\n      \"string\"\n    ],\n    \"created_at\": \"2004-11-29T08:05:17.973Z\",\n    \"updated_at\": \"1971-08-02T17:14:57.568Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41ba3c19-2894-445a-b30f-057c244977d7",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ticket_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "yourdomain",
+      "key": "domain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{domain}}.freshdesk.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ee4a07b6-69dc-4d73-840d-8c3b92b1819f",
+    "name": "Freshdesk REST Agents Tickets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Freshdesk REST API (v2) provides programmatic access to helpdesk data and operations within Freshdesk, a customer support platform by Freshworks. It exposes endpoints for managing tickets, contacts, companies, agents, groups, conversations, products, email configurations, SLA policies, business hours, time entries, satisfaction ratings, solution categories, solution folders, solution articles, and more. The API uses JSON for request and response payloads, supports API key-based authentication, and follows RESTful conventions for CRUD operations.\n\nContact Support:\n Name: Freshdesk Support",
+      "type": "text/plain"
+    }
+  }
+}

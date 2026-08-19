@@ -1,0 +1,212 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshdesk REST Agents Contacts API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Contacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/contacts",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter contacts by email address."
+              },
+              {
+                "name": "phone",
+                "value": "",
+                "type": "query",
+                "description": "Filter contacts by phone number."
+              },
+              {
+                "name": "mobile",
+                "value": "",
+                "type": "query",
+                "description": "Filter contacts by mobile number."
+              },
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter contacts by company ID."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filter contacts by state."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of contacts. Contacts can be filtered by email, phone, mobile, company, or state."
+        },
+        {
+          "info": {
+            "name": "Create a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/contacts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new contact in the helpdesk. At minimum, an email, phone, mobile, or twitter_id must be provided."
+        },
+        {
+          "info": {
+            "name": "View a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/contacts/:contact_id",
+            "params": [
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the contact."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific contact by ID."
+        },
+        {
+          "info": {
+            "name": "Update a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/contacts/:contact_id",
+            "params": [
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the contact."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing contact."
+        },
+        {
+          "info": {
+            "name": "Delete a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshdesk.com/api/v2/contacts/:contact_id",
+            "params": [
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the contact."
+              }
+            ]
+          },
+          "docs": "Soft-deletes a contact. The contact can be restored later."
+        },
+        {
+          "info": {
+            "name": "Restore a deleted contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/contacts/:contact_id/restore",
+            "params": [
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the contact."
+              }
+            ]
+          },
+          "docs": "Restores a previously soft-deleted contact."
+        },
+        {
+          "info": {
+            "name": "Merge contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/contacts/merge",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Merges secondary contacts into a primary contact. The secondary contacts are deleted and their tickets are reassigned to the primary."
+        },
+        {
+          "info": {
+            "name": "Export contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/contacts/export"
+          },
+          "docs": "Initiates an export of contacts and returns a job ID to check status."
+        },
+        {
+          "info": {
+            "name": "List all contact fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/contact_fields"
+          },
+          "docs": "Retrieves all default and custom contact fields."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshdesk REST Agents Business Hours API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Business Hours",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all business hours",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/business_hours"
+          },
+          "docs": "Retrieves a list of all business hour schedules."
+        },
+        {
+          "info": {
+            "name": "View a business hour schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/business_hours/:business_hour_id",
+            "params": [
+              {
+                "name": "business_hour_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the business hour schedule."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific business hour schedule by ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,115 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshdesk REST Agents Products API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/products",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of products."
+        },
+        {
+          "info": {
+            "name": "View a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/products/:product_id",
+            "params": [
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the product."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific product by ID."
+        },
+        {
+          "info": {
+            "name": "Create a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/products/:product_id",
+            "params": [
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the product."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new product in the helpdesk."
+        },
+        {
+          "info": {
+            "name": "Update a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/products/:product_id",
+            "params": [
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the product."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing product."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

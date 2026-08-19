@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshdesk REST Agents Groups API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/groups",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for paginated results."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of agent groups."
+        },
+        {
+          "info": {
+            "name": "Create a group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshdesk.com/api/v2/groups",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new agent group in the helpdesk."
+        },
+        {
+          "info": {
+            "name": "View a group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshdesk.com/api/v2/groups/:group_id",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the group."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific group by ID."
+        },
+        {
+          "info": {
+            "name": "Update a group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshdesk.com/api/v2/groups/:group_id",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the group."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing group."
+        },
+        {
+          "info": {
+            "name": "Delete a group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshdesk.com/api/v2/groups/:group_id",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the group."
+              }
+            ]
+          },
+          "docs": "Deletes a group from the helpdesk."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

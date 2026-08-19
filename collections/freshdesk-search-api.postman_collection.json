@@ -1,0 +1,540 @@
+{
+  "item": [
+    {
+      "id": "00254fca-615c-4f72-a1c9-20dffc8497c0",
+      "name": "Search",
+      "description": {
+        "content": "Search across tickets, contacts, and companies using query syntax.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "33627138-24b5-44e6-ac73-2d822c7be876",
+          "name": "Search tickets",
+          "request": {
+            "name": "Search tickets",
+            "description": {
+              "content": "Searches for tickets using Freshdesk query language. Supports filtering by any ticket field using a SQL-like query syntax.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                "tickets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "(Required) Search query using Freshdesk query language, e.g. \"priority:1 AND status:2\"."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e3d2e125-e74a-4597-959f-122df6b781e1",
+              "name": "Successfully retrieved search results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "tickets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 2725,\n  \"results\": [\n    {\n      \"id\": 2952,\n      \"subject\": \"string\",\n      \"description\": \"string\",\n      \"description_text\": \"string\",\n      \"status\": 4,\n      \"priority\": 3,\n      \"source\": 7,\n      \"type\": \"string\",\n      \"requester_id\": 8050,\n      \"responder_id\": 9835,\n      \"group_id\": 3780,\n      \"product_id\": 1624,\n      \"company_id\": 4978,\n      \"email_config_id\": 6579,\n      \"cc_emails\": [\n        \"8QVNX@RpjlozsRjDk.oeq\",\n        \"UQYmj@AmsDHUocUjOtSe.xgi\"\n      ],\n      \"fwd_emails\": [\n        \"Szk@inngTvDOUwwUswGXFtYL.luyy\",\n        \"pFZC@CLZOungeVXpxHodeVfQsSyKxnenJIsZ.fa\"\n      ],\n      \"reply_cc_emails\": [\n        \"RfRE@JEURGHmWEcLdgCGKdV.gkq\",\n        \"M7uaAev3xvtV@AsHXGZYtBopxaseRUvpQSxKF.ubd\"\n      ],\n      \"to_emails\": [\n        \"5FR@EjnidfOhbQRtrfsdNSGF.dj\",\n        \"4XX4p3G@ujhgkUv.qox\"\n      ],\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"custom_fields\": {\n        \"key_0\": \"string\"\n      },\n      \"fr_escalated\": false,\n      \"spam\": true,\n      \"is_escalated\": false,\n      \"due_by\": \"1986-08-25T09:06:31.123Z\",\n      \"fr_due_by\": \"1979-08-23T10:01:57.783Z\",\n      \"created_at\": \"1956-09-04T03:16:08.147Z\",\n      \"updated_at\": \"1954-12-06T20:22:03.911Z\"\n    },\n    {\n      \"id\": 6337,\n      \"subject\": \"string\",\n      \"description\": \"string\",\n      \"description_text\": \"string\",\n      \"status\": 2,\n      \"priority\": 3,\n      \"source\": 1,\n      \"type\": \"string\",\n      \"requester_id\": 6761,\n      \"responder_id\": 5985,\n      \"group_id\": 6353,\n      \"product_id\": 2471,\n      \"company_id\": 2875,\n      \"email_config_id\": 7377,\n      \"cc_emails\": [\n        \"qj1lFy@tMBOmTHfqlAwzGEKOozIUqZBWoNymHWC.mdpq\",\n        \"gTIpxNFtn1WD@dnSVtGdvexWqVwiuXe.gsmw\"\n      ],\n      \"fwd_emails\": [\n        \"4P84NG@ZPtAPvioXSr.polc\",\n        \"0sW@myTToCajzljcPKqjaaXgqzGyWbOIag.onr\"\n      ],\n      \"reply_cc_emails\": [\n        \"kBm2BKmkto5xi@vOmfSyNTeigBrJdH.fm\",\n        \"KeBUqFVRccKQ@kRKaFJimcZZgHYlucgpn.xy\"\n      ],\n      \"to_emails\": [\n        \"Ipy3brb@PGmwiljffxZKVfarqwqPelymPuoHfRjR.ri\",\n        \"cu9f38@ObEZnbnzDCYHanZUwGpjzpV.zczu\"\n      ],\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"custom_fields\": {\n        \"key_0\": 7528.926215407019,\n        \"key_1\": 9150.769252840615\n      },\n      \"fr_escalated\": true,\n      \"spam\": true,\n      \"is_escalated\": false,\n      \"due_by\": \"2001-09-11T12:52:31.321Z\",\n      \"fr_due_by\": \"1957-11-10T09:51:24.537Z\",\n      \"created_at\": \"1988-04-14T14:03:40.853Z\",\n      \"updated_at\": \"1955-10-11T22:38:58.231Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b520fd3-2099-4379-bab6-5c1c2b304da0",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "tickets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bb7df5cf-7f25-4c21-8b1f-498d89074e21",
+          "name": "Search contacts",
+          "request": {
+            "name": "Search contacts",
+            "description": {
+              "content": "Searches for contacts using Freshdesk query language.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                "contacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "(Required) Search query using Freshdesk query language."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "67d18186-7ed2-48c2-86f3-5b2d81fa85f4",
+              "name": "Successfully retrieved search results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 7014,\n  \"results\": [\n    {\n      \"id\": 2245,\n      \"name\": \"string\",\n      \"email\": \"x5Fy31W0EijiId@aomrWqgTiJVWGRRw.vv\",\n      \"phone\": \"string\",\n      \"mobile\": \"string\",\n      \"twitter_id\": \"string\",\n      \"address\": \"string\",\n      \"description\": \"string\",\n      \"job_title\": \"string\",\n      \"language\": \"string\",\n      \"time_zone\": \"string\",\n      \"company_id\": 3714,\n      \"active\": true,\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"other_emails\": [\n        \"KfH01L6q0DNQ@zLbhkGa.ocy\",\n        \"Mci1A0kJptyg@ANXAmtTrHr.nhz\"\n      ],\n      \"custom_fields\": {\n        \"key_0\": 4468.533223328226\n      },\n      \"created_at\": \"1946-11-01T23:33:31.257Z\",\n      \"updated_at\": \"1987-08-31T04:04:36.589Z\"\n    },\n    {\n      \"id\": 2456,\n      \"name\": \"string\",\n      \"email\": \"UB8mha@jWUR.uc\",\n      \"phone\": \"string\",\n      \"mobile\": \"string\",\n      \"twitter_id\": \"string\",\n      \"address\": \"string\",\n      \"description\": \"string\",\n      \"job_title\": \"string\",\n      \"language\": \"string\",\n      \"time_zone\": \"string\",\n      \"company_id\": 2885,\n      \"active\": false,\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"other_emails\": [\n        \"a-GKe8kyeXs0bV2@oYXukZxTlzO.mqej\",\n        \"CHJyRSQ4GO@unEnlCDeUieUdZlBiOFHHsBXdb.oq\"\n      ],\n      \"custom_fields\": {\n        \"key_0\": \"string\"\n      },\n      \"created_at\": \"1977-05-13T01:44:24.279Z\",\n      \"updated_at\": \"2008-05-12T03:05:01.661Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ff0259c-c612-4f20-8d8b-dd2ba19335ff",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a1673212-dd07-4f01-8be0-634bd1c33bc2",
+          "name": "Search companies",
+          "request": {
+            "name": "Search companies",
+            "description": {
+              "content": "Searches for companies using Freshdesk query language.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                "companies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "(Required) Search query using Freshdesk query language."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "16c6b411-6207-42c8-84cd-2b0240d8c051",
+              "name": "Successfully retrieved search results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "companies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 3999,\n  \"results\": [\n    {\n      \"id\": 1030,\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"note\": \"string\",\n      \"domains\": [\n        \"string\",\n        \"string\"\n      ],\n      \"health_score\": \"string\",\n      \"account_tier\": \"string\",\n      \"renewal_date\": \"2008-08-29T18:02:56.313Z\",\n      \"industry\": \"string\",\n      \"custom_fields\": {\n        \"key_0\": \"string\",\n        \"key_1\": 9665.567847052755\n      },\n      \"created_at\": \"1976-07-31T16:24:07.307Z\",\n      \"updated_at\": \"2018-10-04T22:31:52.265Z\"\n    },\n    {\n      \"id\": 9497,\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"note\": \"string\",\n      \"domains\": [\n        \"string\",\n        \"string\"\n      ],\n      \"health_score\": \"string\",\n      \"account_tier\": \"string\",\n      \"renewal_date\": \"1979-08-17T19:21:04.056Z\",\n      \"industry\": \"string\",\n      \"custom_fields\": {\n        \"key_0\": 9476.384722262057,\n        \"key_1\": false\n      },\n      \"created_at\": \"2025-11-23T05:34:34.108Z\",\n      \"updated_at\": \"1994-08-09T12:17:43.505Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92e2f5bc-5b25-4a26-a959-df7c8a1934ef",
+              "name": "Authentication failed or credentials were not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "companies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Freshdesk subdomain, e.g. if your helpdesk URL is acme.freshdesk.com, use acme.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "yourdomain",
+      "key": "domain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{domain}}.freshdesk.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9ca6548f-7447-45f8-b3e5-d20432444d01",
+    "name": "Freshdesk REST Agents Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Freshdesk REST API (v2) provides programmatic access to helpdesk data and operations within Freshdesk, a customer support platform by Freshworks. It exposes endpoints for managing tickets, contacts, companies, agents, groups, conversations, products, email configurations, SLA policies, business hours, time entries, satisfaction ratings, solution categories, solution folders, solution articles, and more. The API uses JSON for request and response payloads, supports API key-based authentication, and follows RESTful conventions for CRUD operations.\n\nContact Support:\n Name: Freshdesk Support",
+      "type": "text/plain"
+    }
+  }
+}
