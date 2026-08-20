@@ -20,6 +20,12 @@ apis:
   name: Freshdesk Webhook API
   tags:
   - Automation
+  - Customer-Support
+  - Event
+  - Notification
+  - Webhook
+  tags_raw:
+  - Automation
   - Customer Support
   - Events
   - Notifications
@@ -40,6 +46,12 @@ apis:
 - aid: freshdesk:app-sdk
   name: Freshdesk App SDK
   tags:
+  - Application
+  - Extensions
+  - Marketplace
+  - Plugins
+  - SDK
+  tags_raw:
   - Apps
   - Extensions
   - Marketplace
@@ -148,6 +160,8 @@ apis:
   humanURL: https://developers.freshdesk.com/api/
   baseURL: https://yourdomain.freshdesk.com/api/v2
   tags:
+  - Group
+  tags_raw:
   - Groups
   properties:
   - type: OpenAPI
@@ -162,6 +176,8 @@ apis:
   humanURL: https://developers.freshdesk.com/api/
   baseURL: https://yourdomain.freshdesk.com/api/v2
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
