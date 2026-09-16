@@ -297,6 +297,8 @@ apis:
   - type: GraphQL
     url: graphql/freshdesk-graphql.md
 common:
+- type: Website
+  url: https://freshdesk.com
 - type: AgenticAccess
   url: agentic-access/freshdesk-agentic-access.yml
 - type: DomainSecurity
