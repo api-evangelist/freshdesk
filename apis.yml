@@ -51,11 +51,10 @@ apis:
     type: Documentation
   - url: asyncapi/freshdesk-webhook-api-asyncapi.yml
     type: AsyncAPI
-  description: >-
-    The Freshdesk Webhook API enables real-time communication between Freshdesk and external systems by
-    sending HTTP POST requests when specific events occur within the helpdesk. Webhooks can be triggered
-    by ticket creation, updates, status changes, and other support events, allowing developers to build
-    event-driven integrations without polling the REST API.
+  description: The Freshdesk Webhook API enables real-time communication between Freshdesk and external
+    systems by sending HTTP POST requests when specific events occur within the helpdesk. Webhooks can
+    be triggered by ticket creation, updates, status changes, and other support events, allowing developers
+    to build event-driven integrations without polling the REST API.
 - aid: freshdesk:app-sdk
   name: Freshdesk App SDK
   tags:
@@ -78,8 +77,7 @@ apis:
     type: Documentation
   - url: https://developers.freshworks.com/docs/app-sdk/v3.0/support_ticket/rest-apis/
     type: Documentation
-  description: >-
-    The Freshdesk App SDK allows developers to build custom applications that extend the functionality
+  description: The Freshdesk App SDK allows developers to build custom applications that extend the functionality
     of the Freshdesk helpdesk platform. Backed by a Platform-as-a-Service infrastructure that includes
     a data store and serverless runtimes, the SDK provides tools for creating front-end interfaces using
     the Crayons component library and server-side logic through serverless apps.
@@ -271,8 +269,8 @@ apis:
     url: graphql/freshdesk-graphql.md
 - aid: freshdesk:freshdesk-tickets-api
   name: freshdesk Tickets API
-  description: >-
-    Manage support tickets including creation, updates, bulk operations, merging, and lifecycle management.
+  description: Manage support tickets including creation, updates, bulk operations, merging, and lifecycle
+    management.
   humanURL: https://developers.freshdesk.com/api/
   baseURL: https://yourdomain.freshdesk.com/api/v2
   tags:
@@ -313,5 +311,9 @@ common:
   url: json-ld/freshdesk-context.jsonld
 - type: JSONSchema
   url: json-schema/freshdesk-ticket-schema.json
-modified: '2026-05-19'
+modified: '2026-09-16'
 description: Freshdesk API.
+tags:
+- Automation
+- Customer-Support
+- Application
