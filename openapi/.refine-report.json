@@ -1,21 +1,7 @@
 {
   "provider": "freshdesk",
   "sources": [
-    "freshdesk-agents-api-openapi.yml",
-    "freshdesk-business-hours-api-openapi.yml",
-    "freshdesk-companies-api-openapi.yml",
-    "freshdesk-contacts-api-openapi.yml",
-    "freshdesk-conversations-api-openapi.yml",
-    "freshdesk-email-configs-api-openapi.yml",
-    "freshdesk-groups-api-openapi.yml",
-    "freshdesk-products-api-openapi.yml",
-    "freshdesk-roles-api-openapi.yml",
-    "freshdesk-satisfaction-ratings-api-openapi.yml",
-    "freshdesk-search-api-openapi.yml",
-    "freshdesk-sla-policies-api-openapi.yml",
-    "freshdesk-solutions-api-openapi.yml",
-    "freshdesk-tickets-api-openapi.yml",
-    "freshdesk-time-entries-api-openapi.yml"
+    "_original/freshdesk-rest-api-openapi.yml"
   ],
   "outputs": [
     "freshdesk-agents-api-openapi.yml",
@@ -27,9 +13,9 @@
     "freshdesk-groups-api-openapi.yml",
     "freshdesk-products-api-openapi.yml",
     "freshdesk-roles-api-openapi.yml",
+    "freshdesk-sla-policies-api-openapi.yml",
     "freshdesk-satisfaction-ratings-api-openapi.yml",
     "freshdesk-search-api-openapi.yml",
-    "freshdesk-sla-policies-api-openapi.yml",
     "freshdesk-solutions-api-openapi.yml",
     "freshdesk-tickets-api-openapi.yml",
     "freshdesk-time-entries-api-openapi.yml"
@@ -37,6 +23,26 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "freshdesk-rest-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "freshdesk-agents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "freshdesk-business-hours-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "freshdesk-companies-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "freshdesk-contacts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "freshdesk-conversations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "freshdesk-email-configs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "freshdesk-groups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "freshdesk-products-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "freshdesk-roles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "freshdesk-satisfaction-ratings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "freshdesk-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "freshdesk-sla-policies-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "freshdesk-solutions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "freshdesk-tickets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "freshdesk-time-entries-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
