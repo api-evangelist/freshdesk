@@ -33,7 +33,7 @@ apis:
   name: Freshdesk Webhook API
   tags:
   - Automation
-  - Customer-Support
+  - Customer Support
   - Event
   - Notification
   - Webhook
@@ -43,6 +43,7 @@ apis:
   - Events
   - Notifications
   - Webhooks
+  - Customer-Support
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://api.example.com
   humanURL: https://support.freshdesk.com/support/solutions/folders/272646
@@ -93,8 +94,6 @@ apis:
     url: openapi/freshdesk-agents-api-openapi.yml
   - type: Documentation
     url: https://developers.freshdesk.com/api/
-  - type: GraphQL
-    url: graphql/freshdesk-graphql.md
 - aid: freshdesk:freshdesk-business-hours-api
   name: freshdesk Business Hours API
   description: Manage business hour schedules used in SLA calculations.
@@ -107,8 +106,6 @@ apis:
     url: openapi/freshdesk-business-hours-api-openapi.yml
   - type: Documentation
     url: https://developers.freshdesk.com/api/
-  - type: GraphQL
-    url: graphql/freshdesk-graphql.md
 - aid: freshdesk:freshdesk-companies-api
   name: freshdesk Companies API
   description: Manage companies (organizations) associated with contacts.
@@ -121,8 +118,6 @@ apis:
     url: openapi/freshdesk-companies-api-openapi.yml
   - type: Documentation
     url: https://developers.freshdesk.com/api/
-  - type: GraphQL
-    url: graphql/freshdesk-graphql.md
 - aid: freshdesk:freshdesk-contacts-api
   name: freshdesk Contacts API
   description: Manage contacts (end users) who submit support tickets.
@@ -135,8 +130,6 @@ apis:
     url: openapi/freshdesk-contacts-api-openapi.yml
   - type: Documentation
     url: https://developers.freshdesk.com/api/
-  - type: GraphQL
-    url: graphql/freshdesk-graphql.md
 - aid: freshdesk:freshdesk-conversations-api
   name: freshdesk Conversations API
   description: Manage replies, notes, and conversation threads on tickets.
@@ -149,8 +142,6 @@ apis:
     url: openapi/freshdesk-conversations-api-openapi.yml
   - type: Documentation
     url: https://developers.freshdesk.com/api/
-  - type: GraphQL
-    url: graphql/freshdesk-graphql.md
 - aid: freshdesk:freshdesk-email-configs-api
   name: freshdesk Email Configs API
   description: Manage email mailbox configurations for the helpdesk.
@@ -163,8 +154,6 @@ apis:
     url: openapi/freshdesk-email-configs-api-openapi.yml
   - type: Documentation
     url: https://developers.freshdesk.com/api/
-  - type: GraphQL
-    url: graphql/freshdesk-graphql.md
 - aid: freshdesk:freshdesk-groups-api
   name: freshdesk Groups API
   description: Manage agent groups for ticket assignment and routing.
@@ -179,8 +168,6 @@ apis:
     url: openapi/freshdesk-groups-api-openapi.yml
   - type: Documentation
     url: https://developers.freshdesk.com/api/
-  - type: GraphQL
-    url: graphql/freshdesk-graphql.md
 - aid: freshdesk:freshdesk-products-api
   name: freshdesk Products API
   description: Manage products to categorize tickets by product line.
@@ -195,8 +182,6 @@ apis:
     url: openapi/freshdesk-products-api-openapi.yml
   - type: Documentation
     url: https://developers.freshdesk.com/api/
-  - type: GraphQL
-    url: graphql/freshdesk-graphql.md
 - aid: freshdesk:freshdesk-roles-api
   name: freshdesk Roles API
   description: Manage roles that define agent permissions.
@@ -209,8 +194,6 @@ apis:
     url: openapi/freshdesk-roles-api-openapi.yml
   - type: Documentation
     url: https://developers.freshdesk.com/api/
-  - type: GraphQL
-    url: graphql/freshdesk-graphql.md
 - aid: freshdesk:freshdesk-satisfaction-ratings-api
   name: freshdesk Satisfaction Ratings API
   description: View customer satisfaction survey ratings on tickets.
@@ -223,8 +206,6 @@ apis:
     url: openapi/freshdesk-satisfaction-ratings-api-openapi.yml
   - type: Documentation
     url: https://developers.freshdesk.com/api/
-  - type: GraphQL
-    url: graphql/freshdesk-graphql.md
 - aid: freshdesk:freshdesk-search-api
   name: freshdesk Search API
   description: Search across tickets, contacts, and companies using query syntax.
@@ -237,8 +218,6 @@ apis:
     url: openapi/freshdesk-search-api-openapi.yml
   - type: Documentation
     url: https://developers.freshdesk.com/api/
-  - type: GraphQL
-    url: graphql/freshdesk-graphql.md
 - aid: freshdesk:freshdesk-sla-policies-api
   name: freshdesk SLA Policies API
   description: Manage service level agreement policies for ticket response and resolution times.
@@ -251,8 +230,6 @@ apis:
     url: openapi/freshdesk-sla-policies-api-openapi.yml
   - type: Documentation
     url: https://developers.freshdesk.com/api/
-  - type: GraphQL
-    url: graphql/freshdesk-graphql.md
 - aid: freshdesk:freshdesk-solutions-api
   name: freshdesk Solutions API
   description: Manage knowledge base solution categories, folders, and articles.
@@ -265,8 +242,6 @@ apis:
     url: openapi/freshdesk-solutions-api-openapi.yml
   - type: Documentation
     url: https://developers.freshdesk.com/api/
-  - type: GraphQL
-    url: graphql/freshdesk-graphql.md
 - aid: freshdesk:freshdesk-tickets-api
   name: freshdesk Tickets API
   description: Manage support tickets including creation, updates, bulk operations, merging, and lifecycle
@@ -280,8 +255,6 @@ apis:
     url: openapi/freshdesk-tickets-api-openapi.yml
   - type: Documentation
     url: https://developers.freshdesk.com/api/
-  - type: GraphQL
-    url: graphql/freshdesk-graphql.md
 - aid: freshdesk:freshdesk-time-entries-api
   name: freshdesk Time Entries API
   description: Track time spent on tickets by agents.
@@ -294,8 +267,6 @@ apis:
     url: openapi/freshdesk-time-entries-api-openapi.yml
   - type: Documentation
     url: https://developers.freshdesk.com/api/
-  - type: GraphQL
-    url: graphql/freshdesk-graphql.md
 common:
 - type: Website
   url: https://freshdesk.com
@@ -316,6 +287,10 @@ common:
 modified: '2026-09-16'
 description: Freshdesk API.
 tags:
+- Automation
+- Customer Support
+- Application
+tags_raw:
 - Automation
 - Customer-Support
 - Application
