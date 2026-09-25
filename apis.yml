@@ -268,6 +268,8 @@ apis:
   - type: Documentation
     url: https://developers.freshdesk.com/api/
 common:
+- type: VendorFacets
+  url: vendor-facets/freshdesk-vendor-facets.yml
 - type: Website
   url: https://freshdesk.com
 - type: AgenticAccess
