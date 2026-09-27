@@ -115,58 +115,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Company:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: Unique identifier of the company.
-        name:
-          type: string
-          description: Name of the company.
-        description:
-          type: string
-          nullable: true
-          description: Description of the company.
-        note:
-          type: string
-          nullable: true
-          description: Notes about the company.
-        domains:
-          type: array
-          items:
-            type: string
-          description: Email domains associated with the company.
-        health_score:
-          type: string
-          nullable: true
-          description: Health score of the company relationship.
-        account_tier:
-          type: string
-          nullable: true
-          description: Account tier or plan level.
-        renewal_date:
-          type: string
-          format: date-time
-          nullable: true
-          description: Date when the company's account renews.
-        industry:
-          type: string
-          nullable: true
-          description: Industry the company belongs to.
-        custom_fields:
-          type: object
-          additionalProperties: true
-          description: Custom fields set on the company.
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp when the company was created.
-        updated_at:
-          type: string
-          format: date-time
-          description: Timestamp when the company was last updated.
     Ticket:
       type: object
       properties:
@@ -301,6 +249,26 @@ components:
           type: string
           format: date-time
           description: Timestamp when the ticket was last updated.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
     Contact:
       type: object
       properties:
@@ -378,26 +346,58 @@ components:
           type: string
           format: date-time
           description: Timestamp when the contact was last updated.
-    Error:
+    Company:
       type: object
       properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the company.
+        name:
+          type: string
+          description: Name of the company.
         description:
           type: string
-          description: Human-readable error description.
-        errors:
+          nullable: true
+          description: Description of the company.
+        note:
+          type: string
+          nullable: true
+          description: Notes about the company.
+        domains:
           type: array
           items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message for the field.
-              code:
-                type: string
-                description: Error code.
+            type: string
+          description: Email domains associated with the company.
+        health_score:
+          type: string
+          nullable: true
+          description: Health score of the company relationship.
+        account_tier:
+          type: string
+          nullable: true
+          description: Account tier or plan level.
+        renewal_date:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date when the company's account renews.
+        industry:
+          type: string
+          nullable: true
+          description: Industry the company belongs to.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom fields set on the company.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the company was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the company was last updated.
   responses:
     Unauthorized:
       description: Authentication failed or credentials were not provided.

@@ -68,6 +68,19 @@ components:
       schema:
         type: integer
         format: int64
+  responses:
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -121,19 +134,6 @@ components:
           type: string
           format: date-time
           description: Timestamp when the schedule was last updated.
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication failed or credentials were not provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     basicAuth:
       type: http

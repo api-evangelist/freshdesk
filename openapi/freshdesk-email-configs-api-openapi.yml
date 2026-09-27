@@ -59,7 +59,49 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    emailConfigId:
+      name: email_config_id
+      in: path
+      required: true
+      description: Unique identifier of the email configuration.
+      schema:
+        type: integer
+        format: int64
+  responses:
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
     EmailConfig:
       type: object
       properties:
@@ -101,48 +143,6 @@ components:
           type: string
           format: date-time
           description: Timestamp when the email configuration was last updated.
-    Error:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable error description.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message for the field.
-              code:
-                type: string
-                description: Error code.
-  parameters:
-    emailConfigId:
-      name: email_config_id
-      in: path
-      required: true
-      description: Unique identifier of the email configuration.
-      schema:
-        type: integer
-        format: int64
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication failed or credentials were not provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     basicAuth:
       type: http

@@ -249,6 +249,8 @@ apis:
   humanURL: https://developers.freshdesk.com/api/
   baseURL: https://yourdomain.freshdesk.com/api/v2
   tags:
+  - Ticketing
+  tags_raw:
   - Tickets
   properties:
   - type: OpenAPI

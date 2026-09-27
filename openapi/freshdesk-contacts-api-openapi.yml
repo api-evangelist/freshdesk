@@ -257,14 +257,6 @@ components:
         minimum: 1
         maximum: 100
         default: 30
-    contactId:
-      name: contact_id
-      in: path
-      required: true
-      description: Unique identifier of the contact.
-      schema:
-        type: integer
-        format: int64
     page:
       name: page
       in: query
@@ -273,6 +265,33 @@ components:
         type: integer
         minimum: 1
         default: 1
+    contactId:
+      name: contact_id
+      in: path
+      required: true
+      description: Unique identifier of the contact.
+      schema:
+        type: integer
+        format: int64
+  responses:
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request is invalid or malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     ContactCreate:
       type: object
@@ -327,6 +346,26 @@ components:
           type: object
           additionalProperties: true
           description: Custom field values.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
     Contact:
       type: object
       properties:
@@ -404,26 +443,6 @@ components:
           type: string
           format: date-time
           description: Timestamp when the contact was last updated.
-    Error:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable error description.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message for the field.
-              code:
-                type: string
-                description: Error code.
     Field:
       type: object
       properties:
@@ -470,25 +489,6 @@ components:
           type: string
           format: date-time
           description: Timestamp when the field was last updated.
-  responses:
-    BadRequest:
-      description: The request is invalid or malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication failed or credentials were not provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     basicAuth:
       type: http

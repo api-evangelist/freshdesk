@@ -413,102 +413,7 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  parameters:
-    perPage:
-      name: per_page
-      in: query
-      description: Number of results per page (max 100).
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 30
-    ticketId:
-      name: ticket_id
-      in: path
-      required: true
-      description: Unique identifier of the ticket.
-      schema:
-        type: integer
-        format: int64
-    page:
-      name: page
-      in: query
-      description: Page number for paginated results.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
   schemas:
-    TicketCreate:
-      type: object
-      properties:
-        subject:
-          type: string
-          description: Subject of the ticket.
-        description:
-          type: string
-          description: HTML content of the ticket description.
-        email:
-          type: string
-          format: email
-          description: Email address of the requester. Required if requester_id, phone, or twitter_id is not provided.
-        phone:
-          type: string
-          description: Phone number of the requester.
-        requester_id:
-          type: integer
-          format: int64
-          description: ID of the requester contact.
-        status:
-          type: integer
-          description: Status of the ticket. 2=Open, 3=Pending, 4=Resolved, 5=Closed.
-          enum:
-          - 2
-          - 3
-          - 4
-          - 5
-        priority:
-          type: integer
-          description: Priority of the ticket. 1=Low, 2=Medium, 3=High, 4=Urgent.
-          enum:
-          - 1
-          - 2
-          - 3
-          - 4
-        source:
-          type: integer
-          description: Channel source of the ticket.
-        type:
-          type: string
-          description: Type of the ticket.
-        responder_id:
-          type: integer
-          format: int64
-          description: ID of the agent to assign.
-        group_id:
-          type: integer
-          format: int64
-          description: ID of the group to assign.
-        product_id:
-          type: integer
-          format: int64
-          description: ID of the associated product.
-        cc_emails:
-          type: array
-          items:
-            type: string
-            format: email
-          description: Email addresses to CC.
-        tags:
-          type: array
-          items:
-            type: string
-          description: Tags to add to the ticket.
-        custom_fields:
-          type: object
-          additionalProperties: true
-          description: Custom field values keyed by field name with cf_ prefix.
     Ticket:
       type: object
       properties:
@@ -663,52 +568,6 @@ components:
               code:
                 type: string
                 description: Error code.
-    Field:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: Unique identifier of the field.
-        name:
-          type: string
-          description: Internal name of the field.
-        label:
-          type: string
-          description: Display label of the field.
-        description:
-          type: string
-          nullable: true
-          description: Description of the field.
-        type:
-          type: string
-          description: Data type of the field.
-        default:
-          type: boolean
-          description: Whether this is a default system field.
-        required_for_closure:
-          type: boolean
-          description: Whether this field must be filled before closing a ticket.
-        required_for_agents:
-          type: boolean
-          description: Whether this field is required when agents create tickets.
-        required_for_customers:
-          type: boolean
-          description: Whether this field is required when customers create tickets.
-        choices:
-          type: array
-          items:
-            type: string
-          nullable: true
-          description: Available choices for dropdown fields.
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp when the field was created.
-        updated_at:
-          type: string
-          format: date-time
-          description: Timestamp when the field was last updated.
     TicketUpdate:
       type: object
       properties:
@@ -761,7 +620,154 @@ components:
           type: object
           additionalProperties: true
           description: Custom field values to update.
+    TicketCreate:
+      type: object
+      properties:
+        subject:
+          type: string
+          description: Subject of the ticket.
+        description:
+          type: string
+          description: HTML content of the ticket description.
+        email:
+          type: string
+          format: email
+          description: Email address of the requester. Required if requester_id, phone, or twitter_id is not provided.
+        phone:
+          type: string
+          description: Phone number of the requester.
+        requester_id:
+          type: integer
+          format: int64
+          description: ID of the requester contact.
+        status:
+          type: integer
+          description: Status of the ticket. 2=Open, 3=Pending, 4=Resolved, 5=Closed.
+          enum:
+          - 2
+          - 3
+          - 4
+          - 5
+        priority:
+          type: integer
+          description: Priority of the ticket. 1=Low, 2=Medium, 3=High, 4=Urgent.
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+        source:
+          type: integer
+          description: Channel source of the ticket.
+        type:
+          type: string
+          description: Type of the ticket.
+        responder_id:
+          type: integer
+          format: int64
+          description: ID of the agent to assign.
+        group_id:
+          type: integer
+          format: int64
+          description: ID of the group to assign.
+        product_id:
+          type: integer
+          format: int64
+          description: ID of the associated product.
+        cc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses to CC.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags to add to the ticket.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom field values keyed by field name with cf_ prefix.
+    Field:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the field.
+        name:
+          type: string
+          description: Internal name of the field.
+        label:
+          type: string
+          description: Display label of the field.
+        description:
+          type: string
+          nullable: true
+          description: Description of the field.
+        type:
+          type: string
+          description: Data type of the field.
+        default:
+          type: boolean
+          description: Whether this is a default system field.
+        required_for_closure:
+          type: boolean
+          description: Whether this field must be filled before closing a ticket.
+        required_for_agents:
+          type: boolean
+          description: Whether this field is required when agents create tickets.
+        required_for_customers:
+          type: boolean
+          description: Whether this field is required when customers create tickets.
+        choices:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: Available choices for dropdown fields.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the field was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the field was last updated.
+  parameters:
+    perPage:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+    page:
+      name: page
+      in: query
+      description: Page number for paginated results.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    ticketId:
+      name: ticket_id
+      in: path
+      required: true
+      description: Unique identifier of the ticket.
+      schema:
+        type: integer
+        format: int64
   responses:
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     BadRequest:
       description: The request is invalid or malformed.
       content:
@@ -770,12 +776,6 @@ components:
             $ref: '#/components/schemas/Error'
     NotFound:
       description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication failed or credentials were not provided.
       content:
         application/json:
           schema:

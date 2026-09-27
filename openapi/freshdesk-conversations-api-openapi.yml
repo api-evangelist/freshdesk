@@ -210,26 +210,26 @@ components:
             type: string
             format: email
           description: Email addresses to notify about the note.
-    ReplyCreate:
+    Error:
       type: object
-      required:
-      - body
       properties:
-        body:
+        description:
           type: string
-          description: Content of the reply in HTML format.
-        cc_emails:
+          description: Human-readable error description.
+        errors:
           type: array
           items:
-            type: string
-            format: email
-          description: Email addresses to CC on the reply.
-        bcc_emails:
-          type: array
-          items:
-            type: string
-            format: email
-          description: Email addresses to BCC on the reply.
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
     Attachment:
       type: object
       properties:
@@ -258,26 +258,26 @@ components:
           type: string
           format: date-time
           description: Timestamp when the attachment was last updated.
-    Error:
+    ReplyCreate:
       type: object
+      required:
+      - body
       properties:
-        description:
+        body:
           type: string
-          description: Human-readable error description.
-        errors:
+          description: Content of the reply in HTML format.
+        cc_emails:
           type: array
           items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message for the field.
-              code:
-                type: string
-                description: Error code.
+            type: string
+            format: email
+          description: Email addresses to CC on the reply.
+        bcc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses to BCC on the reply.
     Conversation:
       type: object
       properties:
@@ -345,6 +345,14 @@ components:
           format: date-time
           description: Timestamp when the conversation was last updated.
   parameters:
+    conversationId:
+      name: conversation_id
+      in: path
+      required: true
+      description: Unique identifier of the conversation.
+      schema:
+        type: integer
+        format: int64
     perPage:
       name: per_page
       in: query
@@ -354,22 +362,6 @@ components:
         minimum: 1
         maximum: 100
         default: 30
-    ticketId:
-      name: ticket_id
-      in: path
-      required: true
-      description: Unique identifier of the ticket.
-      schema:
-        type: integer
-        format: int64
-    conversationId:
-      name: conversation_id
-      in: path
-      required: true
-      description: Unique identifier of the conversation.
-      schema:
-        type: integer
-        format: int64
     page:
       name: page
       in: query
@@ -378,7 +370,21 @@ components:
         type: integer
         minimum: 1
         default: 1
+    ticketId:
+      name: ticket_id
+      in: path
+      required: true
+      description: Unique identifier of the ticket.
+      schema:
+        type: integer
+        format: int64
   responses:
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     BadRequest:
       description: The request is invalid or malformed.
       content:
@@ -387,12 +393,6 @@ components:
             $ref: '#/components/schemas/Error'
     NotFound:
       description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication failed or credentials were not provided.
       content:
         application/json:
           schema:
