@@ -187,49 +187,41 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    page:
+      name: page
+      in: query
+      description: Page number for paginated results.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    perPage:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+    ticketId:
+      name: ticket_id
+      in: path
+      required: true
+      description: Unique identifier of the ticket.
+      schema:
+        type: integer
+        format: int64
+    conversationId:
+      name: conversation_id
+      in: path
+      required: true
+      description: Unique identifier of the conversation.
+      schema:
+        type: integer
+        format: int64
   schemas:
-    NoteCreate:
-      type: object
-      required:
-      - body
-      properties:
-        body:
-          type: string
-          description: Content of the note in HTML format.
-        private:
-          type: boolean
-          description: Whether the note is private (visible only to agents). Default true.
-          default: true
-        incoming:
-          type: boolean
-          description: Whether the note is incoming (from a customer).
-          default: false
-        notify_emails:
-          type: array
-          items:
-            type: string
-            format: email
-          description: Email addresses to notify about the note.
-    Error:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable error description.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message for the field.
-              code:
-                type: string
-                description: Error code.
     Attachment:
       type: object
       properties:
@@ -258,26 +250,6 @@ components:
           type: string
           format: date-time
           description: Timestamp when the attachment was last updated.
-    ReplyCreate:
-      type: object
-      required:
-      - body
-      properties:
-        body:
-          type: string
-          description: Content of the reply in HTML format.
-        cc_emails:
-          type: array
-          items:
-            type: string
-            format: email
-          description: Email addresses to CC on the reply.
-        bcc_emails:
-          type: array
-          items:
-            type: string
-            format: email
-          description: Email addresses to BCC on the reply.
     Conversation:
       type: object
       properties:
@@ -344,43 +316,71 @@ components:
           type: string
           format: date-time
           description: Timestamp when the conversation was last updated.
-  parameters:
-    conversationId:
-      name: conversation_id
-      in: path
-      required: true
-      description: Unique identifier of the conversation.
-      schema:
-        type: integer
-        format: int64
-    perPage:
-      name: per_page
-      in: query
-      description: Number of results per page (max 100).
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 30
-    page:
-      name: page
-      in: query
-      description: Page number for paginated results.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    ticketId:
-      name: ticket_id
-      in: path
-      required: true
-      description: Unique identifier of the ticket.
-      schema:
-        type: integer
-        format: int64
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
+    ReplyCreate:
+      type: object
+      required:
+      - body
+      properties:
+        body:
+          type: string
+          description: Content of the reply in HTML format.
+        cc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses to CC on the reply.
+        bcc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses to BCC on the reply.
+    NoteCreate:
+      type: object
+      required:
+      - body
+      properties:
+        body:
+          type: string
+          description: Content of the note in HTML format.
+        private:
+          type: boolean
+          description: Whether the note is private (visible only to agents). Default true.
+          default: true
+        incoming:
+          type: boolean
+          description: Whether the note is incoming (from a customer).
+          default: false
+        notify_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses to notify about the note.
   responses:
-    Unauthorized:
-      description: Authentication failed or credentials were not provided.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
@@ -391,8 +391,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
       content:
         application/json:
           schema:

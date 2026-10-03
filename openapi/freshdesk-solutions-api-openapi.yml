@@ -408,28 +408,43 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    SolutionCategory:
+    SolutionFolder:
       type: object
       properties:
         id:
           type: integer
           format: int64
-          description: Unique identifier of the solution category.
+          description: Unique identifier of the solution folder.
         name:
           type: string
-          description: Name of the solution category.
+          description: Name of the solution folder.
         description:
           type: string
           nullable: true
-          description: Description of the solution category.
+          description: Description of the solution folder.
+        category_id:
+          type: integer
+          format: int64
+          description: ID of the parent category.
+        visibility:
+          type: integer
+          description: Visibility setting. 1=All users, 2=Logged-in users, 3=Agents only, 4=Selected companies.
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+        articles_count:
+          type: integer
+          description: Number of articles in the folder.
         created_at:
           type: string
           format: date-time
-          description: Timestamp when the category was created.
+          description: Timestamp when the folder was created.
         updated_at:
           type: string
           format: date-time
-          description: Timestamp when the category was last updated.
+          description: Timestamp when the folder was last updated.
     SolutionArticle:
       type: object
       properties:
@@ -502,69 +517,35 @@ components:
               code:
                 type: string
                 description: Error code.
-    SolutionFolder:
+    SolutionCategory:
       type: object
       properties:
         id:
           type: integer
           format: int64
-          description: Unique identifier of the solution folder.
+          description: Unique identifier of the solution category.
         name:
           type: string
-          description: Name of the solution folder.
+          description: Name of the solution category.
         description:
           type: string
           nullable: true
-          description: Description of the solution folder.
-        category_id:
-          type: integer
-          format: int64
-          description: ID of the parent category.
-        visibility:
-          type: integer
-          description: Visibility setting. 1=All users, 2=Logged-in users, 3=Agents only, 4=Selected companies.
-          enum:
-          - 1
-          - 2
-          - 3
-          - 4
-        articles_count:
-          type: integer
-          description: Number of articles in the folder.
+          description: Description of the solution category.
         created_at:
           type: string
           format: date-time
-          description: Timestamp when the folder was created.
+          description: Timestamp when the category was created.
         updated_at:
           type: string
           format: date-time
-          description: Timestamp when the folder was last updated.
-  parameters:
-    articleId:
-      name: article_id
-      in: path
-      required: true
-      description: Unique identifier of the solution article.
-      schema:
-        type: integer
-        format: int64
-    categoryId:
-      name: category_id
-      in: path
-      required: true
-      description: Unique identifier of the solution category.
-      schema:
-        type: integer
-        format: int64
-    folderId:
-      name: folder_id
-      in: path
-      required: true
-      description: Unique identifier of the solution folder.
-      schema:
-        type: integer
-        format: int64
+          description: Timestamp when the category was last updated.
   responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     BadRequest:
       description: The request is invalid or malformed.
       content:
@@ -577,12 +558,31 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    folderId:
+      name: folder_id
+      in: path
+      required: true
+      description: Unique identifier of the solution folder.
+      schema:
+        type: integer
+        format: int64
+    categoryId:
+      name: category_id
+      in: path
+      required: true
+      description: Unique identifier of the solution category.
+      schema:
+        type: integer
+        format: int64
+    articleId:
+      name: article_id
+      in: path
+      required: true
+      description: Unique identifier of the solution article.
+      schema:
+        type: integer
+        format: int64
   securitySchemes:
     basicAuth:
       type: http

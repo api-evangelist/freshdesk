@@ -128,6 +128,14 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   parameters:
+    page:
+      name: page
+      in: query
+      description: Page number for paginated results.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
     perPage:
       name: per_page
       in: query
@@ -137,14 +145,6 @@ components:
         minimum: 1
         maximum: 100
         default: 30
-    page:
-      name: page
-      in: query
-      description: Page number for paginated results.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
     groupId:
       name: group_id
       in: path
@@ -153,46 +153,34 @@ components:
       schema:
         type: integer
         format: int64
-  responses:
-    Unauthorized:
-      description: Authentication failed or credentials were not provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request is invalid or malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
+    GroupCreate:
       type: object
+      required:
+      - name
       properties:
+        name:
+          type: string
+          description: Name of the group.
         description:
           type: string
-          description: Human-readable error description.
-        errors:
+          description: Description of the group.
+        escalate_to:
+          type: integer
+          format: int64
+          description: Agent ID to escalate to.
+        unassigned_for:
+          type: string
+          description: Duration for escalation.
+        agent_ids:
           type: array
           items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message for the field.
-              code:
-                type: string
-                description: Error code.
+            type: integer
+            format: int64
+          description: Agent IDs to include.
+        auto_ticket_assign:
+          type: boolean
+          description: Enable auto-assignment.
     Group:
       type: object
       properties:
@@ -238,33 +226,45 @@ components:
           type: string
           format: date-time
           description: Timestamp when the group was last updated.
-    GroupCreate:
+    Error:
       type: object
-      required:
-      - name
       properties:
-        name:
-          type: string
-          description: Name of the group.
         description:
           type: string
-          description: Description of the group.
-        escalate_to:
-          type: integer
-          format: int64
-          description: Agent ID to escalate to.
-        unassigned_for:
-          type: string
-          description: Duration for escalation.
-        agent_ids:
+          description: Human-readable error description.
+        errors:
           type: array
           items:
-            type: integer
-            format: int64
-          description: Agent IDs to include.
-        auto_ticket_assign:
-          type: boolean
-          description: Enable auto-assignment.
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request is invalid or malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     basicAuth:
       type: http

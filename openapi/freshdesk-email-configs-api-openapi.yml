@@ -59,24 +59,15 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    emailConfigId:
-      name: email_config_id
-      in: path
-      required: true
-      description: Unique identifier of the email configuration.
-      schema:
-        type: integer
-        format: int64
   responses:
-    Unauthorized:
-      description: Authentication failed or credentials were not provided.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
       content:
         application/json:
           schema:
@@ -143,6 +134,15 @@ components:
           type: string
           format: date-time
           description: Timestamp when the email configuration was last updated.
+  parameters:
+    emailConfigId:
+      name: email_config_id
+      in: path
+      required: true
+      description: Unique identifier of the email configuration.
+      schema:
+        type: integer
+        format: int64
   securitySchemes:
     basicAuth:
       type: http

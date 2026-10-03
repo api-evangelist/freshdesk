@@ -153,14 +153,14 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   parameters:
-    timeEntryId:
-      name: time_entry_id
-      in: path
-      required: true
-      description: Unique identifier of the time entry.
+    page:
+      name: page
+      in: query
+      description: Page number for paginated results.
       schema:
         type: integer
-        format: int64
+        minimum: 1
+        default: 1
     perPage:
       name: per_page
       in: query
@@ -170,19 +170,19 @@ components:
         minimum: 1
         maximum: 100
         default: 30
-    page:
-      name: page
-      in: query
-      description: Page number for paginated results.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
     ticketId:
       name: ticket_id
       in: path
       required: true
       description: Unique identifier of the ticket.
+      schema:
+        type: integer
+        format: int64
+    timeEntryId:
+      name: time_entry_id
+      in: path
+      required: true
+      description: Unique identifier of the time entry.
       schema:
         type: integer
         format: int64
@@ -207,26 +207,6 @@ components:
           type: string
           format: date-time
           description: Date when the work was performed.
-    Error:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable error description.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message for the field.
-              code:
-                type: string
-                description: Error code.
     TimeEntry:
       type: object
       properties:
@@ -272,9 +252,29 @@ components:
           type: string
           format: date-time
           description: Timestamp when the time entry was last updated.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
   responses:
-    Unauthorized:
-      description: Authentication failed or credentials were not provided.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
@@ -285,8 +285,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
       content:
         application/json:
           schema:
