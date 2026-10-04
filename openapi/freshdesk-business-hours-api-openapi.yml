@@ -59,6 +59,28 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    businessHourId:
+      name: business_hour_id
+      in: path
+      required: true
+      description: Unique identifier of the business hour schedule.
+      schema:
+        type: integer
+        format: int64
   schemas:
     BusinessHour:
       type: object
@@ -112,28 +134,6 @@ components:
               code:
                 type: string
                 description: Error code.
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication failed or credentials were not provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    businessHourId:
-      name: business_hour_id
-      in: path
-      required: true
-      description: Unique identifier of the business hour schedule.
-      schema:
-        type: integer
-        format: int64
   securitySchemes:
     basicAuth:
       type: http

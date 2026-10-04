@@ -196,6 +196,22 @@ components:
         type: integer
         minimum: 1
         default: 1
+    conversationId:
+      name: conversation_id
+      in: path
+      required: true
+      description: Unique identifier of the conversation.
+      schema:
+        type: integer
+        format: int64
+    ticketId:
+      name: ticket_id
+      in: path
+      required: true
+      description: Unique identifier of the ticket.
+      schema:
+        type: integer
+        format: int64
     perPage:
       name: per_page
       in: query
@@ -205,51 +221,66 @@ components:
         minimum: 1
         maximum: 100
         default: 30
-    ticketId:
-      name: ticket_id
-      in: path
-      required: true
-      description: Unique identifier of the ticket.
-      schema:
-        type: integer
-        format: int64
-    conversationId:
-      name: conversation_id
-      in: path
-      required: true
-      description: Unique identifier of the conversation.
-      schema:
-        type: integer
-        format: int64
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request is invalid or malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Attachment:
+    Error:
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
-          description: Unique identifier of the attachment.
-        name:
+        description:
           type: string
-          description: File name of the attachment.
-        content_type:
+          description: Human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
+    ReplyCreate:
+      type: object
+      required:
+      - body
+      properties:
+        body:
           type: string
-          description: MIME type of the attachment.
-        size:
-          type: integer
-          description: File size in bytes.
-        attachment_url:
-          type: string
-          format: uri
-          description: URL to download the attachment.
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp when the attachment was created.
-        updated_at:
-          type: string
-          format: date-time
-          description: Timestamp when the attachment was last updated.
+          description: Content of the reply in HTML format.
+        cc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses to CC on the reply.
+        bcc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses to BCC on the reply.
     Conversation:
       type: object
       properties:
@@ -316,46 +347,34 @@ components:
           type: string
           format: date-time
           description: Timestamp when the conversation was last updated.
-    Error:
+    Attachment:
       type: object
       properties:
-        description:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the attachment.
+        name:
           type: string
-          description: Human-readable error description.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message for the field.
-              code:
-                type: string
-                description: Error code.
-    ReplyCreate:
-      type: object
-      required:
-      - body
-      properties:
-        body:
+          description: File name of the attachment.
+        content_type:
           type: string
-          description: Content of the reply in HTML format.
-        cc_emails:
-          type: array
-          items:
-            type: string
-            format: email
-          description: Email addresses to CC on the reply.
-        bcc_emails:
-          type: array
-          items:
-            type: string
-            format: email
-          description: Email addresses to BCC on the reply.
+          description: MIME type of the attachment.
+        size:
+          type: integer
+          description: File size in bytes.
+        attachment_url:
+          type: string
+          format: uri
+          description: URL to download the attachment.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the attachment was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the attachment was last updated.
     NoteCreate:
       type: object
       required:
@@ -378,25 +397,6 @@ components:
             type: string
             format: email
           description: Email addresses to notify about the note.
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request is invalid or malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication failed or credentials were not provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     basicAuth:
       type: http

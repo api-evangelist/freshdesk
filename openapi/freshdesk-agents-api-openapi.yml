@@ -128,72 +128,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    page:
-      name: page
-      in: query
-      description: Page number for paginated results.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    perPage:
-      name: per_page
-      in: query
-      description: Number of results per page (max 100).
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 30
-    agentId:
-      name: agent_id
-      in: path
-      required: true
-      description: Unique identifier of the agent.
-      schema:
-        type: integer
-        format: int64
-  responses:
-    Unauthorized:
-      description: Authentication failed or credentials were not provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request is invalid or malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable error description.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message for the field.
-              code:
-                type: string
-                description: Error code.
     AgentUpdate:
       type: object
       properties:
@@ -218,55 +153,26 @@ components:
             type: integer
             format: int64
           description: Roles to assign.
-    Agent:
+    Error:
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
-          description: Unique identifier of the agent.
-        available:
-          type: boolean
-          description: Whether the agent is currently available.
-        occasional:
-          type: boolean
-          description: Whether the agent is an occasional agent.
-        signature:
+        description:
           type: string
-          nullable: true
-          description: Signature of the agent in HTML format.
-        ticket_scope:
-          type: integer
-          description: Ticket scope of the agent. 1=Global, 2=Group, 3=Restricted.
-          enum:
-          - 1
-          - 2
-          - 3
-        group_ids:
+          description: Human-readable error description.
+        errors:
           type: array
           items:
-            type: integer
-            format: int64
-          description: IDs of the groups the agent belongs to.
-        role_ids:
-          type: array
-          items:
-            type: integer
-            format: int64
-          description: IDs of the roles assigned to the agent.
-        contact:
-          $ref: '#/components/schemas/Contact'
-        type:
-          type: string
-          description: Type of the agent (e.g., support_agent).
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp when the agent was created.
-        updated_at:
-          type: string
-          format: date-time
-          description: Timestamp when the agent was last updated.
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
     Contact:
       type: object
       properties:
@@ -344,6 +250,100 @@ components:
           type: string
           format: date-time
           description: Timestamp when the contact was last updated.
+    Agent:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the agent.
+        available:
+          type: boolean
+          description: Whether the agent is currently available.
+        occasional:
+          type: boolean
+          description: Whether the agent is an occasional agent.
+        signature:
+          type: string
+          nullable: true
+          description: Signature of the agent in HTML format.
+        ticket_scope:
+          type: integer
+          description: Ticket scope of the agent. 1=Global, 2=Group, 3=Restricted.
+          enum:
+          - 1
+          - 2
+          - 3
+        group_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: IDs of the groups the agent belongs to.
+        role_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          description: IDs of the roles assigned to the agent.
+        contact:
+          $ref: '#/components/schemas/Contact'
+        type:
+          type: string
+          description: Type of the agent (e.g., support_agent).
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the agent was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the agent was last updated.
+  parameters:
+    page:
+      name: page
+      in: query
+      description: Page number for paginated results.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    agentId:
+      name: agent_id
+      in: path
+      required: true
+      description: Unique identifier of the agent.
+      schema:
+        type: integer
+        format: int64
+    perPage:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request is invalid or malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     basicAuth:
       type: http

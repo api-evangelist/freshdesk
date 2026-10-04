@@ -59,15 +59,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    slaPolicyId:
-      name: sla_policy_id
-      in: path
-      required: true
-      description: Unique identifier of the SLA policy.
-      schema:
-        type: integer
-        format: int64
   schemas:
     SLAPolicy:
       type: object
@@ -129,6 +120,15 @@ components:
               code:
                 type: string
                 description: Error code.
+  parameters:
+    slaPolicyId:
+      name: sla_policy_id
+      in: path
+      required: true
+      description: Unique identifier of the SLA policy.
+      schema:
+        type: integer
+        format: int64
   responses:
     NotFound:
       description: The requested resource was not found.

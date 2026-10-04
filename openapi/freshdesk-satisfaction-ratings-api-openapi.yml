@@ -85,6 +85,14 @@ components:
         type: integer
         minimum: 1
         default: 1
+    ticketId:
+      name: ticket_id
+      in: path
+      required: true
+      description: Unique identifier of the ticket.
+      schema:
+        type: integer
+        format: int64
     perPage:
       name: per_page
       in: query
@@ -94,15 +102,38 @@ components:
         minimum: 1
         maximum: 100
         default: 30
-    ticketId:
-      name: ticket_id
-      in: path
-      required: true
-      description: Unique identifier of the ticket.
-      schema:
-        type: integer
-        format: int64
   schemas:
+    SatisfactionRatingCreate:
+      type: object
+      required:
+      - rating
+      properties:
+        rating:
+          type: integer
+          description: Satisfaction rating value.
+        feedback:
+          type: string
+          description: Written feedback from the customer.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
     SatisfactionRating:
       type: object
       properties:
@@ -146,37 +177,6 @@ components:
           type: string
           format: date-time
           description: Timestamp when the rating was last updated.
-    Error:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable error description.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message for the field.
-              code:
-                type: string
-                description: Error code.
-    SatisfactionRatingCreate:
-      type: object
-      required:
-      - rating
-      properties:
-        rating:
-          type: integer
-          description: Satisfaction rating value.
-        feedback:
-          type: string
-          description: Written feedback from the customer.
   responses:
     NotFound:
       description: The requested resource was not found.
@@ -184,14 +184,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request is invalid or malformed.
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication failed or credentials were not provided.
+    BadRequest:
+      description: The request is invalid or malformed.
       content:
         application/json:
           schema:

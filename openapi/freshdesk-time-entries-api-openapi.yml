@@ -153,6 +153,14 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   parameters:
+    timeEntryId:
+      name: time_entry_id
+      in: path
+      required: true
+      description: Unique identifier of the time entry.
+      schema:
+        type: integer
+        format: int64
     page:
       name: page
       in: query
@@ -161,6 +169,14 @@ components:
         type: integer
         minimum: 1
         default: 1
+    ticketId:
+      name: ticket_id
+      in: path
+      required: true
+      description: Unique identifier of the ticket.
+      schema:
+        type: integer
+        format: int64
     perPage:
       name: per_page
       in: query
@@ -170,43 +186,26 @@ components:
         minimum: 1
         maximum: 100
         default: 30
-    ticketId:
-      name: ticket_id
-      in: path
-      required: true
-      description: Unique identifier of the ticket.
-      schema:
-        type: integer
-        format: int64
-    timeEntryId:
-      name: time_entry_id
-      in: path
-      required: true
-      description: Unique identifier of the time entry.
-      schema:
-        type: integer
-        format: int64
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request is invalid or malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    TimeEntryCreate:
-      type: object
-      properties:
-        agent_id:
-          type: integer
-          format: int64
-          description: ID of the agent who performed the work.
-        billable:
-          type: boolean
-          description: Whether the time entry is billable.
-        note:
-          type: string
-          description: Notes about the work performed.
-        time_spent:
-          type: string
-          description: Time spent in hh:mm format.
-        executed_at:
-          type: string
-          format: date-time
-          description: Date when the work was performed.
     TimeEntry:
       type: object
       properties:
@@ -272,25 +271,26 @@ components:
               code:
                 type: string
                 description: Error code.
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request is invalid or malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication failed or credentials were not provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    TimeEntryCreate:
+      type: object
+      properties:
+        agent_id:
+          type: integer
+          format: int64
+          description: ID of the agent who performed the work.
+        billable:
+          type: boolean
+          description: Whether the time entry is billable.
+        note:
+          type: string
+          description: Notes about the work performed.
+        time_spent:
+          type: string
+          description: Time spent in hh:mm format.
+        executed_at:
+          type: string
+          format: date-time
+          description: Date when the work was performed.
   securitySchemes:
     basicAuth:
       type: http
