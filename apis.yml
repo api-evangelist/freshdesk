@@ -270,6 +270,9 @@ apis:
   - type: Documentation
     url: https://developers.freshdesk.com/api/
 common:
+- type: CapabilityMap
+  url: capabilities/freshdesk-capability-edges.yml
+  name: Freshdesk Business Capability Map
 - type: VendorFacets
   url: vendor-facets/freshdesk-vendor-facets.yml
 - type: Website
@@ -294,7 +297,11 @@ tags:
 - Automation
 - Customer Support
 - Application
+- Help Desk
+- Ticketing
 tags_raw:
 - Automation
 - Customer-Support
 - Application
+- Help Desk
+- Ticketing
