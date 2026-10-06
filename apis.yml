@@ -270,6 +270,8 @@ apis:
   - type: Documentation
     url: https://developers.freshdesk.com/api/
 common:
+- url: https://www.freshworks.com/company/newsroom/
+  type: Blog
 - type: CapabilityMap
   url: capabilities/freshdesk-capability-edges.yml
   name: Freshdesk Business Capability Map
@@ -291,7 +293,7 @@ common:
   url: json-ld/freshdesk-context.jsonld
 - type: JSONSchema
   url: json-schema/freshdesk-ticket-schema.json
-modified: '2026-09-16'
+modified: '2026-10-06'
 description: Freshdesk API.
 tags:
 - Automation
