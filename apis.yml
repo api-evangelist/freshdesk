@@ -270,6 +270,12 @@ apis:
   - type: Documentation
     url: https://developers.freshdesk.com/api/
 common:
+- type: Plans
+  url: plans/freshdesk-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/freshdesk-rate-limits.yml
+- type: FinOps
+  url: finops/freshdesk-finops.yml
 - url: https://www.freshworks.com/company/newsroom/
   type: Blog
 - type: CapabilityMap
