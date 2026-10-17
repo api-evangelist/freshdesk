@@ -407,25 +407,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication failed or credentials were not provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request is invalid or malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     articleId:
       name: article_id
@@ -451,86 +432,26 @@ components:
       schema:
         type: integer
         format: int64
+  responses:
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request is invalid or malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    SolutionCategory:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: Unique identifier of the solution category.
-        name:
-          type: string
-          description: Name of the solution category.
-        description:
-          type: string
-          nullable: true
-          description: Description of the solution category.
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp when the category was created.
-        updated_at:
-          type: string
-          format: date-time
-          description: Timestamp when the category was last updated.
-    Error:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable error description.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message for the field.
-              code:
-                type: string
-                description: Error code.
-    SolutionFolder:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: Unique identifier of the solution folder.
-        name:
-          type: string
-          description: Name of the solution folder.
-        description:
-          type: string
-          nullable: true
-          description: Description of the solution folder.
-        category_id:
-          type: integer
-          format: int64
-          description: ID of the parent category.
-        visibility:
-          type: integer
-          description: Visibility setting. 1=All users, 2=Logged-in users, 3=Agents only, 4=Selected companies.
-          enum:
-          - 1
-          - 2
-          - 3
-          - 4
-        articles_count:
-          type: integer
-          description: Number of articles in the folder.
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp when the folder was created.
-        updated_at:
-          type: string
-          format: date-time
-          description: Timestamp when the folder was last updated.
     SolutionArticle:
       type: object
       properties:
@@ -583,6 +504,85 @@ components:
           type: string
           format: date-time
           description: Timestamp when the article was last updated.
+    SolutionFolder:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the solution folder.
+        name:
+          type: string
+          description: Name of the solution folder.
+        description:
+          type: string
+          nullable: true
+          description: Description of the solution folder.
+        category_id:
+          type: integer
+          format: int64
+          description: ID of the parent category.
+        visibility:
+          type: integer
+          description: Visibility setting. 1=All users, 2=Logged-in users, 3=Agents only, 4=Selected companies.
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+        articles_count:
+          type: integer
+          description: Number of articles in the folder.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the folder was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the folder was last updated.
+    SolutionCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the solution category.
+        name:
+          type: string
+          description: Name of the solution category.
+        description:
+          type: string
+          nullable: true
+          description: Description of the solution category.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the category was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the category was last updated.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
   securitySchemes:
     basicAuth:
       type: http

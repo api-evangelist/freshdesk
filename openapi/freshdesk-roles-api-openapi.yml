@@ -59,6 +59,28 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    roleId:
+      name: role_id
+      in: path
+      required: true
+      description: Unique identifier of the role.
+      schema:
+        type: integer
+        format: int64
+  responses:
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Role:
       type: object
@@ -105,28 +127,6 @@ components:
               code:
                 type: string
                 description: Error code.
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication failed or credentials were not provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    roleId:
-      name: role_id
-      in: path
-      required: true
-      description: Unique identifier of the role.
-      schema:
-        type: integer
-        format: int64
   securitySchemes:
     basicAuth:
       type: http

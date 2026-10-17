@@ -256,14 +256,6 @@ components:
       schema:
         type: integer
         format: int64
-    page:
-      name: page
-      in: query
-      description: Page number for paginated results.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
     perPage:
       name: per_page
       in: query
@@ -273,15 +265,23 @@ components:
         minimum: 1
         maximum: 100
         default: 30
+    page:
+      name: page
+      in: query
+      description: Page number for paginated results.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
   responses:
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Authentication failed or credentials were not provided.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication failed or credentials were not provided.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
@@ -293,79 +293,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    ContactCreate:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Full name of the contact.
-        email:
-          type: string
-          format: email
-          description: Email address of the contact.
-        phone:
-          type: string
-          description: Phone number of the contact.
-        mobile:
-          type: string
-          description: Mobile phone number of the contact.
-        twitter_id:
-          type: string
-          description: Twitter handle of the contact.
-        address:
-          type: string
-          description: Physical address of the contact.
-        description:
-          type: string
-          description: Description or notes about the contact.
-        job_title:
-          type: string
-          description: Job title of the contact.
-        language:
-          type: string
-          description: Language preference of the contact.
-        time_zone:
-          type: string
-          description: Time zone of the contact.
-        company_id:
-          type: integer
-          format: int64
-          description: ID of the company to associate.
-        tags:
-          type: array
-          items:
-            type: string
-          description: Tags to associate with the contact.
-        other_emails:
-          type: array
-          items:
-            type: string
-            format: email
-          description: Additional email addresses.
-        custom_fields:
-          type: object
-          additionalProperties: true
-          description: Custom field values.
-    Error:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable error description.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message for the field.
-              code:
-                type: string
-                description: Error code.
     Contact:
       type: object
       properties:
@@ -443,6 +370,79 @@ components:
           type: string
           format: date-time
           description: Timestamp when the contact was last updated.
+    ContactCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Full name of the contact.
+        email:
+          type: string
+          format: email
+          description: Email address of the contact.
+        phone:
+          type: string
+          description: Phone number of the contact.
+        mobile:
+          type: string
+          description: Mobile phone number of the contact.
+        twitter_id:
+          type: string
+          description: Twitter handle of the contact.
+        address:
+          type: string
+          description: Physical address of the contact.
+        description:
+          type: string
+          description: Description or notes about the contact.
+        job_title:
+          type: string
+          description: Job title of the contact.
+        language:
+          type: string
+          description: Language preference of the contact.
+        time_zone:
+          type: string
+          description: Time zone of the contact.
+        company_id:
+          type: integer
+          format: int64
+          description: ID of the company to associate.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags to associate with the contact.
+        other_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Additional email addresses.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
     Field:
       type: object
       properties:
