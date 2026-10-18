@@ -33,7 +33,7 @@ apis:
   name: Freshdesk Webhook API
   tags:
   - Automation
-  - Customer Support
+  - Customer Service
   - Event
   - Notification
   - Webhook
@@ -303,7 +303,7 @@ modified: '2026-10-06'
 description: Freshdesk API.
 tags:
 - Automation
-- Customer Support
+- Customer Service
 - Application
 - Help Desk
 - Ticketing
@@ -313,3 +313,4 @@ tags_raw:
 - Application
 - Help Desk
 - Ticketing
+- Customer Support
