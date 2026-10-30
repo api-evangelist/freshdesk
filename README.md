@@ -1,4 +1,4 @@
-# freshdesk (freshdesk)
+# Freshdesk
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,84 +66,190 @@
 
 Freshdesk API.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/freshdesk/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/freshdesk/refs/heads/main/apis.yml)
+**Areas:** Automation · Customer Service · Application · Help Desk · Ticketing
 
-## Timestamps
+## Freshdesk on APIs.io
 
-- **Modified:** 2026-05-19
+Everything profiled for Freshdesk is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/freshdesk/](https://apis.io/providers/freshdesk/)** — or go straight to one of the APIs or properties below.
 
-## APIs
+### APIs (17)
 
-### Freshdesk REST API
+- [Freshdesk Webhook API](https://apis.io/apis/freshdesk/webhook-api/) — The Freshdesk Webhook API enables real-time communication between Freshdesk and external systems by sending HTTP POST requests when specific events occur…
+- [Freshdesk App SDK](https://apis.io/apis/freshdesk/app-sdk/) — The Freshdesk App SDK allows developers to build custom applications that extend the functionality of the Freshdesk helpdesk platform. Backed by a…
+- [freshdesk Agents API](https://apis.io/apis/freshdesk/freshdesk-agents-api/) — Manage support agents and their properties.
+- [freshdesk Business Hours API](https://apis.io/apis/freshdesk/freshdesk-business-hours-api/) — Manage business hour schedules used in SLA calculations.
+- [freshdesk Companies API](https://apis.io/apis/freshdesk/freshdesk-companies-api/) — Manage companies (organizations) associated with contacts.
+- [freshdesk Contacts API](https://apis.io/apis/freshdesk/freshdesk-contacts-api/) — Manage contacts (end users) who submit support tickets.
+- [freshdesk Conversations API](https://apis.io/apis/freshdesk/freshdesk-conversations-api/) — Manage replies, notes, and conversation threads on tickets.
+- [freshdesk Email Configs API](https://apis.io/apis/freshdesk/freshdesk-email-configs-api/) — Manage email mailbox configurations for the helpdesk.
+- [freshdesk Groups API](https://apis.io/apis/freshdesk/freshdesk-groups-api/) — Manage agent groups for ticket assignment and routing.
+- [freshdesk Products API](https://apis.io/apis/freshdesk/freshdesk-products-api/) — Manage products to categorize tickets by product line.
+- [freshdesk Roles API](https://apis.io/apis/freshdesk/freshdesk-roles-api/) — Manage roles that define agent permissions.
+- [freshdesk Satisfaction Ratings API](https://apis.io/apis/freshdesk/freshdesk-satisfaction-ratings-api/) — View customer satisfaction survey ratings on tickets.
+- [freshdesk Search API](https://apis.io/apis/freshdesk/freshdesk-search-api/) — Search across tickets, contacts, and companies using query syntax.
+- [freshdesk SLA Policies API](https://apis.io/apis/freshdesk/freshdesk-sla-policies-api/) — Manage service level agreement policies for ticket response and resolution times.
+- [freshdesk Solutions API](https://apis.io/apis/freshdesk/freshdesk-solutions-api/) — Manage knowledge base solution categories, folders, and articles.
+- [freshdesk Tickets API](https://apis.io/apis/freshdesk/freshdesk-tickets-api/) — Manage support tickets including creation, updates, bulk operations, merging, and lifecycle management.
+- [freshdesk Time Entries API](https://apis.io/apis/freshdesk/freshdesk-time-entries-api/) — Track time spent on tickets by agents.
 
-The Freshdesk REST API (v2) provides programmatic access to helpdesk data and operations within Freshdesk, a customer support platform by Freshworks. It exposes endpoints for managing tickets, contacts, companies, agents, groups, conversations, products, email configurations, SLA policies, and business hours. The API uses JSON for request and response payloads, supports API key-based authentication, and follows RESTful conventions for CRUD operations.
+### Published properties
 
-- **Human URL:** [https://developers.freshdesk.com/api/](https://developers.freshdesk.com/api/)
-- **Base URL:** `https://yourdomain.freshdesk.com/api/v2`
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-#### Tags
+#### AsyncAPI (1)
 
-- Agents
-- Companies
-- Contacts
-- Customer Support
-- Helpdesk
-- Tickets
+Event-driven and webhook contracts.
 
-#### Properties
+- [Freshdesk Webhook Events](https://apis.io/asyncapis/freshdesk/freshdesk-webhook-api-asyncapi/)
 
-- [Documentation](https://developers.freshdesk.com/api/)
-- [OpenAPI](openapi/freshdesk-rest-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/freshdesk-rest-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/freshdesk-rest-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Event channels (1)
 
-### Freshdesk Webhook API
+Individual events and webhooks the provider emits.
 
-The Freshdesk Webhook API enables real-time communication between Freshdesk and external systems by sending HTTP POST requests when specific events occur within the helpdesk. Webhooks can be triggered by ticket creation, updates, status changes, and other support events, allowing developers to build event-driven integrations without polling the REST API.
+- [/webhook](https://apis.io/channels/freshdesk/webhook/)
 
-- **Human URL:** [https://support.freshdesk.com/support/solutions/folders/272646](https://support.freshdesk.com/support/solutions/folders/272646)
-- **Base URL:** `https://api.example.com`
+#### GraphQL (1)
 
-#### Tags
+GraphQL schemas.
 
-- Automation
-- Customer Support
-- Events
-- Notifications
-- Webhooks
+- [Moved to /providers/freshdesk/](https://apis.io/graphqls/freshdesk/freshdesk-graphql/)
 
-#### Properties
+#### MCP servers (1)
 
-- [Documentation](https://support.freshdesk.com/support/solutions/folders/272646)
-- [AsyncAPI](asyncapi/freshdesk-webhook-api-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [Postman Collection](collections/freshdesk-rest-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/freshdesk-rest-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Model Context Protocol servers that expose the API to agents.
 
-### Freshdesk App SDK
+- [freshdesk](https://apis.io/servers/freshdesk/freshdesk/)
 
-The Freshdesk App SDK allows developers to build custom applications that extend the functionality of the Freshdesk helpdesk platform. Backed by a Platform-as-a-Service infrastructure that includes a data store and serverless runtimes, the SDK provides tools for creating front-end interfaces using the Crayons component library and server-side logic through serverless apps.
+#### Agentic access (1)
 
-- **Human URL:** [https://developers.freshdesk.com/](https://developers.freshdesk.com/)
-- **Base URL:** `https://api.example.com`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Freshdesk Agentic Access](https://apis.io/agentic-access/freshdesk/freshdesk-agentic-access/)
 
-- Apps
-- Extensions
-- Marketplace
-- Plugins
-- SDK
+#### JSON Schema (1)
 
-#### Properties
+The data models the API reads and writes.
 
-- [Documentation](https://developers.freshdesk.com/)
-- [Documentation](https://developers.freshworks.com/docs/app-sdk/v3.0/support_ticket/rest-apis/)
-- [Postman Collection](collections/freshdesk-rest-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/freshdesk-rest-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Freshdesk Ticket](https://apis.io/schemas/freshdesk/freshdesk-ticket/)
 
-## Common Properties
+#### JSON-LD (1)
 
-- [GitHub Organization](https://github.com/freshdesk)
-- [LinkedIn](https://www.linkedin.com/showcase/freshdesk)
-- [JSON-LD](json-ld/freshdesk-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [JSON Schema](json-schema/freshdesk-ticket-schema.json) — [JSON Schema](https://json-schema.org/specification)
+Linked-data contexts for the provider's vocabulary.
+
+- [Freshdesk Context](https://apis.io/jsonld/freshdesk/freshdesk-context/)
+
+#### Collections (16)
+
+Postman and Open Collection request collections.
+
+- [Freshdesk REST Agents API](https://apis.io/collections/freshdesk/open-freshdesk-agents-api/)
+- [Freshdesk REST Agents Business Hours API](https://apis.io/collections/freshdesk/open-freshdesk-business-hours-api/)
+- [Freshdesk REST Agents Companies API](https://apis.io/collections/freshdesk/open-freshdesk-companies-api/)
+- [Freshdesk REST Agents Contacts API](https://apis.io/collections/freshdesk/open-freshdesk-contacts-api/)
+- [Freshdesk REST Agents Conversations API](https://apis.io/collections/freshdesk/open-freshdesk-conversations-api/)
+- [Freshdesk REST Agents Email Configs API](https://apis.io/collections/freshdesk/open-freshdesk-email-configs-api/)
+- [Freshdesk REST Agents Groups API](https://apis.io/collections/freshdesk/open-freshdesk-groups-api/)
+- [Freshdesk REST Agents Products API](https://apis.io/collections/freshdesk/open-freshdesk-products-api/)
+- [Freshdesk REST API](https://apis.io/collections/freshdesk/open-freshdesk-rest-api/)
+- [Freshdesk REST Agents Roles API](https://apis.io/collections/freshdesk/open-freshdesk-roles-api/)
+- [Freshdesk REST Agents Satisfaction Ratings API](https://apis.io/collections/freshdesk/open-freshdesk-satisfaction-ratings-api/)
+- [Freshdesk REST Agents Search API](https://apis.io/collections/freshdesk/open-freshdesk-search-api/)
+- [Freshdesk REST Agents SLA Policies API](https://apis.io/collections/freshdesk/open-freshdesk-sla-policies-api/)
+- [Freshdesk REST Agents Solutions API](https://apis.io/collections/freshdesk/open-freshdesk-solutions-api/)
+- [Freshdesk REST Agents Tickets API](https://apis.io/collections/freshdesk/open-freshdesk-tickets-api/)
+- [Freshdesk REST Agents Time Entries API](https://apis.io/collections/freshdesk/open-freshdesk-time-entries-api/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Freshdesk — asyncapi rules](https://apis.io/rules/freshdesk/freshdesk-asyncapi-spectral-rules/)
+- [Freshdesk — jsonschema rules](https://apis.io/rules/freshdesk/freshdesk-jsonschema-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Freshdesk Authentication](https://apis.io/security/freshdesk/freshdesk-authentication/)
+- [Freshdesk Domain Security](https://apis.io/security/freshdesk/freshdesk-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Freshdesk Plans Pricing](https://apis.io/plans/freshdesk/freshdesk-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Freshdesk Rate Limits](https://apis.io/rate-limits/freshdesk/freshdesk-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Freshdesk Finops](https://apis.io/finops/freshdesk/freshdesk-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://freshdesk.com)
+- [Blog](https://www.freshworks.com/company/newsroom/)
+- [GitHub](https://github.com/freshdesk)
+
+## API Evangelist rating
+
+**Kin Score 30.7** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 55.0 |
+| Contract quality | 65.5 |
+| Contract governance | 13.6 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 23.8 |
+| Access clarity | 7.9 |
+
+**Agent readiness 29.8** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | verified |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/freshdesk/](https://apis.io/providers/freshdesk/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Freshdesk: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/freshdesk/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
